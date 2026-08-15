@@ -5,6 +5,8 @@ import customerRoutes from "./modules/customer/customer.routes";
 import concertRoutes from "./modules/concert/concert.routes";
 import ticketRoutes from "./modules/ticket/ticket.routes";
 import reviewRoutes from "./modules/review/review.routes";
+import favoriteRoutes from "./modules/favorite/favorite.routes";
+import notificationRoutes from "./modules/notification/notification.routes";
 
 const app = new Hono();
 
@@ -16,6 +18,8 @@ app.route("/api/v1", customerRoutes);
 app.route("/api/v1", concertRoutes);
 app.route("/api/v1", ticketRoutes);
 app.route("/api/v1", reviewRoutes);
+app.route("/api/v1", favoriteRoutes);
+app.route("/api/v1", notificationRoutes);
 
 export default {
   port: Number(process.env.PORT) || 1420,

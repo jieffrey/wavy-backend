@@ -18,6 +18,7 @@ organizerRoutes.get("/events/:id", organizerController.getEvent);
 organizerRoutes.put("/events/:id", zv(eventSchema), organizerController.updateEvent);
 organizerRoutes.delete("/events/:id", organizerController.deleteEvent);
 organizerRoutes.post("/events/:id/close-sales", organizerController.closeSales);
+organizerRoutes.post("/events/:id/publish", organizerController.publishEvent);
 
 // Ticket Categories
 organizerRoutes.get("/events/:id/ticket-categories", organizerController.listCategories);

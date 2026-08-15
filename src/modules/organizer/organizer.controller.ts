@@ -22,6 +22,7 @@ export const organizerController = {
   },
   deleteEvent: async (c: Context<AppEnv>) => respond(c)(await organizerService.deleteEvent(orgId(c), id(c))),
   closeSales: async (c: Context<AppEnv>) => respond(c)(await organizerService.closeSales(orgId(c), id(c))),
+  publishEvent: async (c: Context<AppEnv>) => respond(c)(await organizerService.publishEvent(orgId(c), id(c))),
 
   // Ticket Categories
   listCategories: async (c: Context<AppEnv>) => respond(c)(await organizerService.listCategories(orgId(c), id(c))),

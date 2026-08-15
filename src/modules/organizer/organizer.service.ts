@@ -4,6 +4,7 @@ import { ok, fail, type Result } from "../../types/result";
 import type { z } from "zod";
 import type { eventSchema, ticketCategorySchema, artistSchema } from "./organizer.schema";
 import { signTicket, verifyTicket } from "../ticket/ticket.service";
+import { notificationService } from "../notification/notification.service";
 
 type EventRow = {
   id: number;
@@ -81,6 +82,26 @@ export const organizerService = {
       RETURNING *
     `;
     if (!event) return fail(404, "event not found");
+    return ok(event);
+  },
+
+  async publishEvent(organizerId: number, id: number): Promise<Result<EventRow>> {
+    const [event] = await sql<EventRow[]>`
+      UPDATE events SET status = 'published'
+      WHERE id = ${id} AND organizer_id = ${organizerId}
+      RETURNING *
+    `;
+    if (!event) return fail(404, "event not found");
+    const followers = await sql<{ customer_id: number }[]>`
+      SELECT customer_id FROM favorite_organizers WHERE organizer_id = ${organizerId}
+      UNION
+      SELECT customer_id FROM favorite_artists WHERE artist_id = ${event.artist_id}
+    `;
+    await notificationService.notifyMany(
+      followers.map((f) => f.customer_id),
+      `Event baru: ${event.title}`,
+      `Tiket ${event.title} sudah dibuka di Wavy.`
+    );
     return ok(event);
   },
 
