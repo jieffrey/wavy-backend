@@ -4,6 +4,7 @@ import organizerRoutes from "./modules/organizer/organizer.routes";
 import customerRoutes from "./modules/customer/customer.routes";
 import concertRoutes from "./modules/concert/concert.routes";
 import ticketRoutes from "./modules/ticket/ticket.routes";
+import reviewRoutes from "./modules/review/review.routes";
 
 const app = new Hono();
 
@@ -14,6 +15,7 @@ app.route("/api/v1/organizer", organizerRoutes);
 app.route("/api/v1", customerRoutes);
 app.route("/api/v1", concertRoutes);
 app.route("/api/v1", ticketRoutes);
+app.route("/api/v1", reviewRoutes);
 
 export default {
   port: Number(process.env.PORT) || 1420,

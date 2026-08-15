@@ -41,6 +41,8 @@ type CategoryRow = {
   remaining: number;
 };
 
+type ReviewRow = { id: number; rating: number; comment: string | null; created_at: Date; customer_name: string };
+
 export const concertService = {
   async list(category?: string, q?: string) {
     const conds = [];
@@ -62,7 +64,9 @@ export const concertService = {
     );
   },
 
-  async detail(id: number): Promise<Result<ConcertDetailRow & { ticket_categories: CategoryRow[] }>> {
+  async detail(
+    id: number
+  ): Promise<Result<ConcertDetailRow & { ticket_categories: CategoryRow[]; reviews: ReviewRow[]; avg_rating: number; review_count: number }>> {
     const [event] = await sql<ConcertDetailRow[]>`
       SELECT e.*, a.name AS artist_name, a.genre, a.photo_url, a.bio, o.name AS organizer_name
       FROM events e
@@ -76,6 +80,18 @@ export const concertService = {
       FROM ticket_categories tc
       WHERE tc.event_id = ${id}
     `;
-    return ok({ ...event, ticket_categories });
+    const [rating] = await sql<{ avg_rating: number; review_count: number }[]>`
+      SELECT COALESCE(AVG(rating), 0)::float8 AS avg_rating, COUNT(*)::int AS review_count
+      FROM reviews
+      WHERE event_id = ${id}
+    `;
+    const reviews = await sql<ReviewRow[]>`
+      SELECT r.id, r.rating, r.comment, r.created_at, c.name AS customer_name
+      FROM reviews r
+      JOIN customers c ON c.id = r.customer_id
+      WHERE r.event_id = ${id}
+      ORDER BY r.created_at DESC
+    `;
+    return ok({ ...event, ticket_categories, reviews, avg_rating: rating.avg_rating, review_count: rating.review_count });
   },
 };
