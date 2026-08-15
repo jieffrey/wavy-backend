@@ -1,38 +1,14 @@
 import { Hono } from "hono";
 import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
-import { sql } from "../db/client";
-import { organizerAuth, type AppEnv } from "../middleware/auth.middleware";
+import { sql } from "../../db/client";
+import { organizerAuth, type AppEnv } from "../../middleware/auth.middleware";
+import { eventSchema, ticketCategorySchema, artistSchema, verifySchema } from "./organizer.schema";
 
 const organizerRoutes = new Hono<AppEnv>();
 organizerRoutes.use("*", organizerAuth);
 
 const zv = <T extends z.ZodTypeAny>(schema: T) => zValidator<T, "json", AppEnv, string>("json", schema);
-
-const eventSchema = z.object({
-  title: z.string(),
-  artist_id: z.number(),
-  category: z.string(),
-  venue: z.string(),
-  date: z.string(),
-  poster_url: z.string(),
-  description: z.string(),
-});
-
-const ticketCategorySchema = z.object({
-  name: z.string(),
-  price: z.number(),
-  quota: z.number().int().positive(),
-});
-
-const artistSchema = z.object({
-  name: z.string(),
-  genre: z.string(),
-  photo_url: z.string(),
-  bio: z.string(),
-});
-
-const verifySchema = z.object({ approve: z.boolean() });
 
 const notFound = (msg: string) => ({ error: msg });
 

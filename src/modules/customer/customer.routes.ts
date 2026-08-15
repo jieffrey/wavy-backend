@@ -1,17 +1,11 @@
 import { Hono } from "hono";
-import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
-import { sql } from "../db/client";
-import { customerAuth, type AppEnv } from "../middleware/auth.middleware";
+import { sql } from "../../db/client";
+import { customerAuth, type AppEnv } from "../../middleware/auth.middleware";
+import { createOrderSchema } from "./customer.schema";
 
 const customerRoutes = new Hono<AppEnv>();
 customerRoutes.use("*", customerAuth);
-
-const createOrderSchema = z.object({
-  event_id: z.number(),
-  ticket_category_id: z.number(),
-  quantity: z.number().int().min(1).max(4),
-});
 
 customerRoutes.post(
   "/orders",

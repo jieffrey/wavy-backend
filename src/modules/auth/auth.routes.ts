@@ -1,17 +1,13 @@
 import { Hono } from "hono";
-import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { sql } from "../db/client";
-import { sendOtpEmail } from "../utils/email";
-import type { AppEnv } from "../middleware/auth.middleware";
+import { sql } from "../../db/client";
+import { sendOtpEmail } from "../../utils/email";
+import type { AppEnv } from "../../middleware/auth.middleware";
+import { loginSchema, sendOtpSchema, verifyOtpSchema } from "./auth.schema";
 
 const authRoutes = new Hono<AppEnv>();
-
-const loginSchema = z.object({ email: z.string().email(), password: z.string() });
-const sendOtpSchema = z.object({ email: z.string().email() });
-const verifyOtpSchema = z.object({ email: z.string().email(), code: z.string().length(6) });
 
 const sign = (payload: object) => jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "24h" });
 

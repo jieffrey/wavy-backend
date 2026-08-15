@@ -1,7 +1,7 @@
 import { Hono } from "hono";
-import authRoutes from "./routes/auth.routes";
-import organizerRoutes from "./routes/organizer.routes";
-import customerRoutes from "./routes/customer.routes";
+import authRoutes from "./modules/auth/auth.routes";
+import organizerRoutes from "./modules/organizer/organizer.routes";
+import customerRoutes from "./modules/customer/customer.routes";
 
 const app = new Hono();
 
