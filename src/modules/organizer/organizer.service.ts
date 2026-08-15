@@ -96,6 +96,8 @@ export const organizerService = {
       SELECT customer_id FROM favorite_organizers WHERE organizer_id = ${organizerId}
       UNION
       SELECT customer_id FROM favorite_artists WHERE artist_id = ${event.artist_id}
+      UNION
+      SELECT customer_id FROM notify_requests WHERE event_id = ${event.id}
     `;
     await notificationService.notifyMany(
       followers.map((f) => f.customer_id),

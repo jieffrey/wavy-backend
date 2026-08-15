@@ -94,4 +94,20 @@ export const concertService = {
     `;
     return ok({ ...event, ticket_categories, reviews, avg_rating: rating.avg_rating, review_count: rating.review_count });
   },
+
+  async notifyMe(customerId: number, eventId: number): Promise<Result<{ message: string }>> {
+    // boleh subscribe ke event apapun yang ada (belum dibuka = draft), notif dikirim saat publish
+    const [event] = await sql<{ id: number }[]>`SELECT id FROM events WHERE id = ${eventId}`;
+    if (!event) return fail(404, "concert not found");
+    await sql`
+      INSERT INTO notify_requests (customer_id, event_id)
+      VALUES (${customerId}, ${eventId}) ON CONFLICT DO NOTHING
+    `;
+    return ok({ message: "notification requested" });
+  },
+
+  async cancelNotifyMe(customerId: number, eventId: number) {
+    await sql`DELETE FROM notify_requests WHERE customer_id = ${customerId} AND event_id = ${eventId}`;
+    return ok({ message: "notification cancelled" });
+  },
 };
