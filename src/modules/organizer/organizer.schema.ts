@@ -24,3 +24,5 @@ export const artistSchema = z.object({
 });
 
 export const verifySchema = z.object({ approve: z.boolean() });
+
+export const scanSchema = z.object({ qr_code: z.string() });

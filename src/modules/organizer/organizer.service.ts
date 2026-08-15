@@ -1,7 +1,9 @@
+import jwt from "jsonwebtoken";
 import { sql } from "../../db/client";
 import { ok, fail, type Result } from "../../types/result";
 import type { z } from "zod";
 import type { eventSchema, ticketCategorySchema, artistSchema } from "./organizer.schema";
+import { signTicket, verifyTicket } from "../ticket/ticket.service";
 
 type EventRow = {
   id: number;
@@ -233,14 +235,51 @@ export const organizerService = {
     if (order.status !== "pending_payment") return fail(400, "order is not pending payment");
 
     if (approve) {
+      const [event] = await sql<{ date: Date }[]>`SELECT date FROM events WHERE id = ${order.event_id}`;
+      const exp = Math.floor(new Date(event.date).getTime() / 1000);
       await sql.begin(async (tx) => {
         await tx`UPDATE orders SET status = 'paid' WHERE id = ${id}`;
         await tx`UPDATE ticket_categories SET sold = sold + ${order.quantity} WHERE id = ${order.ticket_category_id}`;
+        for (let i = 0; i < order.quantity; i++) {
+          await tx`INSERT INTO tickets (order_id, qr_code)
+                   VALUES (${order.id}, ${signTicket({ uid: crypto.randomUUID(), event_id: order.event_id, exp })})`;
+        }
       });
       return ok({ message: "order approved" });
     }
 
     await sql`UPDATE orders SET status = 'rejected' WHERE id = ${id}`;
     return ok({ message: "order rejected" });
+  },
+
+  async scanValidate(
+    organizerId: number,
+    qrCode: string
+  ): Promise<Result<{ message: string; ticket: { id: number; order_id: number; event_id: number; title: string; date: Date; venue: string } }>> {
+    try {
+      verifyTicket(qrCode);
+    } catch (err) {
+      return fail(400, err instanceof jwt.TokenExpiredError ? "QR code expired" : "invalid QR code");
+    }
+
+    const [ticket] = await sql<
+      { id: number; order_id: number; organizer_id: number; event_id: number; title: string; date: Date; venue: string; is_scanned: boolean }[]
+    >`
+      SELECT t.id, t.order_id, t.is_scanned, e.id AS event_id, e.title, e.date, e.venue, e.organizer_id
+      FROM tickets t
+      JOIN orders o ON o.id = t.order_id
+      JOIN events e ON e.id = o.event_id
+      WHERE t.qr_code = ${qrCode}
+    `;
+    if (!ticket) return fail(404, "ticket not found");
+    if (ticket.organizer_id !== organizerId) return fail(403, "ticket does not belong to your event");
+    if (ticket.is_scanned) return fail(400, "ticket already scanned");
+    if (new Date() > new Date(ticket.date)) return fail(400, "event already ended");
+
+    await sql`UPDATE tickets SET is_scanned = true WHERE id = ${ticket.id}`;
+    return ok({
+      message: "ticket valid",
+      ticket: { id: ticket.id, order_id: ticket.order_id, event_id: ticket.event_id, title: ticket.title, date: ticket.date, venue: ticket.venue },
+    });
   },
 };

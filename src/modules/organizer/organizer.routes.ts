@@ -3,7 +3,7 @@ import type { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import type { AppEnv } from "../../middleware/auth.middleware";
 import { organizerAuth } from "../../middleware/auth.middleware";
-import { eventSchema, ticketCategorySchema, artistSchema, verifySchema } from "./organizer.schema";
+import { eventSchema, ticketCategorySchema, artistSchema, verifySchema, scanSchema } from "./organizer.schema";
 import { organizerController } from "./organizer.controller";
 
 const organizerRoutes = new Hono<AppEnv>();
@@ -37,5 +37,6 @@ organizerRoutes.get("/dashboard", organizerController.dashboard);
 // Orders
 organizerRoutes.get("/orders", organizerController.listOrders);
 organizerRoutes.post("/orders/:id/verify", zv(verifySchema), organizerController.verifyOrder);
+organizerRoutes.post("/scan/validate", zv(scanSchema), organizerController.scanValidate);
 
 export default organizerRoutes;

@@ -3,7 +3,7 @@ import type { z } from "zod";
 import type { AppEnv } from "../../middleware/auth.middleware";
 import { respond, validBody } from "../../types/result";
 import { organizerService } from "./organizer.service";
-import { eventSchema, ticketCategorySchema, artistSchema, verifySchema } from "./organizer.schema";
+import { eventSchema, ticketCategorySchema, artistSchema, verifySchema, scanSchema } from "./organizer.schema";
 
 const orgId = (c: Context<AppEnv>) => c.get("organizerId");
 const id = (c: Context<AppEnv>) => Number(c.req.param("id"));
@@ -55,5 +55,10 @@ export const organizerController = {
   verifyOrder: async (c: Context<AppEnv>) => {
     const { approve } = validBody<z.output<typeof verifySchema>>(c);
     return respond(c)(await organizerService.verifyOrder(orgId(c), id(c), approve));
+  },
+
+  scanValidate: async (c: Context<AppEnv>) => {
+    const { qr_code } = validBody<z.output<typeof scanSchema>>(c);
+    return respond(c)(await organizerService.scanValidate(orgId(c), qr_code));
   },
 };
