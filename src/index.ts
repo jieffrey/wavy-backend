@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import authRoutes from "./modules/auth/auth.routes";
 import organizerRoutes from "./modules/organizer/organizer.routes";
 import customerRoutes from "./modules/customer/customer.routes";
+import concertRoutes from "./modules/concert/concert.routes";
 
 const app = new Hono();
 
@@ -10,8 +11,9 @@ app.get("/health", (c) => c.json({ status: "ok" }));
 app.route("/api/v1/auth", authRoutes);
 app.route("/api/v1/organizer", organizerRoutes);
 app.route("/api/v1", customerRoutes);
+app.route("/api/v1", concertRoutes);
 
 export default {
-  port: Number(process.env.PORT) || 8080,
+  port: Number(process.env.PORT) || 1420,
   fetch: app.fetch,
 };
