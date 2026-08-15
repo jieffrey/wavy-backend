@@ -42,7 +42,10 @@ type CategoryRow = {
 };
 
 export const concertService = {
-  async list(category?: string) {
+  async list(category?: string, q?: string) {
+    const conds = [];
+    if (category) conds.push(sql`AND e.category = ${category}`);
+    if (q) conds.push(sql`AND (e.title ILIKE ${`%${q}%`} OR a.name ILIKE ${`%${q}%`})`);
     return ok(
       await sql<ConcertRow[]>`
         SELECT e.id, e.title, e.category, e.venue, e.date, e.poster_url, e.status,
@@ -53,7 +56,7 @@ export const concertService = {
         JOIN artists a ON a.id = e.artist_id
         JOIN organizers o ON o.id = e.organizer_id
         WHERE e.status = 'published'
-          ${category ? sql`AND e.category = ${category}` : sql``}
+          ${conds}
         ORDER BY e.date ASC
       `
     );
