@@ -280,8 +280,8 @@ export const organizerService = {
         await tx`UPDATE orders SET status = 'paid' WHERE id = ${id}`;
         await tx`UPDATE ticket_categories SET sold = sold + ${order.quantity} WHERE id = ${order.ticket_category_id}`;
         for (let i = 0; i < order.quantity; i++) {
-          await tx`INSERT INTO tickets (order_id, qr_code)
-                   VALUES (${order.id}, ${signTicket({ uid: crypto.randomUUID(), event_id: order.event_id, exp })})`;
+          await tx`INSERT INTO tickets (order_id, qr_code, owner_id)
+                   VALUES (${order.id}, ${signTicket({ uid: crypto.randomUUID(), event_id: order.event_id, exp })}, ${order.customer_id})`;
         }
       });
       return ok({ message: "order approved" });
