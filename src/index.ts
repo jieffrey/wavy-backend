@@ -10,6 +10,7 @@ import notificationRoutes from "./modules/notification/notification.routes";
 import homepageRoutes from "./modules/homepage/homepage.routes";
 import adminRoutes from "./modules/admin/admin.routes";
 import waitingRoomRoutes from "./modules/waitingroom/waitingroom.routes";
+import waitingListRoutes from "./modules/waitinglist/waitinglist.routes";
 
 const app = new Hono();
 
@@ -26,6 +27,7 @@ app.route("/api/v1", notificationRoutes);
 app.route("/api/v1", homepageRoutes);
 app.route("/api/v1/admin", adminRoutes);
 app.route("/api/v1", waitingRoomRoutes);
+app.route("/api/v1", waitingListRoutes);
 
 export default {
   port: Number(process.env.PORT) || 1420,

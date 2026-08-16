@@ -272,6 +272,19 @@ export const organizerService = {
     }
 
     await sql`UPDATE orders SET status = 'rejected' WHERE id = ${id}`;
+    // auto-offer (phase 4 item 14): tiket dari order yang gagal ditawarkan ke waiting list teratas
+    const [event] = await sql<{ title: string }[]>`SELECT title FROM events WHERE id = ${order.event_id}`;
+    const offers = await sql<{ customer_id: number }[]>`
+      SELECT customer_id FROM waiting_list
+      WHERE event_id = ${order.event_id}
+      ORDER BY created_at ASC
+      LIMIT ${order.quantity}
+    `;
+    await notificationService.notifyMany(
+      offers.map((o) => o.customer_id),
+      `Slot tiket tersedia: ${event.title}`,
+      `Order yang gagal membebaskan slot — tiket ${event.title} kembali tersedia di Wavy.`
+    );
     return ok({ message: "order rejected" });
   },
 
