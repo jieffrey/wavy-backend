@@ -47,7 +47,7 @@ export const authService = {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     await sql`
       INSERT INTO otp_codes (email, code, expires_at)
-      VALUES (${email}, ${code}, now() + interval '5 minutes')
+      VALUES (${email}, ${code}, LOCALTIMESTAMP + interval '5 minutes')
     `;
     await sendOtpEmail(email, code);
     return ok({ message: "OTP sent to email" });
@@ -58,11 +58,11 @@ export const authService = {
     const [otp] = await sql<OtpRow[]>`
       SELECT * FROM otp_codes
       WHERE email = ${email} AND code = ${code} AND used = false
+        AND expires_at > LOCALTIMESTAMP
       ORDER BY created_at DESC
       LIMIT 1
     `;
     if (!otp) return fail(401, "invalid OTP code");
-    if (new Date(otp.expires_at) < new Date()) return fail(401, "OTP code expired");
 
     await sql`UPDATE otp_codes SET used = true WHERE id = ${otp.id}`;
     const [customer] = await sql<CustomerRow[]>`SELECT * FROM customers WHERE email = ${email}`;
