@@ -38,6 +38,7 @@ organizerRoutes.get("/dashboard", organizerController.dashboard);
 // Orders
 organizerRoutes.get("/orders", organizerController.listOrders);
 organizerRoutes.post("/orders/:id/verify", zv(verifySchema), organizerController.verifyOrder);
+organizerRoutes.post("/orders/:id/refund", organizerController.refundOrder);
 organizerRoutes.post("/scan/validate", zv(scanSchema), organizerController.scanValidate);
 
 export default organizerRoutes;

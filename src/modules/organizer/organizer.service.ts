@@ -35,6 +35,22 @@ type EventInput = z.output<typeof eventSchema>;
 type CategoryInput = z.output<typeof ticketCategorySchema>;
 type ArtistInput = z.output<typeof artistSchema>;
 
+// tawarkan tiket yang kembali tersedia (reject/refund) ke waiting list teratas
+const offerTickets = async (eventId: number, quantity: number) => {
+  const [event] = await sql<{ title: string }[]>`SELECT title FROM events WHERE id = ${eventId}`;
+  const offers = await sql<{ customer_id: number }[]>`
+    SELECT customer_id FROM waiting_list
+    WHERE event_id = ${eventId}
+    ORDER BY created_at ASC
+    LIMIT ${quantity}
+  `;
+  await notificationService.notifyMany(
+    offers.map((o) => o.customer_id),
+    `Slot tiket tersedia: ${event.title}`,
+    `Tiket ${event.title} kembali tersedia di Wavy.`
+  );
+};
+
 export const organizerService = {
   // ---------- Events ----------
 
@@ -273,19 +289,27 @@ export const organizerService = {
 
     await sql`UPDATE orders SET status = 'rejected' WHERE id = ${id}`;
     // auto-offer (phase 4 item 14): tiket dari order yang gagal ditawarkan ke waiting list teratas
-    const [event] = await sql<{ title: string }[]>`SELECT title FROM events WHERE id = ${order.event_id}`;
-    const offers = await sql<{ customer_id: number }[]>`
-      SELECT customer_id FROM waiting_list
-      WHERE event_id = ${order.event_id}
-      ORDER BY created_at ASC
-      LIMIT ${order.quantity}
-    `;
-    await notificationService.notifyMany(
-      offers.map((o) => o.customer_id),
-      `Slot tiket tersedia: ${event.title}`,
-      `Order yang gagal membebaskan slot — tiket ${event.title} kembali tersedia di Wavy.`
-    );
+    await offerTickets(order.event_id, order.quantity);
     return ok({ message: "order rejected" });
+  },
+
+  async refundOrder(organizerId: number, id: number): Promise<Result<{ message: string }>> {
+    const [order] = await sql<OrderRow[]>`
+      SELECT o.* FROM orders o JOIN events e ON e.id = o.event_id
+      WHERE o.id = ${id} AND e.organizer_id = ${organizerId}
+    `;
+    if (!order) return fail(404, "order not found");
+    if (order.status !== "paid") return fail(400, "only paid orders can be refunded");
+    const [event] = await sql<{ date: Date }[]>`SELECT date FROM events WHERE id = ${order.event_id}`;
+    if (new Date() > new Date(event.date)) return fail(400, "event already ended, no refunds");
+
+    await sql.begin(async (tx) => {
+      await tx`UPDATE orders SET status = 'refunded' WHERE id = ${id}`;
+      await tx`UPDATE ticket_categories SET sold = GREATEST(sold - ${order.quantity}, 0) WHERE id = ${order.ticket_category_id}`;
+      await tx`DELETE FROM tickets WHERE order_id = ${id}`;
+    });
+    await offerTickets(order.event_id, order.quantity);
+    return ok({ message: "order refunded" });
   },
 
   async scanValidate(

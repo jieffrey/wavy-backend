@@ -58,6 +58,8 @@ export const organizerController = {
     return respond(c)(await organizerService.verifyOrder(orgId(c), id(c), approve));
   },
 
+  refundOrder: async (c: Context<AppEnv>) => respond(c)(await organizerService.refundOrder(orgId(c), id(c))),
+
   scanValidate: async (c: Context<AppEnv>) => {
     const { qr_code } = validBody<z.output<typeof scanSchema>>(c);
     return respond(c)(await organizerService.scanValidate(orgId(c), qr_code));
