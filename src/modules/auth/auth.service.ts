@@ -4,7 +4,7 @@ import { sql } from "../../db/client";
 import { sendOtpEmail } from "../../utils/email";
 import { ok, fail, type Result } from "../../types/result";
 
-type OrganizerRow = { id: number; name: string; email: string; password: string };
+type OrganizerRow = { id: number; name: string; email: string; password: string; status: string };
 type CustomerRow = { id: number; name: string | null; email: string };
 type OtpRow = { id: number; expires_at: Date };
 
@@ -23,7 +23,7 @@ const sign = (payload: object) => jwt.sign(payload, process.env.JWT_SECRET!, { e
 export const authService = {
   async organizerLogin(email: string, password: string): Promise<Result<LoginData>> {
     const [organizer] = await sql<OrganizerRow[]>`SELECT * FROM organizers WHERE email = ${email}`;
-    if (!organizer || !(await bcrypt.compare(password, organizer.password))) {
+    if (!organizer || organizer.status === "suspended" || !(await bcrypt.compare(password, organizer.password))) {
       return fail(401, "invalid email or password");
     }
     return ok({
