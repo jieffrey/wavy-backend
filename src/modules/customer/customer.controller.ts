@@ -15,4 +15,6 @@ export const customerController = {
     respond(c)(await customerService.getOrder(c.get("customerId"), Number(c.req.param("id")))),
 
   history: async (c: Context<AppEnv>) => respond(c)(await customerService.history(c.get("customerId"))),
+
+  level: async (c: Context<AppEnv>) => respond(c)(await customerService.level(c.get("customerId"))),
 };

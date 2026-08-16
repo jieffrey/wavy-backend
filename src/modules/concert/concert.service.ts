@@ -30,6 +30,7 @@ type ConcertDetailRow = {
   photo_url: string;
   bio: string;
   organizer_name: string;
+  countdown_seconds: number;
 };
 type CategoryRow = {
   id: number;
@@ -68,7 +69,8 @@ export const concertService = {
     id: number
   ): Promise<Result<ConcertDetailRow & { ticket_categories: CategoryRow[]; reviews: ReviewRow[]; avg_rating: number; review_count: number }>> {
     const [event] = await sql<ConcertDetailRow[]>`
-      SELECT e.*, a.name AS artist_name, a.genre, a.photo_url, a.bio, o.name AS organizer_name
+      SELECT e.*, a.name AS artist_name, a.genre, a.photo_url, a.bio, o.name AS organizer_name,
+        GREATEST(EXTRACT(EPOCH FROM (e.date - now()))::int, 0) AS countdown_seconds
       FROM events e
       JOIN artists a ON a.id = e.artist_id
       JOIN organizers o ON o.id = e.organizer_id

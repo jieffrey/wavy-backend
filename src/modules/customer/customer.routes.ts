@@ -18,4 +18,6 @@ customerRoutes.post(
 customerRoutes.get("/orders/history", customerAuth, customerController.history);
 customerRoutes.get("/orders/:id", customerAuth, customerController.getOrder);
 
+customerRoutes.get("/me/level", customerAuth, customerController.level);
+
 export default customerRoutes;

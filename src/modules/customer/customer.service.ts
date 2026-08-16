@@ -42,4 +42,15 @@ export const customerService = {
   async history(customerId: number) {
     return ok(await sql<OrderRow[]>`SELECT * FROM orders WHERE customer_id = ${customerId} ORDER BY created_at DESC`);
   },
+
+  async level(customerId: number) {
+    const [r] = await sql<{ attended: number }[]>`
+      SELECT COUNT(DISTINCT event_id)::int AS attended FROM orders
+      WHERE customer_id = ${customerId} AND status = 'paid'
+    `;
+    const attended = r.attended;
+    const level = attended >= 10 ? 5 : attended >= 5 ? 4 : attended >= 3 ? 3 : attended >= 1 ? 2 : 1;
+    const level_label = ["", "Pengunjung", "Newbie", "Fan", "Super Fan", "Legend"][level];
+    return ok({ attended_concerts: attended, level, level_label });
+  },
 };
