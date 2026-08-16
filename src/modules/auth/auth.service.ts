@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { sql } from "../../db/client";
 import { sendOtpEmail } from "../../utils/email";
+import { rateLimit } from "../../utils/rate-limit";
 import { ok, fail, type Result } from "../../types/result";
 
 type OrganizerRow = { id: number; name: string; email: string; password: string; status: string };
@@ -24,6 +25,7 @@ export const authService = {
   async organizerLogin(email: string, password: string): Promise<Result<LoginData>> {
     const [organizer] = await sql<OrganizerRow[]>`SELECT * FROM organizers WHERE email = ${email}`;
     if (!organizer || organizer.status === "suspended" || !(await bcrypt.compare(password, organizer.password))) {
+      if (!rateLimit(`login:${email}`, 5, 15 * 60 * 1000)) return fail(429, "too many login attempts, try again later");
       return fail(401, "invalid email or password");
     }
     return ok({
@@ -33,6 +35,11 @@ export const authService = {
   },
 
   async sendOtp(email: string): Promise<Result<{ message: string }>> {
+    const [recent] = await sql<{ c: number }[]>`
+      SELECT COUNT(*)::int AS c FROM otp_codes
+      WHERE email = ${email} AND created_at > LOCALTIMESTAMP - interval '5 minutes'
+    `;
+    if (recent.c >= 3) return fail(429, "too many OTP requests, try again later");
     const [existing] = await sql<CustomerRow[]>`SELECT id FROM customers WHERE email = ${email}`;
     if (!existing) {
       await sql`INSERT INTO customers (email) VALUES (${email})`;
@@ -47,6 +54,7 @@ export const authService = {
   },
 
   async verifyOtp(email: string, code: string): Promise<Result<OtpData>> {
+    if (!rateLimit(`verify:${email}`, 5, 10 * 60 * 1000)) return fail(429, "too many attempts, try again later");
     const [otp] = await sql<OtpRow[]>`
       SELECT * FROM otp_codes
       WHERE email = ${email} AND code = ${code} AND used = false
