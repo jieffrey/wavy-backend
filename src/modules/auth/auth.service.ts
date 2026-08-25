@@ -5,13 +5,24 @@ import { sendOtpEmail } from "../../utils/email";
 import { rateLimit } from "../../utils/rate-limit";
 import { ok, fail, type Result } from "../../types/result";
 
-type OrganizerRow = { id: number; name: string; email: string; password: string; status: string };
+type OrganizerRow = {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  status: string;
+};
 type CustomerRow = { id: number; name: string | null; email: string };
 type OtpRow = { id: number; expires_at: Date };
 
 export type LoginData = {
   access_token: string;
   organizer: { id: number; name: string; email: string };
+};
+
+export type OrganizerRegisterData = {
+  message: string;
+  status: string;
 };
 
 export type OtpData = {
@@ -24,13 +35,40 @@ const sign = (payload: object) => jwt.sign(payload, process.env.JWT_SECRET!, { e
 export const authService = {
   async organizerLogin(email: string, password: string): Promise<Result<LoginData>> {
     const [organizer] = await sql<OrganizerRow[]>`SELECT * FROM organizers WHERE email = ${email}`;
-    if (!organizer || organizer.status === "suspended" || !(await bcrypt.compare(password, organizer.password))) {
+    if (!organizer || !(await bcrypt.compare(password, organizer.password))) {
       if (!rateLimit(`login:${email}`, 5, 15 * 60 * 1000)) return fail(429, "too many login attempts, try again later");
       return fail(401, "invalid email or password");
+    }
+    if (organizer.status === "pending_verification") {
+      return fail(403, "akun Anda masih dalam proses verifikasi kerja sama. Tim kami akan menghubungi Anda via WhatsApp/Email.");
+    }
+    if (organizer.status === "suspended") {
+      return fail(403, "akun organizer Anda sedang ditangguhkan. Hubungi admin untuk informasi lebih lanjut.");
     }
     return ok({
       access_token: sign({ organizer_id: organizer.id }),
       organizer: { id: organizer.id, name: organizer.name, email: organizer.email },
+    });
+  },
+
+  async organizerRegister(input: {
+    organizer_name: string;
+    email: string;
+    password: string;
+    whatsapp: string;
+    event_types: string;
+    social_link?: string;
+  }): Promise<Result<OrganizerRegisterData>> {
+    const [existing] = await sql<{ id: number }[]>`SELECT id FROM organizers WHERE email = ${input.email}`;
+    if (existing) return fail(409, "email sudah terdaftar sebagai organizer");
+
+    await sql`
+      INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
+      VALUES (${input.organizer_name}, ${input.email}, ${bcrypt.hashSync(input.password, 10)}, 'pending_verification', ${input.whatsapp}, ${input.event_types}, ${input.social_link ?? ""})
+    `;
+    return ok({
+      message: "Pengajuan kerja sama terkirim. Tim kami akan memverifikasi dan menghubungi Anda via WhatsApp/Email.",
+      status: "pending_verification",
     });
   },
 

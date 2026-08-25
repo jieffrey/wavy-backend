@@ -36,7 +36,7 @@ export const adminService = {
   async listOrganizers() {
     return ok(
       await sql`
-        SELECT o.id, o.name, o.email, o.status, o.created_at,
+        SELECT o.id, o.name, o.email, o.status, o.created_at, o.whatsapp, o.event_types, o.social_link,
           (SELECT COUNT(*) FROM events e WHERE e.organizer_id = o.id)::int AS event_count,
           (SELECT COALESCE(SUM(o2.total_price), 0) FROM orders o2 JOIN events e2 ON e2.id = o2.event_id
             WHERE e2.organizer_id = o.id AND o2.status = 'paid')::float8 AS revenue

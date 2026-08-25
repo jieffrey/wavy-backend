@@ -68,7 +68,7 @@ export const organizerService = {
   async createEvent(organizerId: number, input: EventInput) {
     const [event] = await sql<EventRow[]>`
       INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description)
-      VALUES (${organizerId}, ${input.artist_id}, ${input.title}, ${input.category}, ${input.venue}, to_timestamp(${input.date}), ${input.poster_url}, ${input.description})
+      VALUES (${organizerId}, ${input.artist_id}, ${input.title}, ${input.category}, ${input.venue}, ${new Date(input.date)}, ${input.poster_url}, ${input.description})
       RETURNING *
     `;
     return ok(event);
@@ -77,7 +77,7 @@ export const organizerService = {
   async updateEvent(organizerId: number, id: number, input: EventInput): Promise<Result<EventRow>> {
     const [event] = await sql<EventRow[]>`
       UPDATE events SET artist_id = ${input.artist_id}, title = ${input.title}, category = ${input.category},
-        venue = ${input.venue}, date = to_timestamp(${input.date}), poster_url = ${input.poster_url}, description = ${input.description}
+        venue = ${input.venue}, date = ${new Date(input.date)}, poster_url = ${input.poster_url}, description = ${input.description}
       WHERE id = ${id} AND organizer_id = ${organizerId}
       RETURNING *
     `;
