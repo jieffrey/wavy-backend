@@ -42,13 +42,16 @@ type CategoryRow = {
   remaining: number;
 };
 
-type ReviewRow = { id: number; rating: number; comment: string | null; created_at: Date; customer_name: string };
+type ReviewRow = {
+  id: number;
+  rating: number;
+  comment: string | null;
+  created_at: Date;
+  customer_name: string;
+};
 
 export const concertService = {
   async list(category?: string, q?: string) {
-    const conds = [];
-    if (category) conds.push(sql`AND e.category = ${category}`);
-    if (q) conds.push(sql`AND (e.title ILIKE ${`%${q}%`} OR a.name ILIKE ${`%${q}%`})`);
     return ok(
       await sql<ConcertRow[]>`
         SELECT e.id, e.title, e.category, e.venue, e.date, e.poster_url, e.status,
@@ -59,15 +62,25 @@ export const concertService = {
         JOIN artists a ON a.id = e.artist_id
         JOIN organizers o ON o.id = e.organizer_id
         WHERE e.status = 'published'
-          ${conds}
+          ${category ? sql`AND e.category = ${category}` : sql``}
+          ${q ? sql`AND (e.title ILIKE ${`%${q}%`} OR a.name ILIKE ${`%${q}%`})` : sql``}
         ORDER BY e.date ASC
-      `
+      `,
     );
   },
 
   async detail(
-    id: number
-  ): Promise<Result<ConcertDetailRow & { ticket_categories: CategoryRow[]; reviews: ReviewRow[]; avg_rating: number; review_count: number }>> {
+    id: number,
+  ): Promise<
+    Result<
+      ConcertDetailRow & {
+        ticket_categories: CategoryRow[];
+        reviews: ReviewRow[];
+        avg_rating: number;
+        review_count: number;
+      }
+    >
+  > {
     const [event] = await sql<ConcertDetailRow[]>`
       SELECT e.*, a.name AS artist_name, a.genre, a.photo_url, a.bio, o.name AS organizer_name,
         GREATEST(EXTRACT(EPOCH FROM (e.date - now()))::int, 0) AS countdown_seconds
@@ -94,12 +107,23 @@ export const concertService = {
       WHERE r.event_id = ${id}
       ORDER BY r.created_at DESC
     `;
-    return ok({ ...event, ticket_categories, reviews, avg_rating: rating.avg_rating, review_count: rating.review_count });
+    return ok({
+      ...event,
+      ticket_categories,
+      reviews,
+      avg_rating: rating.avg_rating,
+      review_count: rating.review_count,
+    });
   },
 
-  async notifyMe(customerId: number, eventId: number): Promise<Result<{ message: string }>> {
+  async notifyMe(
+    customerId: number,
+    eventId: number,
+  ): Promise<Result<{ message: string }>> {
     // boleh subscribe ke event apapun yang ada (belum dibuka = draft), notif dikirim saat publish
-    const [event] = await sql<{ id: number }[]>`SELECT id FROM events WHERE id = ${eventId}`;
+    const [event] = await sql<
+      { id: number }[]
+    >`SELECT id FROM events WHERE id = ${eventId}`;
     if (!event) return fail(404, "concert not found");
     await sql`
       INSERT INTO notify_requests (customer_id, event_id)
