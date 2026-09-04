@@ -3,9 +3,6 @@
 -- Safe to re-run: uses ON CONFLICT / NOT EXISTS for idempotency
 -- ============================================================
 
--- Disable FK triggers for clean truncation
-SET session_replication_role = replica;
-
 TRUNCATE TABLE
   waiting_list,
   waiting_room,
@@ -24,10 +21,6 @@ TRUNCATE TABLE
   organizers,
   admins
 CASCADE;
-
-SET session_replication_role = origin;
-
-BEGIN;
 
 -- ============================================================
 -- 1. PK Entertainment — ENHYPEN + BIGBANG
@@ -743,8 +736,6 @@ INSERT INTO ticket_categories (event_id, name, price, quota, sold)
 SELECT e.id, 'Reguler', 8500000, 200, 59
 FROM events e WHERE e.title='Exclusive Dinner with Park Ji-Sung and Patrice Evra' AND e.venue='Jakarta Selatan'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id=e.id);
-
-COMMIT;
 
 -- Verify counts
 SELECT 'organizers' AS tbl, COUNT(*) AS cnt FROM organizers
