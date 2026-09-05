@@ -5,7 +5,14 @@ const raw = await Bun.file(sqlPath).text();
 
 const beginIdx = raw.indexOf("BEGIN;");
 const endIdx = raw.lastIndexOf("COMMIT;");
-const truncateSql = raw.slice(0, beginIdx).trim();
+const truncateSql = `
+  TRUNCATE TABLE
+    waiting_list, waiting_room, notify_requests, notifications,
+    favorite_artists, favorite_organizers, reviews, tickets, orders,
+    ticket_categories, events, artists, otp_codes, customers,
+    organizers, admins
+  CASCADE;
+`;
 const insertSql = raw.slice(beginIdx + "BEGIN;".length, endIdx).trim();
 
 console.log("Reading seed SQL from:", sqlPath);
