@@ -1,15 +1,13 @@
 import { sql } from "../src/db/client";
 
-const ev = await sql`SELECT count(*)::int AS n, count(poster_url)::int AS posters, count(description)::int AS descs, min(date)::date AS earliest, max(date)::date AS latest FROM events`;
-const up = await sql`SELECT count(*)::int AS n FROM events WHERE date >= now()`;
-const orgs = await sql`SELECT count(*)::int AS n FROM organizers WHERE email LIKE 'demo.scrape-%' OR email LIKE 'demo.%@wavy.seed'`;
-const cats = await sql`SELECT count(*)::int AS n FROM ticket_categories`;
-const sample = await sql`SELECT title, venue, poster_url, left(description, 80) AS descr FROM events ORDER BY date ASC LIMIT 3`;
+const ev = await sql`SELECT count(*)::int AS n, count(poster_url)::int AS posters, count(CASE WHEN poster_url LIKE 'https://res.cloudinary.com/%' THEN 1 END)::int AS cloudinary FROM events`;
+const ff = await sql`SELECT count(*)::int AS n FROM events WHERE title ILIKE '%free fire%' OR category ILIKE '%esports%'`;
+const missing = await sql`SELECT title, poster_url FROM events WHERE poster_url = '' OR poster_url IS NULL LIMIT 10`;
+const upcoming = await sql`SELECT count(*)::int AS n FROM events WHERE date >= now()`;
 
 console.log("events:", JSON.stringify(ev[0]));
-console.log("upcoming:", JSON.stringify(up[0]));
-console.log("seed organizers:", JSON.stringify(orgs[0]));
-console.log("ticket_categories:", JSON.stringify(cats[0]));
-console.table(sample);
+console.log("free-fire/esports events:", JSON.stringify(ff[0]));
+console.log("events without poster:", JSON.stringify(missing));
+console.log("upcoming:", JSON.stringify(upcoming[0]));
 
 await sql.end();
