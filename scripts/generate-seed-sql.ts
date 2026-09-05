@@ -1,16 +1,8 @@
 import { writeFileSync } from "fs";
 
-const raw = JSON.parse(await Bun.file("scripts/curated-events.json").text());
+const raw = JSON.parse(await Bun.file("scripts/filtered-events.json").text());
 
-const events = raw.filter(
-  (e: any) =>
-    ["Musik", "Konser"].includes(e.category) &&
-    e.venue &&
-    e.venue.trim() &&
-    e.city &&
-    e.city.trim() &&
-    e.venue !== "Online Event",
-);
+const events = raw;
 
 function esc(s: string) {
   return (s ?? "").replace(/'/g, "''");
@@ -79,8 +71,9 @@ for (const e of events) {
   lines.push(`FROM organizers WHERE email = '${orgSlug.get(org)}'`);
   lines.push(`AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o ON o.id = a.organizer_id WHERE o.email = '${orgSlug.get(org)}' AND a.name = '${esc(title)}');`);
 
+  const desc = (e.description ?? "").trim();
   lines.push(`INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)`);
-  lines.push(`SELECT o.id, a.id, '${esc(title)}', 'Music', '${venue}', ${eventDate(e)}, '${esc(e.image ?? "")}', 'Seeded from public listing data for UKK demo purposes.', 'published'`);
+  lines.push(`SELECT o.id, a.id, '${esc(title)}', 'Music', '${venue}', ${eventDate(e)}, '${esc(e.image ?? "")}', '${esc(desc)}', 'published'`);
   lines.push(`FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = '${esc(title)}'`);
   lines.push(`WHERE o.email = '${orgSlug.get(org)}'`);
   lines.push(`AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = '${esc(title)}' AND ev.venue = '${venue}');`);
