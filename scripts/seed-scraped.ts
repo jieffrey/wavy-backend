@@ -1,16 +1,28 @@
 import { sql } from "../src/db/client";
-import { readFileSync } from "fs";
-import { resolve } from "path";
 
-const sqlPath = resolve(import.meta.dir, "seed-scraped.sql");
-const sqlContent = readFileSync(sqlPath, "utf-8");
+const sqlPath = `${import.meta.dir}/seed-scraped.sql`;
+const raw = await Bun.file(sqlPath).text();
+
+const beginIdx = raw.indexOf("BEGIN;");
+const endIdx = raw.lastIndexOf("COMMIT;");
+const truncateSql = `
+  TRUNCATE TABLE
+    waiting_list, waiting_room, notify_requests, notifications,
+    favorite_artists, favorite_organizers, reviews, tickets, orders,
+    ticket_categories, events, artists, otp_codes, customers,
+    organizers, admins
+  CASCADE;
+`;
+const insertSql = raw.slice(beginIdx + "BEGIN;".length, endIdx).trim();
 
 console.log("Reading seed SQL from:", sqlPath);
 console.log("Executing seed SQL...");
 
 try {
-  // postgres.js sql.unsafe() executes raw SQL without parameterization
-  await sql.unsafe(sqlContent);
+  await sql.begin(async (tx) => {
+    await tx.unsafe(truncateSql);
+    await tx.unsafe(insertSql);
+  });
   console.log("Seed SQL executed successfully.");
 } catch (err: any) {
   console.error("Seed SQL failed:", err.message);
