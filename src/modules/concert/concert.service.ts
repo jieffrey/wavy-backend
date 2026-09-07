@@ -26,6 +26,7 @@ type ConcertDetailRow = {
   description: string;
   gallery: string;
   terms_conditions: string;
+  seatmap: string;
   status: string;
   artist_name: string;
   genre: string;
@@ -76,8 +77,9 @@ export const concertService = {
     id: number,
   ): Promise<
     Result<
-      Omit<ConcertDetailRow, "gallery"> & {
+      Omit<ConcertDetailRow, "gallery" | "seatmap"> & {
         gallery: string[];
+        seatmap: { name: string; image: string } | null;
         ticket_categories: CategoryRow[];
         reviews: ReviewRow[];
         avg_rating: number;
@@ -100,6 +102,12 @@ export const concertService = {
     } catch {
       gallery = [];
     }
+    let seatmap: { name: string; image: string } | null = null;
+    try {
+      seatmap = JSON.parse(event.seatmap || "null");
+    } catch {
+      seatmap = null;
+    }
     const ticket_categories = await sql<CategoryRow[]>`
       SELECT tc.*, (tc.quota - tc.sold) AS remaining
       FROM ticket_categories tc
@@ -120,6 +128,7 @@ export const concertService = {
     return ok({
       ...event,
       gallery,
+      seatmap,
       ticket_categories,
       reviews,
       avg_rating: rating.avg_rating,
