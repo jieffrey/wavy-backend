@@ -1,4 +1,4 @@
-﻿-- Seed data: scraped concerts (artatix.co.id + loket.com), cleaned, posters hosted on Cloudinary
+-- Seed data: scraped concerts (artatix.co.id + loket.com), cleaned, posters hosted on Cloudinary
 -- Safe to re-run: organizers keyed by email (ON CONFLICT DO NOTHING)
 
 TRUNCATE TABLE
@@ -577,17 +577,17 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'Hillsong Worship Nights Asia Tour Surabaya', 'Music', '', 'Untuk pertama kalinya di Surabaya, Hillsong Worship hadir sebagai bagian dari Asia Tour 2026. Sebuah malam istimewa yang akan menyatukan ribuan hati dalam pujian dan penyembahan me'
 FROM organizers o WHERE o.email = 'demo.otello-asia-dan-color-asia-live@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.otello-asia-dan-color-asia-live@wavy.seed' AND a.name = 'Hillsong Worship Nights Asia Tour Surabaya');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'Hillsong Worship Nights Asia Tour Surabaya', 'Music', 'Graha Unesa Surabaya, Kota Surabaya', '2026-09-11 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260626103121_6a3df2891f543.jpeg', 'Untuk pertama kalinya di Surabaya, Hillsong Worship hadir sebagai bagian dari Asia Tour 2026. Sebuah malam istimewa yang akan menyatukan ribuan hati dalam pujian dan penyembahan melalui lagu-lagu yang telah menjadi berkat bagi jutaan orang di seluruh dunia. Nikmati secara langsung lagu-lagu ikonik seperti What A Beautiful Name, Oceans (Where Feet May Fail), Who You Say I Am, Cornerstone, dan King of Kings dalam sebuah pengalaman worship yang penuh sukacita, pengharapan, dan inspirasi. Malam istimewa ini akan menjadi pengalaman yang tak terlupakan bagi ribuan jemaat, keluarga, dan komunitas Kristen yang akan berkumpul bersama dalam satu hati untuk memuji dan menyembah Tuhan.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Hillsong Worship Nights Asia Tour Surabaya', 'Music', 'Graha Unesa Surabaya, Kota Surabaya', '2026-09-11 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260626103121_6a3df2891f543.jpeg', 'Untuk pertama kalinya di Surabaya, Hillsong Worship hadir sebagai bagian dari Asia Tour 2026. Sebuah malam istimewa yang akan menyatukan ribuan hati dalam pujian dan penyembahan melalui lagu-lagu yang telah menjadi berkat bagi jutaan orang di seluruh dunia. Nikmati secara langsung lagu-lagu ikonik seperti What A Beautiful Name, Oceans (Where Feet May Fail), Who You Say I Am, Cornerstone, dan King of Kings dalam sebuah pengalaman worship yang penuh sukacita, pengharapan, dan inspirasi. Malam istimewa ini akan menjadi pengalaman yang tak terlupakan bagi ribuan jemaat, keluarga, dan komunitas Kristen yang akan berkumpul bersama dalam satu hati untuk memuji dan menyembah Tuhan.', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Hillsong Worship Nights Asia Tour Surabaya'
 WHERE o.email = 'demo.otello-asia-dan-color-asia-live@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Hillsong Worship Nights Asia Tour Surabaya' AND ev.venue = 'Graha Unesa Surabaya, Kota Surabaya');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'FESTIVAL (STANDING)', 750000, 1442, 144
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'FESTIVAL (STANDING)', 750000, 1442, 144, '&lt;ul&gt; &lt;li&gt;&lt;em&gt;Harga belum termasuk pajak dan admin fee&lt;/em&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Hillsong Worship Nights Asia Tour Surabaya' AND ev.venue = 'Graha Unesa Surabaya, Kota Surabaya'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'FESTIVAL (STANDING)');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'VIP (NUMBERING SEATING)', 1250000, 1949, 194
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP (NUMBERING SEATING)', 1250000, 1949, 194, '&lt;ul&gt; &lt;li&gt;&lt;em&gt;Harga belum termasuk pajak dan admin fee&lt;/em&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Hillsong Worship Nights Asia Tour Surabaya' AND ev.venue = 'Graha Unesa Surabaya, Kota Surabaya'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP (NUMBERING SEATING)');
 
@@ -600,13 +600,13 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'StashedTheJazz Reunion', 'Music', '', 'STASHEDTHEJAZZ REUNION ONCE UPON A JAZZ — Vol. 02 Standards from Your Favorite Classic Movies StashedTheJazz returns for an intimate evening of jazz, bringing together timeless sta'
 FROM organizers o WHERE o.email = 'demo.stashedthejazz@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.stashedthejazz@wavy.seed' AND a.name = 'StashedTheJazz Reunion');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'StashedTheJazz Reunion', 'Music', 'Sunbreeze Hotel, Jakarta Selatan', '2026-09-11 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260906085347_6a9cc7abc908e.jpg', 'STASHEDTHEJAZZ REUNION ONCE UPON A JAZZ — Vol. 02 Standards from Your Favorite Classic Movies StashedTheJazz returns for an intimate evening of jazz, bringing together timeless standards from beloved classic movies in a sophisticated rooftop setting at SunBreeze Hotel, Senayan Jakarta. A special reunion featuring live performances by a curated lineup of musicians, creating an evening of music, atmosphere, and timeless melodies. THE EXPERIENCE • Live Jazz Tribute Concert • Standards from Your Favorite Classic Movies • Intimate Rooftop Setting • Limited Seating • Curated live music performances • Rp100.000 F&B Voucher included with your ticket EVENT DETAILS Friday, 11 September 2026 Doors Open: 8:00 PM Venue: SunBreeze Hotel, Senayan Jakarta — 7th Floor Event Time: 8:00 PM – 3:00 AM WIB Limited seats available. Come for the music. Stay for the atmosphere. Welcome back to StashedTheJazz.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'StashedTheJazz Reunion', 'Music', 'Sunbreeze Hotel, Jakarta Selatan', '2026-09-11 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260906085347_6a9cc7abc908e.jpg', 'STASHEDTHEJAZZ REUNION ONCE UPON A JAZZ — Vol. 02 Standards from Your Favorite Classic Movies StashedTheJazz returns for an intimate evening of jazz, bringing together timeless standards from beloved classic movies in a sophisticated rooftop setting at SunBreeze Hotel, Senayan Jakarta. A special reunion featuring live performances by a curated lineup of musicians, creating an evening of music, atmosphere, and timeless melodies. THE EXPERIENCE • Live Jazz Tribute Concert • Standards from Your Favorite Classic Movies • Intimate Rooftop Setting • Limited Seating • Curated live music performances • Rp100.000 F&B Voucher included with your ticket EVENT DETAILS Friday, 11 September 2026 Doors Open: 8:00 PM Venue: SunBreeze Hotel, Senayan Jakarta — 7th Floor Event Time: 8:00 PM – 3:00 AM WIB Limited seats available. Come for the music. Stay for the atmosphere. Welcome back to StashedTheJazz.', 'published', '["https://assets.loket.com/neo/production/images/event_gallery/2026-09-06_edef81ae376c780a7fe26332c7209b82970c8c89da1102d4b73ac080668f06c5.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-06_78ae48d481cb3c89b5fbd0bfb410ac3ee0b4e0230cc6f23b822ed759d2ec6847.webp"]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'StashedTheJazz Reunion'
 WHERE o.email = 'demo.stashedthejazz@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'StashedTheJazz Reunion' AND ev.venue = 'Sunbreeze Hotel, Jakarta Selatan');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Once Upon A Jazz', 330000, 100, 10
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Once Upon A Jazz', 330000, 100, 10, 'Event access, seating, and Rp100.000 F&B Voucher. Limited seats available. Valid for 1 person.'
 FROM events ev WHERE ev.title = 'StashedTheJazz Reunion' AND ev.venue = 'Sunbreeze Hotel, Jakarta Selatan'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Once Upon A Jazz');
 
@@ -619,17 +619,17 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'EDU CONCERT "Our Musical Journey"', 'Music', '', 'Edu Concert 2026 Our Musical Journey Edu Concert: Our Musical Journey merupakan konser tahunan yang diselenggarakan oleh Jurusan Musik SMKN 12 Surabaya sebagai bentuk apresiasi ter'
 FROM organizers o WHERE o.email = 'demo.musik-rolas@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.musik-rolas@wavy.seed' AND a.name = 'EDU CONCERT "Our Musical Journey"');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'EDU CONCERT "Our Musical Journey"', 'Music', 'Performance Hall UK Petra Surabaya, Kota Surabaya', '2026-09-12 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260804160556_6a71ab74d6f3b.jpg', 'Edu Concert 2026 Our Musical Journey Edu Concert: Our Musical Journey merupakan konser tahunan yang diselenggarakan oleh Jurusan Musik SMKN 12 Surabaya sebagai bentuk apresiasi terhadap proses belajar, dedikasi, dan perkembangan musikal para siswa selama menempuh pendidikan di sekolah. Mengusung tema "Our Musical Journey" , konser ini mengajak penonton menyaksikan perjalanan setiap siswa dalam mengembangkan kemampuan bermusik, mulai dari proses pembelajaran di kelas, latihan yang penuh disiplin, hingga pencapaian yang diwujudkan melalui sebuah pertunjukan di atas panggung. Setiap penampilan menjadi cerminan dari semangat belajar, kerja sama, kreativitas, dan kecintaan terhadap musik yang terus bertumbuh. Bertempat di Performance Hall Universitas Kristen Petra Surabaya , konser ini akan menampilkan siswa kelas XI dan XII Jurusan Musik dengan berbagai mayor, meliputi Piano, Gitar, Gesek, Tiup, dan Vokal . Selain penampilan solo, penonton juga akan disuguhkan berbagai pertunjukan ansambel, seperti Orkestra SMKN 12 Surabaya, Ansambel Gitar, Paduan Suara , serta berbagai kolaborasi musikal yang menggambarkan kekayaan ekspresi dan kemampuan para siswa.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'EDU CONCERT "Our Musical Journey"', 'Music', 'Performance Hall UK Petra Surabaya, Kota Surabaya', '2026-09-12 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260804160556_6a71ab74d6f3b.jpg', 'Edu Concert 2026 Our Musical Journey Edu Concert: Our Musical Journey merupakan konser tahunan yang diselenggarakan oleh Jurusan Musik SMKN 12 Surabaya sebagai bentuk apresiasi terhadap proses belajar, dedikasi, dan perkembangan musikal para siswa selama menempuh pendidikan di sekolah. Mengusung tema "Our Musical Journey" , konser ini mengajak penonton menyaksikan perjalanan setiap siswa dalam mengembangkan kemampuan bermusik, mulai dari proses pembelajaran di kelas, latihan yang penuh disiplin, hingga pencapaian yang diwujudkan melalui sebuah pertunjukan di atas panggung. Setiap penampilan menjadi cerminan dari semangat belajar, kerja sama, kreativitas, dan kecintaan terhadap musik yang terus bertumbuh. Bertempat di Performance Hall Universitas Kristen Petra Surabaya , konser ini akan menampilkan siswa kelas XI dan XII Jurusan Musik dengan berbagai mayor, meliputi Piano, Gitar, Gesek, Tiup, dan Vokal . Selain penampilan solo, penonton juga akan disuguhkan berbagai pertunjukan ansambel, seperti Orkestra SMKN 12 Surabaya, Ansambel Gitar, Paduan Suara , serta berbagai kolaborasi musikal yang menggambarkan kekayaan ekspresi dan kemampuan para siswa.', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'EDU CONCERT "Our Musical Journey"'
 WHERE o.email = 'demo.musik-rolas@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'EDU CONCERT "Our Musical Journey"' AND ev.venue = 'Performance Hall UK Petra Surabaya, Kota Surabaya');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Pelajar/Mahasiswa', 25000, 100, 10
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Pelajar/Mahasiswa', 25000, 100, 10, 'Tiket khusus untuk pelajar dan mahasiswa'
 FROM events ev WHERE ev.title = 'EDU CONCERT "Our Musical Journey"' AND ev.venue = 'Performance Hall UK Petra Surabaya, Kota Surabaya'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Pelajar/Mahasiswa');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Tiket UMUM', 35000, 210, 21
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Tiket UMUM', 35000, 210, 21, 'Dibeli masyarakat umum'
 FROM events ev WHERE ev.title = 'EDU CONCERT "Our Musical Journey"' AND ev.venue = 'Performance Hall UK Petra Surabaya, Kota Surabaya'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Tiket UMUM');
 
@@ -642,17 +642,17 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'SARVIVAL EVENT', 'Music', '', 'Sekarang persiapkan dirimu untuk SARVIVAL (Sarkoro Voice Festival) Festival ini akan digelar dengan menghadirkan deretan bintang tamu yang luar biasa. Diantaranya: -NADHIF BASALAMA'
 FROM organizers o WHERE o.email = 'demo.sarvival@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.sarvival@wavy.seed' AND a.name = 'SARVIVAL EVENT');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'SARVIVAL EVENT', 'Music', 'SMAN 7 Purworejo, Kab. Purworejo', '2026-09-12 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260804145234_6a719a42b4552.jpg', 'Sekarang persiapkan dirimu untuk SARVIVAL (Sarkoro Voice Festival) Festival ini akan digelar dengan menghadirkan deretan bintang tamu yang luar biasa. Diantaranya: -NADHIF BASALAMAH -DENNY CAKNAN -TYO AND FRIENDS Tempat : Lapangan SMA NEGERI 7 PURWOREJO Tanggal : 12 September 2026 Ayo, jangan lewatkan konser terbesar di Kota Purworejo dan jadilah bagian dari keseruan Konser SARVIVAL (Sarkoro Voice Festival) bersama teman, pasangan, dan keluarga! Segera amankan tiketmu sebelum kehabisan!', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'SARVIVAL EVENT', 'Music', 'SMAN 7 Purworejo, Kab. Purworejo', '2026-09-12 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260804145234_6a719a42b4552.jpg', 'Sekarang persiapkan dirimu untuk SARVIVAL (Sarkoro Voice Festival) Festival ini akan digelar dengan menghadirkan deretan bintang tamu yang luar biasa. Diantaranya: -NADHIF BASALAMAH -DENNY CAKNAN -TYO AND FRIENDS Tempat : Lapangan SMA NEGERI 7 PURWOREJO Tanggal : 12 September 2026 Ayo, jangan lewatkan konser terbesar di Kota Purworejo dan jadilah bagian dari keseruan Konser SARVIVAL (Sarkoro Voice Festival) bersama teman, pasangan, dan keluarga! Segera amankan tiketmu sebelum kehabisan!', 'published', '["https://assets.loket.com/neo/production/images/event_gallery/2026-08-04_ca03cc2169477f6326a10b2a8189c52201688f7c63becf7e9a9a03c7f08d87e1.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-08-04_6db89d1312a9f909e316f28a829dbd28b321b0b472118da941541967b7c04d5d.webp"]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'SARVIVAL EVENT'
 WHERE o.email = 'demo.sarvival@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'SARVIVAL EVENT' AND ev.venue = 'SMAN 7 Purworejo, Kab. Purworejo');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'FESTIVAL', 140000, 1, 0
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'FESTIVAL', 140000, 1, 0, 'Tiket Festival'
 FROM events ev WHERE ev.title = 'SARVIVAL EVENT' AND ev.venue = 'SMAN 7 Purworejo, Kab. Purworejo'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'FESTIVAL');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'VVIP', 199000, 1, 0
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VVIP', 199000, 1, 0, 'Tiket VVIP'
 FROM events ev WHERE ev.title = 'SARVIVAL EVENT' AND ev.venue = 'SMAN 7 Purworejo, Kab. Purworejo'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VVIP');
 
@@ -665,21 +665,21 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'RUANG RAYA - KARAWANG', 'Music', '', 'Ruang Raya adalah festival yang mempertemukan musik, komunitas, kuliner, dan kreativitas lokal dalam satu perayaan.Lebih dari sekadar konser, Ruang Raya menjadi ruang bagi semua or'
 FROM organizers o WHERE o.email = 'demo.lima-ruang@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.lima-ruang@wavy.seed' AND a.name = 'RUANG RAYA - KARAWANG');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'RUANG RAYA - KARAWANG', 'Music', 'KAWASAN 3 BISNIS, KARAWANG, Kab. Karawang', '2026-09-12 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260611113413_6a2a3ac5de004.jpeg', 'Ruang Raya adalah festival yang mempertemukan musik, komunitas, kuliner, dan kreativitas lokal dalam satu perayaan.Lebih dari sekadar konser, Ruang Raya menjadi ruang bagi semua orang untuk berkumpul, berekspresi, dan menciptakan momen yang tak terlupakan. &rdquo;Menyalakan Ruang, Merayakan Kota.&rdquo;', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'RUANG RAYA - KARAWANG', 'Music', 'KAWASAN 3 BISNIS, KARAWANG, Kab. Karawang', '2026-09-12 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260611113413_6a2a3ac5de004.jpeg', 'Ruang Raya adalah festival yang mempertemukan musik, komunitas, kuliner, dan kreativitas lokal dalam satu perayaan.Lebih dari sekadar konser, Ruang Raya menjadi ruang bagi semua orang untuk berkumpul, berekspresi, dan menciptakan momen yang tak terlupakan. &rdquo;Menyalakan Ruang, Merayakan Kota.&rdquo;', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'RUANG RAYA - KARAWANG'
 WHERE o.email = 'demo.lima-ruang@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'RUANG RAYA - KARAWANG' AND ev.venue = 'KAWASAN 3 BISNIS, KARAWANG, Kab. Karawang');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'REGULAR - Early Entry', 200000, 690, 69
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'REGULAR - Early Entry', 200000, 690, 69, '&lt;ul&gt; &lt;li&gt;Harga belum termasuk pajak dan biaya platform&lt;/li&gt; &lt;li&gt;Wajib masuk sebelum pukul 15:00&lt;/li&gt; &lt;li&gt;Datang diatas pukul 15:00, tiket dinyatakan hangus&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'RUANG RAYA - KARAWANG' AND ev.venue = 'KAWASAN 3 BISNIS, KARAWANG, Kab. Karawang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'REGULAR - Early Entry');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'REGULAR - Festival', 275000, 2277, 227
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'REGULAR - Festival', 275000, 2277, 227, '&lt;ul&gt; &lt;li&gt;Harga belum termasuk pajak dan biaya platform&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'RUANG RAYA - KARAWANG' AND ev.venue = 'KAWASAN 3 BISNIS, KARAWANG, Kab. Karawang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'REGULAR - Festival');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'REGULAR - VIP Festival', 350000, 401, 40
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'REGULAR - VIP Festival', 350000, 401, 40, '&lt;ul&gt; &lt;li&gt;Harga belum termasuk pajak dan biaya platform&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'RUANG RAYA - KARAWANG' AND ev.venue = 'KAWASAN 3 BISNIS, KARAWANG, Kab. Karawang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'REGULAR - VIP Festival');
 
@@ -692,29 +692,29 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'NO PEACE TODAY NO LIFE TOMORROW #7', 'Music', '', 'NO PEACE TODAY NO LIFE TOMORROW adalah event musik tahunan yang diinisiasi pada era 2000an. Berawal dari penggalangan dana untuk korban bencana Bengkulu tahun 2000. Bukan hanya mem'
 FROM organizers o WHERE o.email = 'demo.84-crew@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.84-crew@wavy.seed' AND a.name = 'NO PEACE TODAY NO LIFE TOMORROW #7');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'NO PEACE TODAY NO LIFE TOMORROW #7', 'Music', 'THE SYSTEM LIVE SPACE - PFN HERITAGE, Jakarta Timur', '2026-09-12 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260725203446_6a64bb762533a.jpg', 'NO PEACE TODAY NO LIFE TOMORROW adalah event musik tahunan yang diinisiasi pada era 2000an. Berawal dari penggalangan dana untuk korban bencana Bengkulu tahun 2000. Bukan hanya membawa misi amal namun juga keresahan kolektif untuk membuat ruang ekspresi lintas genre. Event ini tumbuh menjadi salah satu movement independen yang ditunggu tunggu.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'NO PEACE TODAY NO LIFE TOMORROW #7', 'Music', 'THE SYSTEM LIVE SPACE - PFN HERITAGE, Jakarta Timur', '2026-09-12 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260725203446_6a64bb762533a.jpg', 'NO PEACE TODAY NO LIFE TOMORROW adalah event musik tahunan yang diinisiasi pada era 2000an. Berawal dari penggalangan dana untuk korban bencana Bengkulu tahun 2000. Bukan hanya membawa misi amal namun juga keresahan kolektif untuk membuat ruang ekspresi lintas genre. Event ini tumbuh menjadi salah satu movement independen yang ditunggu tunggu.', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'NO PEACE TODAY NO LIFE TOMORROW #7'
 WHERE o.email = 'demo.84-crew@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'NO PEACE TODAY NO LIFE TOMORROW #7' AND ev.venue = 'THE SYSTEM LIVE SPACE - PFN HERITAGE, Jakarta Timur');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PRESALE 1', 50000, 500, 50
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PRESALE 1', 50000, 500, 50, ''
 FROM events ev WHERE ev.title = 'NO PEACE TODAY NO LIFE TOMORROW #7' AND ev.venue = 'THE SYSTEM LIVE SPACE - PFN HERITAGE, Jakarta Timur'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PRESALE 1');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PRESALE 2', 75000, 500, 50
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PRESALE 2', 75000, 500, 50, ''
 FROM events ev WHERE ev.title = 'NO PEACE TODAY NO LIFE TOMORROW #7' AND ev.venue = 'THE SYSTEM LIVE SPACE - PFN HERITAGE, Jakarta Timur'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PRESALE 2');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'REGULER', 100000, 1000, 100
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'REGULER', 100000, 1000, 100, ''
 FROM events ev WHERE ev.title = 'NO PEACE TODAY NO LIFE TOMORROW #7' AND ev.venue = 'THE SYSTEM LIVE SPACE - PFN HERITAGE, Jakarta Timur'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'REGULER');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'BERDUA', 185000, 500, 50
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'BERDUA', 185000, 500, 50, 'Paket 2 orang'
 FROM events ev WHERE ev.title = 'NO PEACE TODAY NO LIFE TOMORROW #7' AND ev.venue = 'THE SYSTEM LIVE SPACE - PFN HERITAGE, Jakarta Timur'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'BERDUA');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'BERTIGA', 270000, 300, 30
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'BERTIGA', 270000, 300, 30, 'Paket bertiga'
 FROM events ev WHERE ev.title = 'NO PEACE TODAY NO LIFE TOMORROW #7' AND ev.venue = 'THE SYSTEM LIVE SPACE - PFN HERITAGE, Jakarta Timur'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'BERTIGA');
 
@@ -727,17 +727,17 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'HUJAN TENTANG CINTA - MAJELIS LIDAH BERDURI', 'Music', '', 'HUJAN TENTANG CINTA. Majelis Lidah Berduri kembali ke Bali. Setelah Tiba-Tiba Marabahaya, kali ini hujan datang membawa cinta—dengan segala yang sengit, bising, absurd, dan tak sel'
 FROM organizers o WHERE o.email = 'demo.melbi@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.melbi@wavy.seed' AND a.name = 'HUJAN TENTANG CINTA - MAJELIS LIDAH BERDURI');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'HUJAN TENTANG CINTA - MAJELIS LIDAH BERDURI', 'Music', 'Berbagi Ruang, Kota Denpasar', '2026-09-13 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260831225034_6a95a2ca000db.jpg', 'HUJAN TENTANG CINTA. Majelis Lidah Berduri kembali ke Bali. Setelah Tiba-Tiba Marabahaya, kali ini hujan datang membawa cinta—dengan segala yang sengit, bising, absurd, dan tak selesai. 13 September, mari bertemu lagi di antara lagu-lagu lama, bunyi-bunyi baru, dan cerita yang mungkin lebih baik dirasakan daripada dijelaskan. Datang. Kita lihat apa yang turun malam itu.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'HUJAN TENTANG CINTA - MAJELIS LIDAH BERDURI', 'Music', 'Berbagi Ruang, Kota Denpasar', '2026-09-13 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260831225034_6a95a2ca000db.jpg', 'HUJAN TENTANG CINTA. Majelis Lidah Berduri kembali ke Bali. Setelah Tiba-Tiba Marabahaya, kali ini hujan datang membawa cinta—dengan segala yang sengit, bising, absurd, dan tak selesai. 13 September, mari bertemu lagi di antara lagu-lagu lama, bunyi-bunyi baru, dan cerita yang mungkin lebih baik dirasakan daripada dijelaskan. Datang. Kita lihat apa yang turun malam itu.', 'published', '["https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_42c2c432b2770dbc8aba5e3f585b122aa057aa4f6824672b8dc2241cc3d53310.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_c3b2f81e302b84164c58238dd5de5e63978b74c3078c71d568b3b6a9d58ffe01.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_d41bbd8d1f27a6a4df2250064753711c1c8c25b1ee3df253d20bc787039d18f0.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_03d1ba8259f0ca52da95aea302d4e47e026fe1fe80e896fd72a6dc85696d35fe.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_43d46c1b44ed3ae7304d2bb9ed7c7b72b6c1477ae5730604aefa5a6cf903fd43.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_553e4a92f99ba942c44a58e935c401e4a2025b0a98769c4ab7e245bcd166cbad.webp"]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'HUJAN TENTANG CINTA - MAJELIS LIDAH BERDURI'
 WHERE o.email = 'demo.melbi@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'HUJAN TENTANG CINTA - MAJELIS LIDAH BERDURI' AND ev.venue = 'Berbagi Ruang, Kota Denpasar');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Advance Ticket', 75000, 500, 50
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Advance Ticket', 75000, 500, 50, ''
 FROM events ev WHERE ev.title = 'HUJAN TENTANG CINTA - MAJELIS LIDAH BERDURI' AND ev.venue = 'Berbagi Ruang, Kota Denpasar'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Advance Ticket');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Door Ticket', 100000, 100, 10
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Door Ticket', 100000, 100, 10, ''
 FROM events ev WHERE ev.title = 'HUJAN TENTANG CINTA - MAJELIS LIDAH BERDURI' AND ev.venue = 'Berbagi Ruang, Kota Denpasar'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Door Ticket');
 
@@ -750,13 +750,13 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'Waria Fest (Warga Berpesta Ria) Vol. 2', 'Music', '', 'Warga Berpesta Ria — Saatnya Kumpul, Musik, dan Seru-Seruan! WARIA FEST (Warga Berpesta Ria) Vol. 2 kembali hadir untuk mengajak warga berkumpul, bersenang-senang, dan menikmati ma'
 FROM organizers o WHERE o.email = 'demo.pt-besar-intan-gemilang@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.pt-besar-intan-gemilang@wavy.seed' AND a.name = 'Waria Fest (Warga Berpesta Ria) Vol. 2');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'Waria Fest (Warga Berpesta Ria) Vol. 2', 'Music', 'Warmindo Bang Gaga Bojong Nangka, Kab. Tangerang', '2026-09-19 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260901154925_6a96919512602.jpg', 'Warga Berpesta Ria — Saatnya Kumpul, Musik, dan Seru-Seruan! WARIA FEST (Warga Berpesta Ria) Vol. 2 kembali hadir untuk mengajak warga berkumpul, bersenang-senang, dan menikmati malam dengan suguhan musik dari berbagai penampil. Bersiap untuk malam yang penuh energi bersama Dogy Is Dog, Smile Morning, DJ Renggo, Never Forgive Honey, The Matulacaka, dan Akar Enak , serta dipandu oleh MC Reza . Jangan lewatkan keseruan WARIA FEST Vol. 2 dan jadilah bagian dari pesta warga yang penuh musik, tawa, dan kebersamaan! Detail Event Event: WARIA FEST (Warga Berpesta Ria) Vol. 2 Tanggal: Sabtu, 19 September 2026 Waktu: Mulai pukul 19.00 WIB Lokasi: Warmindo Bang Gaga MC: Reza Line Up Dogy Is Dog Smile Morning DJ Renggo Never Forgive Honey The Matulacaka Akar enak Harga Tiket Tiket Online: Rp35.000 FREE Soft Drink Info lebih lanjut: 0852-8553-5237 (Dimas)', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Waria Fest (Warga Berpesta Ria) Vol. 2', 'Music', 'Warmindo Bang Gaga Bojong Nangka, Kab. Tangerang', '2026-09-19 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260901154925_6a96919512602.jpg', 'Warga Berpesta Ria — Saatnya Kumpul, Musik, dan Seru-Seruan! WARIA FEST (Warga Berpesta Ria) Vol. 2 kembali hadir untuk mengajak warga berkumpul, bersenang-senang, dan menikmati malam dengan suguhan musik dari berbagai penampil. Bersiap untuk malam yang penuh energi bersama Dogy Is Dog, Smile Morning, DJ Renggo, Never Forgive Honey, The Matulacaka, dan Akar Enak , serta dipandu oleh MC Reza . Jangan lewatkan keseruan WARIA FEST Vol. 2 dan jadilah bagian dari pesta warga yang penuh musik, tawa, dan kebersamaan! Detail Event Event: WARIA FEST (Warga Berpesta Ria) Vol. 2 Tanggal: Sabtu, 19 September 2026 Waktu: Mulai pukul 19.00 WIB Lokasi: Warmindo Bang Gaga MC: Reza Line Up Dogy Is Dog Smile Morning DJ Renggo Never Forgive Honey The Matulacaka Akar enak Harga Tiket Tiket Online: Rp35.000 FREE Soft Drink Info lebih lanjut: 0852-8553-5237 (Dimas)', 'published', '["https://assets.loket.com/neo/production/images/event_gallery/2026-09-01_1b4e26e9b8dcb0090be0178c4bd0734bfcc9dff83e6701b2cb6c311810bef8dd.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-01_9747b11b1654fc47b9e8f536fd3a201e063e942ab9c803394329a9a2531bbca8.webp"]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Waria Fest (Warga Berpesta Ria) Vol. 2'
 WHERE o.email = 'demo.pt-besar-intan-gemilang@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Waria Fest (Warga Berpesta Ria) Vol. 2' AND ev.venue = 'Warmindo Bang Gaga Bojong Nangka, Kab. Tangerang');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Tiket Waria Fest', 35000, 200, 20
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Tiket Waria Fest', 35000, 200, 20, 'Tiket Regular Waria Fest Vol. 2'
 FROM events ev WHERE ev.title = 'Waria Fest (Warga Berpesta Ria) Vol. 2' AND ev.venue = 'Warmindo Bang Gaga Bojong Nangka, Kab. Tangerang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Tiket Waria Fest');
 
@@ -769,49 +769,49 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'SUARA GUNTUR (The Sound Of Wellness)', 'Music', '', 'THE SOUND OF WELLNESS'
 FROM organizers o WHERE o.email = 'demo.nalarraya@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.nalarraya@wavy.seed' AND a.name = 'SUARA GUNTUR (The Sound Of Wellness)');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'SUARA GUNTUR (The Sound Of Wellness)', 'Music', 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut', '2026-09-19 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260821171844_6a882604b0753.jpg', 'THE SOUND OF WELLNESS', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'SUARA GUNTUR (The Sound Of Wellness)', 'Music', 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut', '2026-09-19 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260821171844_6a882604b0753.jpg', 'THE SOUND OF WELLNESS', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'SUARA GUNTUR (The Sound Of Wellness)'
 WHERE o.email = 'demo.nalarraya@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Presale - Camp Fest Cat 1', 325000, 30, 3
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Presale - Camp Fest Cat 1', 325000, 30, 3, '&lt;p&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Benefit :&lt;/em&gt;&lt;/span&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Akses semua area konser.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Tiket berlaku untuk satu orang.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;i&gt;Program Mindfullness Eating (Makan bersama : Makan malam &amp; sara'
 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Presale - Camp Fest Cat 1');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Presale - Camp Fest Cat 2', 300000, 30, 3
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Presale - Camp Fest Cat 2', 300000, 30, 3, '&lt;p&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Benefit :&lt;/em&gt;&lt;/span&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Akses semua area konser.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Tiket berlaku untuk satu orang.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;i&gt;Program Mindfullness Eating (Makan bersama : Makan malam &amp; sara'
 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Presale - Camp Fest Cat 2');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Presale - 2 Daypass (NO CAMP)', 200000, 100, 10
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Presale - 2 Daypass (NO CAMP)', 200000, 100, 10, '&lt;p&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Benefit :&lt;/em&gt;&lt;/span&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Akses semua area konser.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Tiket berlaku untuk satu orang.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;i&gt;Program Mindfullness Eating (Makan bersama : Makan malam &amp; sara'
 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Presale - 2 Daypass (NO CAMP)');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Presale - Suara Buana', 150000, 300, 30
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Presale - Suara Buana', 150000, 300, 30, '&lt;p&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Benefit :&lt;/em&gt;&lt;/span&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Akses semua area konser hari pertama.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Tiket berlaku untuk satu orang.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;i&gt;Program Mindfullness Eating (Makan bersama : Makan mal'
 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Presale - Suara Buana');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Presale - Suara Pagi Buta', 150000, 300, 30
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Presale - Suara Pagi Buta', 150000, 300, 30, '&lt;p&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Benefit :&lt;/em&gt;&lt;/span&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Akses semua area konser hari kedua.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Tiket berlaku untuk satu orang.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;i&gt;Program Mindfullness Eating (Makan bersama : Makan sarap'
 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Presale - Suara Pagi Buta');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Normal - Camp Fest Cat 1', 350000, 40, 4
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Normal - Camp Fest Cat 1', 350000, 40, 4, '&lt;p&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Benefit :&lt;/em&gt;&lt;/span&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Akses semua area konser.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Tiket berlaku untuk satu orang.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;i&gt;Program Mindfullness Eating (Makan bersama : Makan malam &amp; sara'
 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Normal - Camp Fest Cat 1');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Normal - Camp Fest Cat 2', 300000, 40, 4
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Normal - Camp Fest Cat 2', 300000, 40, 4, '&lt;p&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Benefit :&lt;/em&gt;&lt;/span&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Akses semua area konser.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Tiket berlaku untuk satu orang.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;i&gt;Program Mindfullness Eating (Makan bersama : Makan malam &amp; sara'
 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Normal - Camp Fest Cat 2');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Normal - 2 Daypass (NO CAMP)', 225000, 100, 10
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Normal - 2 Daypass (NO CAMP)', 225000, 100, 10, '&lt;p&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Benefit :&lt;/em&gt;&lt;/span&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Akses semua area konser.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Tiket berlaku untuk satu orang.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;i&gt;Program Mindfullness Eating (Makan bersama : Makan malam &amp; sara'
 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Normal - 2 Daypass (NO CAMP)');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Normal - Suara Buana', 175000, 150, 15
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Normal - Suara Buana', 175000, 150, 15, '&lt;p&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Benefit :&lt;/em&gt;&lt;/span&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Akses semua area konser hari pertama.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Tiket berlaku untuk satu orang.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;i&gt;Program Mindfullness Eating (Makan bersama : Makan mal'
 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Normal - Suara Buana');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Normal - Suara Pagi Buta', 175000, 150, 15
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Normal - Suara Pagi Buta', 175000, 150, 15, '&lt;p&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Benefit :&lt;/em&gt;&lt;/span&gt;&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Akses semua area konser hari kedua.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;span style=&quot;color:#0000FF;&quot;&gt;&lt;em&gt;Tiket berlaku untuk satu orang.&lt;/em&gt;&lt;/span&gt;&lt;/li&gt; &lt;li&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;i&gt;Program Mindfullness Eating (Makan bersama : Makan sarap'
 FROM events ev WHERE ev.title = 'SUARA GUNTUR (The Sound Of Wellness)' AND ev.venue = 'Edu Wisata Perlebahan Gunung Guntur, Kab. Garut'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Normal - Suara Pagi Buta');
 
@@ -824,13 +824,13 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'TOUR-GETHER WORSHIP NITE PROJECT BALI', 'Music', '', 'GUTS Bali × Worship Nite Project Tour-gether is a journey of worship, and Bali is where it comes to a close. In collaboration with GUTS Bali , Worship Nite Project brings the final'
 FROM organizers o WHERE o.email = 'demo.guts-bali@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.guts-bali@wavy.seed' AND a.name = 'TOUR-GETHER WORSHIP NITE PROJECT BALI');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'TOUR-GETHER WORSHIP NITE PROJECT BALI', 'Music', 'Atlas Super Club, Kab. Badung', '2026-09-25 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260811210347_6a7b2bc3a86c7.jpg', 'GUTS Bali × Worship Nite Project Tour-gether is a journey of worship, and Bali is where it comes to a close. In collaboration with GUTS Bali , Worship Nite Project brings the final stop of the Tour-gether journey to Bali. creating a space where worship goes beyond the walls of a church and reaches everyone, wherever they are. Because we believe Jesus is present everywhere and His love is for everyone. This is more than a night of worship. It’s an invitation to encounter Jesus, find hope, and experience His presence in a place you might not expect. Come as you are. Come with an open heart. Come and encounter Jesus. Tour-gether: Bali. Revival is here.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'TOUR-GETHER WORSHIP NITE PROJECT BALI', 'Music', 'Atlas Super Club, Kab. Badung', '2026-09-25 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260811210347_6a7b2bc3a86c7.jpg', 'GUTS Bali × Worship Nite Project Tour-gether is a journey of worship, and Bali is where it comes to a close. In collaboration with GUTS Bali , Worship Nite Project brings the final stop of the Tour-gether journey to Bali. creating a space where worship goes beyond the walls of a church and reaches everyone, wherever they are. Because we believe Jesus is present everywhere and His love is for everyone. This is more than a night of worship. It’s an invitation to encounter Jesus, find hope, and experience His presence in a place you might not expect. Come as you are. Come with an open heart. Come and encounter Jesus. Tour-gether: Bali. Revival is here.', 'published', '["https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_f2d4e0b43271efcca9a16295eb3577fc35a028679eb69b5fb8639dc010f2751e.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_1e5b09016cb267da2c0586af271963e199481acb83a0852002c613cda6b19b09.webp"]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'TOUR-GETHER WORSHIP NITE PROJECT BALI'
 WHERE o.email = 'demo.guts-bali@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'TOUR-GETHER WORSHIP NITE PROJECT BALI' AND ev.venue = 'Atlas Super Club, Kab. Badung');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'REGULER', 115000, 661, 66
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'REGULER', 115000, 661, 66, 'Worship. Music. Revival. Step into a night where faith meets a new atmosphere. Come as you are and encounter Jesus. Revival is here.'
 FROM events ev WHERE ev.title = 'TOUR-GETHER WORSHIP NITE PROJECT BALI' AND ev.venue = 'Atlas Super Club, Kab. Badung'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'REGULER');
 
@@ -840,60 +840,60 @@ VALUES ('Boss Creator', 'demo.boss-creator@wavy.seed', '$2b$10$demoSeedHashNotFo
 ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
-SELECT o.id, 'Pestapora 2026', 'Music', '', '&nbsp; Pestapora 2026 adalah sebuah perayaan dan selebrasi selama tiga hari yang melibatkan berbagai komunitas dan menggabungkan lintas genre musik di Indonesia. 25, 26, 27 Septemb'
+SELECT o.id, 'Pestapora 2026', 'Music', '', 'Pestapora 2026 adalah sebuah perayaan dan selebrasi selama tiga hari yang melibatkan berbagai komunitas dan menggabungkan lintas genre musik di Indonesia. 25, 26, 27 September 2026'
 FROM organizers o WHERE o.email = 'demo.boss-creator@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.boss-creator@wavy.seed' AND a.name = 'Pestapora 2026');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'Pestapora 2026', 'Music', 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara', '2026-09-25 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260819162030_6a85755e86d56.jpeg', '&nbsp; Pestapora 2026 adalah sebuah perayaan dan selebrasi selama tiga hari yang melibatkan berbagai komunitas dan menggabungkan lintas genre musik di Indonesia. 25, 26, 27 September 2026 adalah hari perayaan Pestapora selanjutnya. Nantikan dan mari berpestapora! &nbsp;', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Pestapora 2026', 'Music', 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara', '2026-09-25 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260819162030_6a85755e86d56.jpeg', 'Pestapora 2026 adalah sebuah perayaan dan selebrasi selama tiga hari yang melibatkan berbagai komunitas dan menggabungkan lintas genre musik di Indonesia. 25, 26, 27 September 2026 adalah hari perayaan Pestapora selanjutnya. Nantikan dan mari berpestapora!', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Pestapora 2026'
 WHERE o.email = 'demo.boss-creator@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Regular - 3 Days Pass', 650000, 1500, 150
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Regular - 3 Days Pass', 650000, 1500, 150, '&lt;ul&gt; &lt;li&gt;Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Regular - 3 Days Pass');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Daily Pass - Day 1', 300000, 5000, 400
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Daily Pass - Day 1', 300000, 5000, 400, '&lt;ul&gt; &lt;li&gt;Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Daily Pass - Day 1');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Daily Pass - Day 3', 300000, 5000, 400
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Daily Pass - Day 3', 300000, 5000, 400, '&lt;ul&gt; &lt;li&gt;Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Daily Pass - Day 3');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Early Entry - Day 1', 225000, 1500, 150
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Entry - Day 1', 225000, 1500, 150, '&lt;ul&gt; &lt;li&gt;Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.&lt;/li&gt; &lt;li&gt;Masuk ke venue sebelum jam 15.00 WIB&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Early Entry - Day 1');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Early Entry - Day 3', 225000, 1500, 150
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Entry - Day 3', 225000, 1500, 150, '&lt;ul&gt; &lt;li&gt;Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.&lt;/li&gt; &lt;li&gt;Masuk ke venue sebelum jam 15.00 WIB&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Early Entry - Day 3');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Regular - 3 Days Pass', 650000, 1000, 100
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Regular - 3 Days Pass', 650000, 1000, 100, '&lt;p&gt;Prices do not include Regional Entertainment Tax, Admin Fees and other fees.&lt;/p&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Regular - 3 Days Pass');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Daily Pass - Day 1', 300000, 2000, 200
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Daily Pass - Day 1', 300000, 2000, 200, '&lt;p&gt;Prices do not include Regional Entertainment Tax, Admin Fees and other fees.&lt;/p&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Daily Pass - Day 1');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Daily Pass - Day 2', 300000, 500, 50
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Daily Pass - Day 2', 300000, 500, 50, '&lt;p&gt;Prices do not include Regional Entertainment Tax, Admin Fees and other fees.&lt;/p&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Daily Pass - Day 2');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Daily Pass - Day 3', 300000, 3000, 300
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Daily Pass - Day 3', 300000, 3000, 300, '&lt;p&gt;Prices do not include Regional Entertainment Tax, Admin Fees and other fees.&lt;/p&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Daily Pass - Day 3');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Early Entry - Day 1', 225000, 1000, 100
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Entry - Day 1', 225000, 1000, 100, '&lt;p&gt;Prices do not include Regional Entertainment Tax, Admin Fees and other fees.&lt;br /&gt; Entry to venue before 15.00 WIB&lt;/p&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Early Entry - Day 1');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Early Entry - Day 2', 225000, 1000, 100
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Entry - Day 2', 225000, 1000, 100, '&lt;p&gt;Prices do not include Regional Entertainment Tax, Admin Fees and other fees.&lt;br /&gt; Entry to venue before 15.00 WIB&lt;/p&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Early Entry - Day 2');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Early Entry - Day 3', 225000, 1000, 100
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Entry - Day 3', 225000, 1000, 100, '&lt;p&gt;Prices do not include Regional Entertainment Tax, Admin Fees and other fees.&lt;br /&gt; Entry to venue before 15.00 WIB&lt;/p&gt;'
 FROM events ev WHERE ev.title = 'Pestapora 2026' AND ev.venue = 'Gambir Expo & Hall D2 Jiexpo, Jakarta Utara'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Early Entry - Day 3');
 
@@ -906,29 +906,29 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'Glitter Camp Live Concert', 'Music', '', '&quot;Glitter Camp Live Concert&quot; mengusung konsep intimate concert dengan sentuhan tata visual modern dan warna-warni, hingga atmosfer panggung yang dibuat dengan suasana camp'
 FROM organizers o WHERE o.email = 'demo.arvindo-media@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.arvindo-media@wavy.seed' AND a.name = 'Glitter Camp Live Concert');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'Glitter Camp Live Concert', 'Music', 'Balai Sarbini Jakarta, Jakarta Selatan', '2026-10-03 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260622121756_6a38c58400b06.jpeg', '&quot;Glitter Camp Live Concert&quot; mengusung konsep intimate concert dengan sentuhan tata visual modern dan warna-warni, hingga atmosfer panggung yang dibuat dengan suasana camp yang modern dan hangat.&nbsp; Tak hanya menjadi showcase penampilan lagu-lagu glitter, &quot;Glitter Camp Live Concert&quot; juga akan menjadi playground bagi masing-masing personil Glitter dengan para Glitz.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Glitter Camp Live Concert', 'Music', 'Balai Sarbini Jakarta, Jakarta Selatan', '2026-10-03 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260622121756_6a38c58400b06.jpeg', '&quot;Glitter Camp Live Concert&quot; mengusung konsep intimate concert dengan sentuhan tata visual modern dan warna-warni, hingga atmosfer panggung yang dibuat dengan suasana camp yang modern dan hangat. Tak hanya menjadi showcase penampilan lagu-lagu glitter, &quot;Glitter Camp Live Concert&quot; juga akan menjadi playground bagi masing-masing personil Glitter dengan para Glitz.', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Glitter Camp Live Concert'
 WHERE o.email = 'demo.arvindo-media@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Glitter Camp Live Concert' AND ev.venue = 'Balai Sarbini Jakarta, Jakarta Selatan');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Glitz (CAT 1)', 500000, 196, 19
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Glitz (CAT 1)', 500000, 196, 19, '&lt;ul&gt; &lt;li&gt;&lt;em&gt;Harga belum termasuk pajak dan admin fee&lt;/em&gt;&lt;/li&gt; &lt;li&gt;&lt;em&gt;Setiap pembelian tiket Glitz akan mendapatkan Photocard. Pembeli juga mendapatkan kesempatan untuk Hi-Bye dan kesempatan mendapatkan Official Signed Poster melalui sistem raffle.&lt;/em&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Glitter Camp Live Concert' AND ev.venue = 'Balai Sarbini Jakarta, Jakarta Selatan'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Glitz (CAT 1)');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Besties (CAT 2)', 400000, 50, 5
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Besties (CAT 2)', 400000, 50, 5, '&lt;ul&gt; &lt;li&gt;&lt;em&gt;Harga belum termasuk pajak dan admin fee&lt;/em&gt;&lt;/li&gt; &lt;li&gt;&lt;em&gt;Setiap pembelian tiket Bestie akan mendapatkan kesempatan untuk mendapatkan Official Signed Poster dan Photocard melalui sistem raffle&lt;/em&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Glitter Camp Live Concert' AND ev.venue = 'Balai Sarbini Jakarta, Jakarta Selatan'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Besties (CAT 2)');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Berkilau (CAT 3)', 125000, 52, 5
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Berkilau (CAT 3)', 125000, 52, 5, '&lt;ul&gt; &lt;li&gt;&lt;em&gt;Harga belum termasuk pajak dan admin fee&lt;/em&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Glitter Camp Live Concert' AND ev.venue = 'Balai Sarbini Jakarta, Jakarta Selatan'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Berkilau (CAT 3)');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Glitz with Buumi Bundle (CAT 1)', 630000, 40, 4
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Glitz with Buumi Bundle (CAT 1)', 630000, 40, 4, '&lt;ul&gt; &lt;li&gt;&lt;em&gt;Harga belum termasuk pajak dan admin fee&lt;/em&gt;&lt;/li&gt; &lt;li&gt;&lt;em&gt;Setiap pembelian tiket Glitz akan mendapatkan Photocard. Pembeli juga mendapatkan kesempatan untuk Hi-Bye dan kesempatan mendapatkan Official Signed Poster melalui sistem raffle.&lt;/em&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Glitter Camp Live Concert' AND ev.venue = 'Balai Sarbini Jakarta, Jakarta Selatan'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Glitz with Buumi Bundle (CAT 1)');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Besties with Buumi Bundle (CAT 2)', 530000, 30, 3
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Besties with Buumi Bundle (CAT 2)', 530000, 30, 3, '&lt;ul&gt; &lt;li&gt;&lt;em&gt;Harga belum termasuk pajak dan admin fee&lt;/em&gt;&lt;/li&gt; &lt;li&gt;&lt;em&gt;Setiap pembelian tiket Bestie akan mendapatkan kesempatan untuk mendapatkan Official Signed Poster dan Photocard melalui sistem raffle&lt;/em&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Glitter Camp Live Concert' AND ev.venue = 'Balai Sarbini Jakarta, Jakarta Selatan'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Besties with Buumi Bundle (CAT 2)');
 
@@ -941,25 +941,25 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'PGR 2026 @Cikarang', 'Music', '', 'PGR 2026 @Cikarang'
 FROM organizers o WHERE o.email = 'demo.pt-semua-pasti-gembira@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.pt-semua-pasti-gembira@wavy.seed' AND a.name = 'PGR 2026 @Cikarang');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'PGR 2026 @Cikarang', 'Music', 'Lippo Mall Cikarang, Kab. Bekasi', '2026-10-03 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260824224750_6a8c67a68485b.jpeg', 'PGR 2026 @Cikarang', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'PGR 2026 @Cikarang', 'Music', 'Lippo Mall Cikarang, Kab. Bekasi', '2026-10-03 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260824224750_6a8c67a68485b.jpeg', 'PGR 2026 @Cikarang', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'PGR 2026 @Cikarang'
 WHERE o.email = 'demo.pt-semua-pasti-gembira@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'PGR 2026 @Cikarang' AND ev.venue = 'Lippo Mall Cikarang, Kab. Bekasi');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PGR2026 @Cikarang - FESTIVAL PRESALE', 85000, 200, 20
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PGR2026 @Cikarang - FESTIVAL PRESALE', 85000, 200, 20, '&lt;ul&gt; &lt;li&gt;Harga Belum termasuk pajak dan admin fee&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'PGR 2026 @Cikarang' AND ev.venue = 'Lippo Mall Cikarang, Kab. Bekasi'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PGR2026 @Cikarang - FESTIVAL PRESALE');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PGR2026 @Cikarang - FESTIVAL PRESALE.', 100000, 5000, 400
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PGR2026 @Cikarang - FESTIVAL PRESALE.', 100000, 5000, 400, '&lt;ul&gt; &lt;li&gt;Harga Belum termasuk pajak dan admin fee&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'PGR 2026 @Cikarang' AND ev.venue = 'Lippo Mall Cikarang, Kab. Bekasi'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PGR2026 @Cikarang - FESTIVAL PRESALE.');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PGR2026 @Cikarang - VIP PRESALE', 175000, 100, 10
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PGR2026 @Cikarang - VIP PRESALE', 175000, 100, 10, '&lt;ul&gt; &lt;li&gt;&lt;small&gt;Harga Belum termasuk pajak dan admin fee&lt;/small&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'PGR 2026 @Cikarang' AND ev.venue = 'Lippo Mall Cikarang, Kab. Bekasi'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PGR2026 @Cikarang - VIP PRESALE');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PGR2026 @Cikarang - VIP PRESALE.', 200000, 300, 30
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PGR2026 @Cikarang - VIP PRESALE.', 200000, 300, 30, '&lt;ul&gt; &lt;li&gt;&lt;small&gt;Harga Belum termasuk pajak dan admin fee&lt;/small&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'PGR 2026 @Cikarang' AND ev.venue = 'Lippo Mall Cikarang, Kab. Bekasi'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PGR2026 @Cikarang - VIP PRESALE.');
 
@@ -972,25 +972,25 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'Party Du Royaume by de Creative Kingdom', 'Music', '', 'Party Du Royaume Di sebuah kerajaan yang megah, lahirlah seorang Putra Mahkota yang telah lama dinantikan. Untuk menyambut kelahirannya, sebuah pesta besar dipersiapkan dengan sega'
 FROM organizers o WHERE o.email = 'demo.ydl-teknologi@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.ydl-teknologi@wavy.seed' AND a.name = 'Party Du Royaume by de Creative Kingdom');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'Party Du Royaume by de Creative Kingdom', 'Music', 'Taman Budaya Raden Saleh, Kota Semarang', '2026-10-10 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260902183800_6a980a98a2970.jpg', 'Party Du Royaume Di sebuah kerajaan yang megah, lahirlah seorang Putra Mahkota yang telah lama dinantikan. Untuk menyambut kelahirannya, sebuah pesta besar dipersiapkan dengan segala sesuatu yang paling indah, mewah, dan sempurna. Namun, di tengah kemeriahan dan gemerlap istana, sesuatu yang tak terduga mulai terjadi... Apa yang sebenarnya terjadi di balik pesta sang Putra Mahkota? Dan mampukah mereka menyadari apa yang paling berharga? Saksikan drama musikal Party Du Royaume! Sabtu, 10 Oktober 2026 di Taman Budaya Raden Saleh (Gedung Ki Narto Sabdho) Semarang.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Party Du Royaume by de Creative Kingdom', 'Music', 'Taman Budaya Raden Saleh, Kota Semarang', '2026-10-10 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260902183800_6a980a98a2970.jpg', 'Party Du Royaume Di sebuah kerajaan yang megah, lahirlah seorang Putra Mahkota yang telah lama dinantikan. Untuk menyambut kelahirannya, sebuah pesta besar dipersiapkan dengan segala sesuatu yang paling indah, mewah, dan sempurna. Namun, di tengah kemeriahan dan gemerlap istana, sesuatu yang tak terduga mulai terjadi... Apa yang sebenarnya terjadi di balik pesta sang Putra Mahkota? Dan mampukah mereka menyadari apa yang paling berharga? Saksikan drama musikal Party Du Royaume! Sabtu, 10 Oktober 2026 di Taman Budaya Raden Saleh (Gedung Ki Narto Sabdho) Semarang.', 'published', '["https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_97778e0a800e6a2e8243d94fbab6b3b9bef7a0bc4a8f85de6125557e6fa87829.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_c5ad21eaef024ff083a1e425b1ba062270999615e59e72d11dc93ce62fefd13e.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_bed35f0d1368212fd573b6305b354e4d0ed8bcf50efbd25232ffae57358564dc.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_7bd128551c4eae9b3c085b16f74e8fd116329a6eecf087fb8a9104dc11ed83fd.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-09-02_d8c0af11c4724022aa7ecb445e666b4220f860250794bcec554446ff01f72901.webp"]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Party Du Royaume by de Creative Kingdom'
 WHERE o.email = 'demo.ydl-teknologi@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Party Du Royaume by de Creative Kingdom' AND ev.venue = 'Taman Budaya Raden Saleh, Kota Semarang');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Early Bird Sales VIP Session 1', 125000, 265, 26
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Bird Sales VIP Session 1', 125000, 265, 26, 'Early Bird Sales VIP'
 FROM events ev WHERE ev.title = 'Party Du Royaume by de Creative Kingdom' AND ev.venue = 'Taman Budaya Raden Saleh, Kota Semarang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Early Bird Sales VIP Session 1');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Early Bird Sales Regular Session 1', 75000, 189, 18
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Bird Sales Regular Session 1', 75000, 189, 18, 'Early Bird Sales Regular'
 FROM events ev WHERE ev.title = 'Party Du Royaume by de Creative Kingdom' AND ev.venue = 'Taman Budaya Raden Saleh, Kota Semarang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Early Bird Sales Regular Session 1');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Early Bird Sales VIP Session 2', 125000, 265, 26
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Bird Sales VIP Session 2', 125000, 265, 26, 'Early Bird Sales VIP Session 2'
 FROM events ev WHERE ev.title = 'Party Du Royaume by de Creative Kingdom' AND ev.venue = 'Taman Budaya Raden Saleh, Kota Semarang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Early Bird Sales VIP Session 2');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Early Bird Sales Regular Session 2', 75000, 189, 18
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Bird Sales Regular Session 2', 75000, 189, 18, 'Early Bird Sales Regular Session 2'
 FROM events ev WHERE ev.title = 'Party Du Royaume by de Creative Kingdom' AND ev.venue = 'Taman Budaya Raden Saleh, Kota Semarang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Early Bird Sales Regular Session 2');
 
@@ -1003,29 +1003,29 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'Golden Jubilee 2026', 'Music', '', 'Golden Jubilee adalah perayaan iman sekaligus gerakan solidaritas spiritual yang mengundang 12.000 umat untuk hadir bersama dalam satu momen bersejarah, merayakan 50 tahun Pembarua'
 FROM organizers o WHERE o.email = 'demo.bpn-pkki@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.bpn-pkki@wavy.seed' AND a.name = 'Golden Jubilee 2026');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'Golden Jubilee 2026', 'Music', 'Indonesia Arena, Jakarta Pusat', '2026-10-10 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260618124142_6a338516d382f.jpeg', 'Golden Jubilee adalah perayaan iman sekaligus gerakan solidaritas spiritual yang mengundang 12.000 umat untuk hadir bersama dalam satu momen bersejarah, merayakan 50 tahun Pembaruan Karismatik Katolik (PKK) di Indonesia dengan tema Roh Kudus Api Evangelisasi dan misi Solidaritas Spiritual. Lebih dari sebuah perayaan, Golden Jubilee adalah panggilan nyata untuk bergerak bersama bagi Kaum Kecil, Lemah, Miskin, Tersingkir, dan Difabel (KLMTD) mereka yang kerap berada di pinggiran, namun adalah pusat dari misi Injil. Kehadiranmu bukan sekadar mengisi kursi. Setiap tiket yang kamu beli adalah kontribusi nyata bagi misi yang berkelanjutan, termasuk retreat pendampingan iman bagi keluarga, kaum muda, dan sahabat KLMTD yang akan terus berjalan setelah perayaan ini. Satu kursi. Satu langkah iman. Satu dampak nyata. &#128330;&#65039; Rundown 09.00 WIB Registrasi & GoJu Fair 11.00 WIB Open Gate 12.45 - 21.00 WIB Acara Puncak GoJu', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Golden Jubilee 2026', 'Music', 'Indonesia Arena, Jakarta Pusat', '2026-10-10 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260618124142_6a338516d382f.jpeg', 'Golden Jubilee adalah perayaan iman sekaligus gerakan solidaritas spiritual yang mengundang 12.000 umat untuk hadir bersama dalam satu momen bersejarah, merayakan 50 tahun Pembaruan Karismatik Katolik (PKK) di Indonesia dengan tema Roh Kudus Api Evangelisasi dan misi Solidaritas Spiritual. Lebih dari sebuah perayaan, Golden Jubilee adalah panggilan nyata untuk bergerak bersama bagi Kaum Kecil, Lemah, Miskin, Tersingkir, dan Difabel (KLMTD) mereka yang kerap berada di pinggiran, namun adalah pusat dari misi Injil. Kehadiranmu bukan sekadar mengisi kursi. Setiap tiket yang kamu beli adalah kontribusi nyata bagi misi yang berkelanjutan, termasuk retreat pendampingan iman bagi keluarga, kaum muda, dan sahabat KLMTD yang akan terus berjalan setelah perayaan ini. Satu kursi. Satu langkah iman. Satu dampak nyata. &#128330;&#65039; Rundown 09.00 WIB Registrasi & GoJu Fair 11.00 WIB Open Gate 12.45 - 21.00 WIB Acara Puncak GoJu', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Golden Jubilee 2026'
 WHERE o.email = 'demo.bpn-pkki@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Golden Jubilee 2026' AND ev.venue = 'Indonesia Arena, Jakarta Pusat');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'VVIP', 3300000, 200, 20
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VVIP', 3300000, 200, 20, '&lt;ul&gt; &lt;li&gt;This ticket is valid for 1 person.&lt;/li&gt; &lt;li&gt;⁠Seating is located on VVIP zone 1st/ground floor.&lt;/li&gt; &lt;li&gt;Free Seating (No Assigned Seats).&lt;/li&gt; &lt;li&gt;Ticket price excludes 10% government tax, 5% administration fee, and platform fee.&lt;/li&gt; &lt;li&gt;If you using wheelchair please contact customer service.&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Golden Jubilee 2026' AND ev.venue = 'Indonesia Arena, Jakarta Pusat'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VVIP');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'VIP', 1400000, 400, 40
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 1400000, 400, 40, '&lt;ul&gt; &lt;li&gt;This ticket is valid for 1 person.&lt;/li&gt; &lt;li&gt;Seating is located on VIP zone 1st/ground floor.&lt;/li&gt; &lt;li&gt;Free Seating (No Assigned Seats).&lt;/li&gt; &lt;li&gt;Ticket price excludes 10% government tax, 5% administration fee, and platform fee.&lt;/li&gt; &lt;li&gt;If you using wheelchair please contact customer service.&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Golden Jubilee 2026' AND ev.venue = 'Indonesia Arena, Jakarta Pusat'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'TELESKOPIK', 1100000, 350, 35
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'TELESKOPIK', 1100000, 350, 35, '&lt;ul&gt; &lt;li&gt;This ticket is valid for 1 person.&lt;/li&gt; &lt;li&gt;Seating is located on teleskopik zone 1st/ground floor.&lt;/li&gt; &lt;li&gt;Free Seating (No Assigned Seats).&lt;/li&gt; &lt;li&gt;Ticket price excludes 10% government tax, 5% administration fee, and platform fee.&quot;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Golden Jubilee 2026' AND ev.venue = 'Indonesia Arena, Jakarta Pusat'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'TELESKOPIK');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'SILVER', 125000, 2000, 200
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'SILVER', 125000, 2000, 200, '&lt;ul&gt; &lt;li&gt;This ticket is valid for 1 person.&lt;/li&gt; &lt;li&gt;Seating is located on Silver zone 4th floor.&lt;/li&gt; &lt;li&gt;Free Seating (No Assigned Seats).&lt;/li&gt; &lt;li&gt;Ticket price excludes 10% government tax, 5% administration fee, and platform fee.&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Golden Jubilee 2026' AND ev.venue = 'Indonesia Arena, Jakarta Pusat'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'SILVER');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'DONASI KURSI KASIH', 300000, 50, 5
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'DONASI KURSI KASIH', 300000, 50, 5, '&lt;ul&gt; &lt;li&gt; &lt;style type=&quot;text/css&quot;&gt;&lt;!--br {mso-data-placement:same-cell;}--&gt; &lt;/style&gt; &lt;strong&gt;Kursi kasih akan disalurkan langsung oleh tim KLMTD Goju.&lt;/strong&gt;&lt;/li&gt; &lt;li&gt;&lt;strong&gt;QRCode tidak diberikan kepada pemberi donasi.&lt;/strong&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Golden Jubilee 2026' AND ev.venue = 'Indonesia Arena, Jakarta Pusat'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'DONASI KURSI KASIH');
 
@@ -1038,13 +1038,13 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'GOOD DAY SCHOOLICIOUS - HARMONY IN COLLABORATION Vol. 4', 'Music', '', 'GOOD DAY SCHOOLIOCUS - Harmony In Collaboration Vol 4 Kompetisi Angklung Tingkat SMA terbesar di Jawa Barat kembali hadir di bulan Oktober 2026. Kali ini mendatangkan guest star: S'
 FROM organizers o WHERE o.email = 'demo.ff-creative@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.ff-creative@wavy.seed' AND a.name = 'GOOD DAY SCHOOLICIOUS - HARMONY IN COLLABORATION Vol. 4');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'GOOD DAY SCHOOLICIOUS - HARMONY IN COLLABORATION Vol. 4', 'Music', 'Laswi Heritage, Bandung', '2026-10-10 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260824143453_6a8bf41dee62f.jpg', 'GOOD DAY SCHOOLIOCUS - Harmony In Collaboration Vol 4 Kompetisi Angklung Tingkat SMA terbesar di Jawa Barat kembali hadir di bulan Oktober 2026. Kali ini mendatangkan guest star: Saung Angklung Udjo, DIA - Stand Here Alone & Juicy Luicy. &nbsp; Selain penampilan di atas kalian juga dapat mengikuti banyak games seru dan hadiah menarik setiap kalian memenangkan games. &nbsp; &nbsp;', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'GOOD DAY SCHOOLICIOUS - HARMONY IN COLLABORATION Vol. 4', 'Music', 'Laswi Heritage, Bandung', '2026-10-10 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260824143453_6a8bf41dee62f.jpg', 'GOOD DAY SCHOOLIOCUS - Harmony In Collaboration Vol 4 Kompetisi Angklung Tingkat SMA terbesar di Jawa Barat kembali hadir di bulan Oktober 2026. Kali ini mendatangkan guest star: Saung Angklung Udjo, DIA - Stand Here Alone & Juicy Luicy. Selain penampilan di atas kalian juga dapat mengikuti banyak games seru dan hadiah menarik setiap kalian memenangkan games.', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'GOOD DAY SCHOOLICIOUS - HARMONY IN COLLABORATION Vol. 4'
 WHERE o.email = 'demo.ff-creative@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'GOOD DAY SCHOOLICIOUS - HARMONY IN COLLABORATION Vol. 4' AND ev.venue = 'Laswi Heritage, Bandung');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PRESALE', 25000, 1000, 100
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PRESALE', 25000, 1000, 100, 'PRESALE'
 FROM events ev WHERE ev.title = 'GOOD DAY SCHOOLICIOUS - HARMONY IN COLLABORATION Vol. 4' AND ev.venue = 'Laswi Heritage, Bandung'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PRESALE');
 
@@ -1057,13 +1057,13 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'KARAOKE MUSIK JKT48 BY ALDAN GROUP VOL 3', 'Music', '', 'Karaoke musik JKT48 merupakan suatu kesenangan terutama bagi seluruh penggemar musik JKT48, tentunya dengan adanya acara ini bisa memperketat silaturahmi bagi anak muda, jangan sam'
 FROM organizers o WHERE o.email = 'demo.dadan-aldia-putra@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.dadan-aldia-putra@wavy.seed' AND a.name = 'KARAOKE MUSIK JKT48 BY ALDAN GROUP VOL 3');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'KARAOKE MUSIK JKT48 BY ALDAN GROUP VOL 3', 'Music', 'ILLUA SOJU BOX, Jakarta Pusat', '2026-10-10 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260904181041_6a9aa731daafb.jpg', 'Karaoke musik JKT48 merupakan suatu kesenangan terutama bagi seluruh penggemar musik JKT48, tentunya dengan adanya acara ini bisa memperketat silaturahmi bagi anak muda, jangan sampai lewatkan keseruan acara ini karena acara ini akan lebih meriah ditahun sebelumnya, Jangan lupa datang pada acara karaoke bu Aldan group dengan waktu yang sudah di tentukan.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'KARAOKE MUSIK JKT48 BY ALDAN GROUP VOL 3', 'Music', 'ILLUA SOJU BOX, Jakarta Pusat', '2026-10-10 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260904181041_6a9aa731daafb.jpg', 'Karaoke musik JKT48 merupakan suatu kesenangan terutama bagi seluruh penggemar musik JKT48, tentunya dengan adanya acara ini bisa memperketat silaturahmi bagi anak muda, jangan sampai lewatkan keseruan acara ini karena acara ini akan lebih meriah ditahun sebelumnya, Jangan lupa datang pada acara karaoke bu Aldan group dengan waktu yang sudah di tentukan.', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'KARAOKE MUSIK JKT48 BY ALDAN GROUP VOL 3'
 WHERE o.email = 'demo.dadan-aldia-putra@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'KARAOKE MUSIK JKT48 BY ALDAN GROUP VOL 3' AND ev.venue = 'ILLUA SOJU BOX, Jakarta Pusat');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PRESALE SPC', 30000, 20, 2
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PRESALE SPC', 30000, 20, 2, ''
 FROM events ev WHERE ev.title = 'KARAOKE MUSIK JKT48 BY ALDAN GROUP VOL 3' AND ev.venue = 'ILLUA SOJU BOX, Jakarta Pusat'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PRESALE SPC');
 
@@ -1073,36 +1073,36 @@ VALUES ('SIGMA PRO INDONESIA', 'demo.sigma-pro-indonesia@wavy.seed', '$2b$10$dem
 ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
-SELECT o.id, 'BADONCI FESTIVAL DISK.2', 'Music', '', 'SYARAT DAN KETENTUAN BADONCI FESTIVAL 1.⁠ ⁠UMUM Badonci&nbsp;Festival&nbsp;diselenggarakan&nbsp;oleh&nbsp;penyelenggara&nbsp;resmi&nbsp;PT. Sigma Pro Indonesia&nbsp; Syarat&nbsp;da'
+SELECT o.id, 'BADONCI FESTIVAL DISK.2', 'Music', '', 'SYARAT DAN KETENTUAN BADONCI FESTIVAL 1.⁠ ⁠UMUM Badonci Festival diselenggarakan oleh penyelenggara resmi PT. Sigma Pro Indonesia Syarat dan ketentuan ini berlaku untuk semua pengu'
 FROM organizers o WHERE o.email = 'demo.sigma-pro-indonesia@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.sigma-pro-indonesia@wavy.seed' AND a.name = 'BADONCI FESTIVAL DISK.2');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'BADONCI FESTIVAL DISK.2', 'Music', 'Pohon Kasih Megamas, Kota Manado', '2026-10-15 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260821133006_6a87f06e50af1.jpg', 'SYARAT DAN KETENTUAN BADONCI FESTIVAL 1.⁠ ⁠UMUM Badonci&nbsp;Festival&nbsp;diselenggarakan&nbsp;oleh&nbsp;penyelenggara&nbsp;resmi&nbsp;PT. Sigma Pro Indonesia&nbsp; Syarat&nbsp;dan&nbsp;ketentuan&nbsp;ini&nbsp;berlaku&nbsp;untuk&nbsp;semua&nbsp;pengunjung,&nbsp;peserta, artis, vendor, dan&nbsp;pihak&nbsp;terkait&nbsp;yang&nbsp;terlibat&nbsp;dalamacara. Penyelenggara&nbsp;berhak&nbsp;mengubah&nbsp;syarat&nbsp;dan&nbsp;ketentuan&nbsp;kapan&nbsp;saja&nbsp;tanpa&nbsp;pemberitahuan&nbsp;terlebih&nbsp;dahulu,&nbsp;denganpembaruan&nbsp;akan&nbsp;diumumkan&nbsp;melalui&nbsp;kanal&nbsp;resmi&nbsp;festival. &nbsp; 2.⁠ ⁠PEMBELIAN DAN PENGGUNAAN TIKET Tiket&nbsp;hanya&nbsp;bisa&nbsp;dibeli&nbsp;melalui&nbsp;kanal&nbsp;resmi&nbsp;yang&nbsp;telah&nbsp;ditentukan&nbsp;LOKET.COM. ⁠Setiap&nbsp;tiket&nbsp;hanya&nbsp;sah&nbsp;untuk&nbsp;satu&nbsp;orang dan&nbsp;tidak&nbsp;dapat&nbsp;dipindahkan&nbsp;kepemilikan&nbsp;atau&nbsp;dijual&nbsp;kembali&nbsp;tanpa&nbsp;izinpenyelenggara. Tiket&nbsp;yang&nbsp;hilang,&nbsp;rusak,&nbsp;atau&nbsp;palsu&nbsp;tidak&nbsp;akan&nbsp;diganti&nbsp;atau&nbsp;diterima&nbsp;masuk. Pengunjung&nbsp;harus&nbsp;menunjukkan&nbsp;tiket&nbsp;berupa&nbsp;QR Code&nbsp;&nbsp;atau&nbsp;bukti&nbsp;pembayaran&nbsp;elektronik&nbsp;yang valid&nbsp;saat&nbsp;masuk&nbsp;area festival. &nbsp; 3.⁠ ⁠SYARAT MASUK AREA FESTIVAL Pengunjung&nbsp;di&nbsp;bawah&nbsp;umur&nbsp;harus&nbsp;ditemani&nbsp;oleh orang&nbsp;tua&nbsp;atau&nbsp;wali&nbsp;yang&nbsp;bertanggung&nbsp;jawab. ⁠Semua&nbsp;pengunjung&nbsp;wajib&nbsp;menjalani&nbsp;pemeriksaan&nbsp;keamanan&nbsp;sebelum&nbsp;masuk&nbsp;area festival. ⁠Penyelenggara&nbsp;berhak&nbsp;menolak&nbsp;masuk&nbsp;atau&nbsp;mengeluarkan&nbsp;pengunjung&nbsp;yang&nbsp;tidak&nbsp;mematuhi&nbsp;peraturan&nbsp;atau&nbsp;menunjukkanperilaku&nbsp;yang&nbsp;mengganggu&nbsp;ketertiban. &nbsp; 4.⁠ ⁠BARANG TERLARANG DAN DIIZINKAN Barang&nbsp;terlarang: Senjata&nbsp;api,&nbsp;senjata&nbsp;tajam, dan&nbsp;benda&nbsp;berbahaya&nbsp;lainnya. Narkoba,&nbsp;alkohol, dan&nbsp;zat&nbsp;terlarang&nbsp;lainnya. ⁠Bahan&nbsp;peledak&nbsp;atau&nbsp;bahan&nbsp;yang&nbsp;dapat&nbsp;menyebabkan&nbsp;kebakaran. ⁠Benda&nbsp;keras&nbsp;atau&nbsp;tajam&nbsp;yang&nbsp;dapat&nbsp;digunakan&nbsp;sebagai&nbsp;alat&nbsp;serangan. Drinks dan&nbsp;makanan&nbsp;dari&nbsp;luar&nbsp;area festival (kecuali&nbsp;untuk&nbsp;kebutuhan&nbsp;kesehatan&nbsp;khusus&nbsp;dengan&nbsp;izin&nbsp;tertulis). Barang&nbsp;diizinkan&nbsp;(dengan&nbsp;pembatasan): Tas&nbsp;kecil&nbsp;atau&nbsp;ransel&nbsp;dengan&nbsp;ukuran&nbsp;maksimal&nbsp;[misal: 40x30x20 cm]. ⁠Perlengkapan&nbsp;medis&nbsp;pribadi&nbsp;dengan&nbsp;izin&nbsp;petugas&nbsp;keamanan. ⁠Kamera&nbsp;foto/video non-profesional&nbsp;(tanpa&nbsp;tripod&nbsp;atau&nbsp;peralatan&nbsp;besar). ⁠Sunscreen,&nbsp;topi, dan&nbsp;payung&nbsp;untuk&nbsp;perlindungan&nbsp;dari&nbsp;cuaca. &nbsp; 5.⁠ ⁠PERILAKU PENGUNJUNG Seluruh&nbsp;pengunjung&nbsp;diharapkan&nbsp;bertingkah&nbsp;laku&nbsp;sopan&nbsp;dan&nbsp;menghormati&nbsp;s', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'BADONCI FESTIVAL DISK.2', 'Music', 'Pohon Kasih Megamas, Kota Manado', '2026-10-15 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260821133006_6a87f06e50af1.jpg', 'SYARAT DAN KETENTUAN BADONCI FESTIVAL 1.⁠ ⁠UMUM Badonci Festival diselenggarakan oleh penyelenggara resmi PT. Sigma Pro Indonesia Syarat dan ketentuan ini berlaku untuk semua pengunjung, peserta, artis, vendor, dan pihak terkait yang terlibat dalamacara. Penyelenggara berhak mengubah syarat dan ketentuan kapan saja tanpa pemberitahuan terlebih dahulu, denganpembaruan akan diumumkan melalui kanal resmi festival. 2.⁠ ⁠PEMBELIAN DAN PENGGUNAAN TIKET Tiket hanya bisa dibeli melalui kanal resmi yang telah ditentukan LOKET.COM. ⁠Setiap tiket hanya sah untuk satu orang dan tidak dapat dipindahkan kepemilikan atau dijual kembali tanpa izinpenyelenggara. Tiket yang hilang, rusak, atau palsu tidak akan diganti atau diterima masuk. Pengunjung harus menunjukkan tiket berupa QR Code atau bukti pembayaran elektronik yang valid saat masuk area festival. 3.⁠ ⁠SYARAT MASUK AREA FESTIVAL Pengunjung di bawah umur harus ditemani oleh orang tua atau wali yang bertanggung jawab. ⁠Semua pengunjung wajib menjalani pemeriksaan keamanan sebelum masuk area festival. ⁠Penyelenggara berhak menolak masuk atau mengeluarkan pengunjung yang tidak mematuhi peraturan atau menunjukkanperilaku yang mengganggu ketertiban. 4.⁠ ⁠BARANG TERLARANG DAN DIIZINKAN Barang terlarang: Senjata api, senjata tajam, dan benda berbahaya lainnya. Narkoba, alkohol, dan zat terlarang lainnya. ⁠Bahan peledak atau bahan yang dapat menyebabkan kebakaran. ⁠Benda keras atau tajam yang dapat digunakan sebagai alat serangan. Drinks dan makanan dari luar area festival (kecuali untuk kebutuhan kesehatan khusus dengan izin tertulis). Barang diizinkan (dengan pembatasan): Tas kecil atau ransel dengan ukuran maksimal [misal: 40x30x20 cm]. ⁠Perlengkapan medis pribadi dengan izin petugas keamanan. ⁠Kamera foto/video non-profesional (tanpa tripod atau peralatan besar). ⁠Sunscreen, topi, dan payung untuk perlindungan dari cuaca. 5.⁠ ⁠PERILAKU PENGUNJUNG Seluruh pengunjung diharapkan bertingkah laku sopan dan menghormati sesama pengunjung, artis, dan petugas acara. Tidak diperbolehkan melakukan tindakan kekerasan, pelecehan, atau ujaran kebencian. ⁠Tidak diperbolehkan merusak atau mengganggu fasilitas dan properti festival. Merokok hanya diperbolehkan di area merokok yang telah ditentukan. 6.⁠ ⁠HAK DAN TANGGUNG JAWAB PENYELENGGARA Penyelenggara berhak membatalkan atau menangguhkan acara karena alasan keamanan, cuaca ekstrem, atau kondisi takterduga lainnya. Dalam hal ini, pengembalian tiket akan diatur sesuai kebijakan yang telah ditentukan. Penyelenggara tidak bertanggung jawab atas kehilangan, kerusakan, atau cedera yang terjadi pada pengunjung akibatkelalaian pribadi atau tidak mematuhi peraturan. Penyelenggara berhak mengambil foto atau video selama acara untuk keperluan promosi dan dokumentasi, denganpengunjung dianggap telah menyetujui penggunaan gambar tersebut. 7.⁠ ⁠KESEHATAN DAN KEAMANAN Pengunjung dengan kondisi kesehatan khusus disarankan untuk membawa obat pribadi dan memberitahu petugas medisjika diperluk', 'published', '["https://assets.loket.com/neo/production/images/event_gallery/2026-08-22_f91ab905923b0b139a5eb36c99f1ccc80d8314d1e7ada7492690c78a4d290d21.webp"]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'BADONCI FESTIVAL DISK.2'
 WHERE o.email = 'demo.sigma-pro-indonesia@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'BADONCI FESTIVAL DISK.2' AND ev.venue = 'Pohon Kasih Megamas, Kota Manado');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PRESALE 1 - FESTIVAL', 150000, 4550, 400
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PRESALE 1 - FESTIVAL', 150000, 4550, 400, ''
 FROM events ev WHERE ev.title = 'BADONCI FESTIVAL DISK.2' AND ev.venue = 'Pohon Kasih Megamas, Kota Manado'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PRESALE 1 - FESTIVAL');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'FRESALE 1 - VIP', 250000, 650, 65
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'FRESALE 1 - VIP', 250000, 650, 65, ''
 FROM events ev WHERE ev.title = 'BADONCI FESTIVAL DISK.2' AND ev.venue = 'Pohon Kasih Megamas, Kota Manado'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'FRESALE 1 - VIP');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'FESTIVAL - BARENG SAYANG', 260000, 500, 50
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'FESTIVAL - BARENG SAYANG', 260000, 500, 50, '2 tiket'
 FROM events ev WHERE ev.title = 'BADONCI FESTIVAL DISK.2' AND ev.venue = 'Pohon Kasih Megamas, Kota Manado'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'FESTIVAL - BARENG SAYANG');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'VIP - BARENG SAYANG', 460000, 500, 50
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP - BARENG SAYANG', 460000, 500, 50, '2 tiket'
 FROM events ev WHERE ev.title = 'BADONCI FESTIVAL DISK.2' AND ev.venue = 'Pohon Kasih Megamas, Kota Manado'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP - BARENG SAYANG');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'FESTIVAL - BARENG TAMANG', 480000, 500, 50
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'FESTIVAL - BARENG TAMANG', 480000, 500, 50, '4 TIKET'
 FROM events ev WHERE ev.title = 'BADONCI FESTIVAL DISK.2' AND ev.venue = 'Pohon Kasih Megamas, Kota Manado'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'FESTIVAL - BARENG TAMANG');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'VIP - BARENG TAMANG', 880000, 500, 50
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP - BARENG TAMANG', 880000, 500, 50, '4 TIKET'
 FROM events ev WHERE ev.title = 'BADONCI FESTIVAL DISK.2' AND ev.venue = 'Pohon Kasih Megamas, Kota Manado'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP - BARENG TAMANG');
 
@@ -1115,13 +1115,13 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'In Inertia Showcase - Unfamiliar Weather', 'Music', '', 'Unfamiliar Weather Showcase adalah pertunjukan spesial dari In Inertia untuk merayakan album kedua mereka, Unfamiliar Weather. Pertunjukan akan berlangsung selama kurang lebih 120 '
 FROM organizers o WHERE o.email = 'demo.angular-momentum@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.angular-momentum@wavy.seed' AND a.name = 'In Inertia Showcase - Unfamiliar Weather');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'In Inertia Showcase - Unfamiliar Weather', 'Music', 'Aula Gudskul, Gudskul Ekosistem, Jakarta Selatan', '2026-10-24 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260731175446_6a6c7ef65fe70.jpg', 'Unfamiliar Weather Showcase adalah pertunjukan spesial dari In Inertia untuk merayakan album kedua mereka, Unfamiliar Weather. Pertunjukan akan berlangsung selama kurang lebih 120 menit dan terbagi ke dalam dua babak. In Inertia akan membawakan rangkaian lagu dari album Unfamiliar Weather dalam sebuah format pertunjukan yang memadukan musik live, tata suara imersif, visual, pencahayaan, dan instalasi artistik. Setiap elemen dirancang sebagai satu kesatuan untuk membawa penonton memasuki perjalanan emosional yang menjadi tema utama album ini, mulai dari perubahan, kehilangan, penerimaan, hingga usaha menemukan rasa nyaman di tengah situasi yang terasa asing. Penonton akan diajak menikmati pertunjukan dari awal hingga akhir sebagai satu rangkaian cerita yang terbagi ke dalam dua babak. Durasi pertunjukan: ±120 menit Penampil: In Inertia Format pertunjukan: 2 babak Pengalaman: Musik live, tata suara imersif, visual, pencahayaan, dan instalasi artistik', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'In Inertia Showcase - Unfamiliar Weather', 'Music', 'Aula Gudskul, Gudskul Ekosistem, Jakarta Selatan', '2026-10-24 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260731175446_6a6c7ef65fe70.jpg', 'Unfamiliar Weather Showcase adalah pertunjukan spesial dari In Inertia untuk merayakan album kedua mereka, Unfamiliar Weather. Pertunjukan akan berlangsung selama kurang lebih 120 menit dan terbagi ke dalam dua babak. In Inertia akan membawakan rangkaian lagu dari album Unfamiliar Weather dalam sebuah format pertunjukan yang memadukan musik live, tata suara imersif, visual, pencahayaan, dan instalasi artistik. Setiap elemen dirancang sebagai satu kesatuan untuk membawa penonton memasuki perjalanan emosional yang menjadi tema utama album ini, mulai dari perubahan, kehilangan, penerimaan, hingga usaha menemukan rasa nyaman di tengah situasi yang terasa asing. Penonton akan diajak menikmati pertunjukan dari awal hingga akhir sebagai satu rangkaian cerita yang terbagi ke dalam dua babak. Durasi pertunjukan: ±120 menit Penampil: In Inertia Format pertunjukan: 2 babak Pengalaman: Musik live, tata suara imersif, visual, pencahayaan, dan instalasi artistik', 'published', '["https://assets.loket.com/neo/production/images/event_gallery/2026-07-31_2f6f5f272e41c97f875c0328dc156e352f241373b18c7a627c6fb46799305488.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-07-31_a2cf9c7a7f7f8e327c2a74338d1d1cffeb819f353b0788251955e02bf72a0c07.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-07-31_fea78744c8d934faf45c2e2c147eb942a879144dc44528fb4c818187819ee295.webp","https://assets.loket.com/neo/production/images/event_gallery/2026-07-31_9b4a72be45c3f80fd6cb5d71fa6e4d07f639b42e1031f9b742c2093a4941af1a.webp"]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'In Inertia Showcase - Unfamiliar Weather'
 WHERE o.email = 'demo.angular-momentum@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'In Inertia Showcase - Unfamiliar Weather' AND ev.venue = 'Aula Gudskul, Gudskul Ekosistem, Jakarta Selatan');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Reguler', 200000, 230, 23
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Reguler', 200000, 230, 23, 'Tiket untuk pertunjukan imersif “Unfamiliar Weather” oleh In Inertia'
 FROM events ev WHERE ev.title = 'In Inertia Showcase - Unfamiliar Weather' AND ev.venue = 'Aula Gudskul, Gudskul Ekosistem, Jakarta Selatan'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Reguler');
 
@@ -1134,17 +1134,17 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'Underground Supreme', 'Music', '', 'UNDERGROUND SUPREME: Rise The Underground Culture Kultur Hip-Hop bukan sekadar musik, melainkan sebuah wadah ekspresi kreatif, seni, dan pergerakan komunitas. KRAZY BRAZY KARAWANG '
 FROM organizers o WHERE o.email = 'demo.krazy-brazy-karawang@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.krazy-brazy-karawang@wavy.seed' AND a.name = 'Underground Supreme');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'Underground Supreme', 'Music', 'District 163, Kab. Karawang', '2026-10-25 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260713224128_6a550728a5089.jpg', 'UNDERGROUND SUPREME: Rise The Underground Culture Kultur Hip-Hop bukan sekadar musik, melainkan sebuah wadah ekspresi kreatif, seni, dan pergerakan komunitas. KRAZY BRAZY KARAWANG dengan bangga mempersembahkan UNDERGROUND SUPREME , sebuah panggung representatif yang dirancang untuk merayakan energi kultur Hip-Hop lokal serta membangun ekosistem kreatif urban yang lebih besar di Karawang. Dengan mengusung semangat "Rise The Underground Culture" , event ini memadukan konser musik dengan berbagai aktivasi komunitas kreatif untuk memberikan pengalaman hiburan alternatif yang segar, eksklusif, dan berkualitas bagi generasi muda. Lineup & Pengisi Acara Bersiaplah untuk merayakan energi skena underground bersama deretan talenta Hip-Hop terbaik: Main Performance (Guest Stars): Penampilan rap yang energik, gelap, dan khas dari Coming soon Guess Star Local Heroes: Aksi panggung memukau dari 3 Local Heroes yang siap membakar atmosfer acara. Creative Experience Tidak hanya menyajikan pertunjukan musik di panggung utama, UNDERGROUND SUPREME juga menghadirkan pengalaman interaktif yang melibatkan massa secara langsung: Live Printing & Sablon Area: Area kreatif interaktif di mana pengunjung bisa melihat dan merasakan langsung proses pembuatan karya sablon. Merchandise Area: Tempat berburu berbagai produk kreatif eksklusif sebagai bagian dari identitas event dan komunitas. UMKM & Brand Local Booth: Ruang khusus bagi brand lokal dan pelaku usaha kreatif untuk memperkenalkan produk urban terbaik mereka kepada audiens. Detail Pelaksanaan Event Hari/Tanggal: Minggu, 25 Oktober 2026 Waktu: 15.00 WIB – 01.55 WIB ( Open Gate & penukaran tiket dimulai pukul 15.00 WIB) Lokasi: District 163 Karawang (Jl. Tarumanagara No. 6, Ruko Karawang Hijau, Purwadana, Kecamatan Telukjambe Timur, Karawang) Jangan sampai kehabisan! Kuota tiket terbatas. Amankan tiketmu sekarang juga, jadilah bagian dari solidaritas komunitas, dan rasakan pengalaman kultur urban yang autentik bersama Krazy Brazy Karawang!', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Underground Supreme', 'Music', 'District 163, Kab. Karawang', '2026-10-25 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260713224128_6a550728a5089.jpg', 'UNDERGROUND SUPREME: Rise The Underground Culture Kultur Hip-Hop bukan sekadar musik, melainkan sebuah wadah ekspresi kreatif, seni, dan pergerakan komunitas. KRAZY BRAZY KARAWANG dengan bangga mempersembahkan UNDERGROUND SUPREME , sebuah panggung representatif yang dirancang untuk merayakan energi kultur Hip-Hop lokal serta membangun ekosistem kreatif urban yang lebih besar di Karawang. Dengan mengusung semangat "Rise The Underground Culture" , event ini memadukan konser musik dengan berbagai aktivasi komunitas kreatif untuk memberikan pengalaman hiburan alternatif yang segar, eksklusif, dan berkualitas bagi generasi muda. Lineup & Pengisi Acara Bersiaplah untuk merayakan energi skena underground bersama deretan talenta Hip-Hop terbaik: Main Performance (Guest Stars): Penampilan rap yang energik, gelap, dan khas dari Coming soon Guess Star Local Heroes: Aksi panggung memukau dari 3 Local Heroes yang siap membakar atmosfer acara. Creative Experience Tidak hanya menyajikan pertunjukan musik di panggung utama, UNDERGROUND SUPREME juga menghadirkan pengalaman interaktif yang melibatkan massa secara langsung: Live Printing & Sablon Area: Area kreatif interaktif di mana pengunjung bisa melihat dan merasakan langsung proses pembuatan karya sablon. Merchandise Area: Tempat berburu berbagai produk kreatif eksklusif sebagai bagian dari identitas event dan komunitas. UMKM & Brand Local Booth: Ruang khusus bagi brand lokal dan pelaku usaha kreatif untuk memperkenalkan produk urban terbaik mereka kepada audiens. Detail Pelaksanaan Event Hari/Tanggal: Minggu, 25 Oktober 2026 Waktu: 15.00 WIB – 01.55 WIB ( Open Gate & penukaran tiket dimulai pukul 15.00 WIB) Lokasi: District 163 Karawang (Jl. Tarumanagara No. 6, Ruko Karawang Hijau, Purwadana, Kecamatan Telukjambe Timur, Karawang) Jangan sampai kehabisan! Kuota tiket terbatas. Amankan tiketmu sekarang juga, jadilah bagian dari solidaritas komunitas, dan rasakan pengalaman kultur urban yang autentik bersama Krazy Brazy Karawang!', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Underground Supreme'
 WHERE o.email = 'demo.krazy-brazy-karawang@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Underground Supreme' AND ev.venue = 'District 163, Kab. Karawang');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Presale 1 - Underground Supreme', 160000, 300, 30
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Presale 1 - Underground Supreme', 160000, 300, 30, 'Tiket UNDERGROUND SUPREME Presale 1. Kuota terbatas! Akses masuk area konser Hip-Hop dan area kreatif. Amankan tiketmu sekarang juga!'
 FROM events ev WHERE ev.title = 'Underground Supreme' AND ev.venue = 'District 163, Kab. Karawang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Presale 1 - Underground Supreme');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Presale 2 - Underground Supreme', 200000, 500, 50
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Presale 2 - Underground Supreme', 200000, 500, 50, 'Tiket UNDERGROUND SUPREME Presale 2. Kuota terbatas! Akses masuk area konser Hip-Hop dan area kreatif. Amankan tiketmu sekarang juga!'
 FROM events ev WHERE ev.title = 'Underground Supreme' AND ev.venue = 'District 163, Kab. Karawang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Presale 2 - Underground Supreme');
 
@@ -1154,20 +1154,20 @@ VALUES ('Antara Suara', 'demo.antara-suara@wavy.seed', '$2b$10$demoSeedHashNotFo
 ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
-SELECT o.id, 'Titik Sadrah for Revenge', 'Music', '', 'Menginjak dua dekade,&nbsp; Titik Sadrah hadir sebagai pelabuhan terakhir bagi mereka yang lelah berlari dari kehilangan. Ini bukan sekadar panggung bagi&nbsp; for Revenge , melain'
+SELECT o.id, 'Titik Sadrah for Revenge', 'Music', '', 'Menginjak dua dekade, Titik Sadrah hadir sebagai pelabuhan terakhir bagi mereka yang lelah berlari dari kehilangan. Ini bukan sekadar panggung bagi for Revenge , melainkan ruang sa'
 FROM organizers o WHERE o.email = 'demo.antara-suara@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.antara-suara@wavy.seed' AND a.name = 'Titik Sadrah for Revenge');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'Titik Sadrah for Revenge', 'Music', 'ELDORADO SPORT & CONVENTION HALL, BANDUNG, Bandung', '2026-10-31 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260710180442_6a50d1ca9d9bd.jpeg', 'Menginjak dua dekade,&nbsp; Titik Sadrah hadir sebagai pelabuhan terakhir bagi mereka yang lelah berlari dari kehilangan. Ini bukan sekadar panggung bagi&nbsp; for Revenge , melainkan ruang sakral yang merangkum gelombang emosi band,&nbsp; Archims Pribadi (Chimot)&nbsp; secara personal, dan&nbsp; for Revenge Family . Sebuah memoar bersama untuk berhenti memaksakan apa yang telah karam dan mulai berdamai dengan kenyataan yang mematahkan arah. Kita semua pernah tersapu arus emosi liar hingga tenggelam di palung terendah. Bagi&nbsp; Chimot , palung itu adalah penerimaan pahit bahwa di tahun ke-20 ini ia tidak bisa lagi berdiri di balik set drumnya. Bagi&nbsp; for Revenge , ini adalah patah hati terdalam karena kehilangan detak jantung keseharian mereka. Sementara bagi&nbsp; for Revenge Family , ini adalah fase transisi berat untuk menerima keadaan dan formasi yang baru. Namun, kita disadarkan bahwa di setiap arus deras, selalu ada muara yang menanti. Di titik ini kita belajar bahwa tidak semua hal harus dipaksa untuk tetap tinggal, karena beberapa hal justru baru menemukan makna sejatinya saat kita memilih ikhlas melepaskan. Di muara inilah kita bertemu untuk saling menguatkan. Mari rayakan ruang penerimaan ini di Titik Sadrah Bandung, Eldorado Sport & Convention Hall&nbsp; pada 31 Oktober September 2026 , dan Titik Sadrah&nbsp; Kuala Lumpur . Datanglah untuk melarung segala yang menyesakkan, biarkan semuanya usai di titik ini, dan pulanglah membawa awal yang baru.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Titik Sadrah for Revenge', 'Music', 'ELDORADO SPORT & CONVENTION HALL, BANDUNG, Bandung', '2026-10-31 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260710180442_6a50d1ca9d9bd.jpeg', 'Menginjak dua dekade, Titik Sadrah hadir sebagai pelabuhan terakhir bagi mereka yang lelah berlari dari kehilangan. Ini bukan sekadar panggung bagi for Revenge , melainkan ruang sakral yang merangkum gelombang emosi band, Archims Pribadi (Chimot) secara personal, dan for Revenge Family . Sebuah memoar bersama untuk berhenti memaksakan apa yang telah karam dan mulai berdamai dengan kenyataan yang mematahkan arah. Kita semua pernah tersapu arus emosi liar hingga tenggelam di palung terendah. Bagi Chimot , palung itu adalah penerimaan pahit bahwa di tahun ke-20 ini ia tidak bisa lagi berdiri di balik set drumnya. Bagi for Revenge , ini adalah patah hati terdalam karena kehilangan detak jantung keseharian mereka. Sementara bagi for Revenge Family , ini adalah fase transisi berat untuk menerima keadaan dan formasi yang baru. Namun, kita disadarkan bahwa di setiap arus deras, selalu ada muara yang menanti. Di titik ini kita belajar bahwa tidak semua hal harus dipaksa untuk tetap tinggal, karena beberapa hal justru baru menemukan makna sejatinya saat kita memilih ikhlas melepaskan. Di muara inilah kita bertemu untuk saling menguatkan. Mari rayakan ruang penerimaan ini di Titik Sadrah Bandung, Eldorado Sport & Convention Hall pada 31 Oktober September 2026 , dan Titik Sadrah Kuala Lumpur . Datanglah untuk melarung segala yang menyesakkan, biarkan semuanya usai di titik ini, dan pulanglah membawa awal yang baru.', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Titik Sadrah for Revenge'
 WHERE o.email = 'demo.antara-suara@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Titik Sadrah for Revenge' AND ev.venue = 'ELDORADO SPORT & CONVENTION HALL, BANDUNG, Bandung');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Festival A ', 450000, 985, 98
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Festival A ', 450000, 985, 98, '&lt;ul&gt; &lt;li&gt;1 tiket Konser Titik Sadrah for Revenge&lt;/li&gt; &lt;li&gt;⁠1 tiket berlaku untuk satu orang&lt;/li&gt; &lt;li&gt;Harga tiket belum termasuk Pajak Hiburan Daerah 10%, Biaya Admin 5%&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Titik Sadrah for Revenge' AND ev.venue = 'ELDORADO SPORT & CONVENTION HALL, BANDUNG, Bandung'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Festival A ');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Festival B', 400000, 645, 64
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Festival B', 400000, 645, 64, '&lt;ul&gt; &lt;li&gt;1 tiket Konser Titik Sadrah for Revenge&lt;/li&gt; &lt;li&gt;⁠1 tiket berlaku untuk satu orang&lt;/li&gt; &lt;li&gt;Harga tiket belum termasuk Pajak Hiburan Daerah 10%, Biaya Admin 5%&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'Titik Sadrah for Revenge' AND ev.venue = 'ELDORADO SPORT & CONVENTION HALL, BANDUNG, Bandung'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Festival B');
 
@@ -1177,40 +1177,40 @@ VALUES ('S3 Entertainment by PT. Suryono Sehat Sejahtera', 'demo.s3-entertainmen
 ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
-SELECT o.id, 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01', 'Music', '', '&nbsp; Memories Of The Soul adalah sebuah perhelatan musik yang menghadirkan kembali lagu-lagu hits terbaik era 80-an, 90-an, hingga awal 2000-an yang penuh kenangan. Event ini dir'
+SELECT o.id, 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01', 'Music', '', 'Memories Of The Soul adalah sebuah perhelatan musik yang menghadirkan kembali lagu-lagu hits terbaik era 80-an, 90-an, hingga awal 2000-an yang penuh kenangan. Event ini dirancang '
 FROM organizers o WHERE o.email = 'demo.s3-entertainment-by-pt-suryono-sehat-sej@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.s3-entertainment-by-pt-suryono-sehat-sej@wavy.seed' AND a.name = 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01', 'Music', 'Balai Sarbini, DKI Jakarta', '2026-10-31 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260721113228_6a5ef65c616bf.jpg', '&nbsp; Memories Of The Soul adalah sebuah perhelatan musik yang menghadirkan kembali lagu-lagu hits terbaik era 80-an, 90-an, hingga awal 2000-an yang penuh kenangan. Event ini dirancang sebagai momen &ldquo;temu kangen&rdquo; bagi para pecinta musik lintas generasi untuk kembali merasakan suasana hangat, romantis, dan penuh memori indah melalui lantunan lagu yang tak lekang oleh waktu. Dikemas dengan konsep panggung elegan, tata cahaya spektakuler, dan kualitas tata suara premium, event ini menghadirkan pengalaman eksklusif dan berkelas. Tidak hanya menyuguhkan hiburan, acara ini juga menjadi ruang silaturahmi, networking, serta ajang mempererat kebersamaan dalam suasana yang nyaman dan penuh nostalgia. Dengan segmentasi audiens usia 35&ndash;60 tahun, kalangan profesional, eksekutif, dan komunitas pecinta musik nostalgia, event ini diharapkan menjadi event tahunan yang dinantikan serta memberikan nilai tambah promosi dan eksposur maksimal bagi para sponsor yang terlibat. &nbsp; &nbsp;', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01', 'Music', 'Balai Sarbini, DKI Jakarta', '2026-10-31 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260721113228_6a5ef65c616bf.jpg', 'Memories Of The Soul adalah sebuah perhelatan musik yang menghadirkan kembali lagu-lagu hits terbaik era 80-an, 90-an, hingga awal 2000-an yang penuh kenangan. Event ini dirancang sebagai momen &ldquo;temu kangen&rdquo; bagi para pecinta musik lintas generasi untuk kembali merasakan suasana hangat, romantis, dan penuh memori indah melalui lantunan lagu yang tak lekang oleh waktu. Dikemas dengan konsep panggung elegan, tata cahaya spektakuler, dan kualitas tata suara premium, event ini menghadirkan pengalaman eksklusif dan berkelas. Tidak hanya menyuguhkan hiburan, acara ini juga menjadi ruang silaturahmi, networking, serta ajang mempererat kebersamaan dalam suasana yang nyaman dan penuh nostalgia. Dengan segmentasi audiens usia 35&ndash;60 tahun, kalangan profesional, eksekutif, dan komunitas pecinta musik nostalgia, event ini diharapkan menjadi event tahunan yang dinantikan serta memberikan nilai tambah promosi dan eksposur maksimal bagi para sponsor yang terlibat.', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01'
 WHERE o.email = 'demo.s3-entertainment-by-pt-suryono-sehat-sej@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01' AND ev.venue = 'Balai Sarbini, DKI Jakarta');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'VVIP Kursi Atas', 2000000, 33, 3
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VVIP Kursi Atas', 2000000, 33, 3, ''
 FROM events ev WHERE ev.title = 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01' AND ev.venue = 'Balai Sarbini, DKI Jakarta'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VVIP Kursi Atas');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'VVIP Kursi Depan', 1500000, 64, 6
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VVIP Kursi Depan', 1500000, 64, 6, ''
 FROM events ev WHERE ev.title = 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01' AND ev.venue = 'Balai Sarbini, DKI Jakarta'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VVIP Kursi Depan');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'VIP', 1300000, 24, 2
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 1300000, 24, 2, ''
 FROM events ev WHERE ev.title = 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01' AND ev.venue = 'Balai Sarbini, DKI Jakarta'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Platinum', 1000000, 162, 16
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Platinum', 1000000, 162, 16, ''
 FROM events ev WHERE ev.title = 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01' AND ev.venue = 'Balai Sarbini, DKI Jakarta'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Platinum');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Gold', 750000, 471, 47
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Gold', 750000, 471, 47, ''
 FROM events ev WHERE ev.title = 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01' AND ev.venue = 'Balai Sarbini, DKI Jakarta'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Gold');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Silver', 500000, 250, 25
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Silver', 500000, 250, 25, ''
 FROM events ev WHERE ev.title = 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01' AND ev.venue = 'Balai Sarbini, DKI Jakarta'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Silver');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'Bronze', 350000, 148, 14
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Bronze', 350000, 148, 14, ''
 FROM events ev WHERE ev.title = 'Alunan Musik Nostalgia (Memories Of The Soul) Vol. 01' AND ev.venue = 'Balai Sarbini, DKI Jakarta'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'Bronze');
 
@@ -1223,17 +1223,17 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'PGR Vol. 11 @Jakarta', 'Music', '', 'PGR Vol. 11 @Jakarta'
 FROM organizers o WHERE o.email = 'demo.pt-semua-pasti-gembira-1@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.pt-semua-pasti-gembira-1@wavy.seed' AND a.name = 'PGR Vol. 11 @Jakarta');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'PGR Vol. 11 @Jakarta', 'Music', 'JIExpo Kemayoran, Jakarta Pusat', '2026-11-07 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260525145212_6a13ffac08f80.jpeg', 'PGR Vol. 11 @Jakarta', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'PGR Vol. 11 @Jakarta', 'Music', 'JIExpo Kemayoran, Jakarta Pusat', '2026-11-07 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260525145212_6a13ffac08f80.jpeg', 'PGR Vol. 11 @Jakarta', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'PGR Vol. 11 @Jakarta'
 WHERE o.email = 'demo.pt-semua-pasti-gembira-1@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'PGR Vol. 11 @Jakarta' AND ev.venue = 'JIExpo Kemayoran, Jakarta Pusat');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PGR Vol. 11 - FESTIVAL PRESALE', 100000, 5000, 400
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PGR Vol. 11 - FESTIVAL PRESALE', 100000, 5000, 400, '&lt;ul&gt; &lt;li&gt;&lt;em&gt;&lt;strong&gt;Harga Belum termasuk pajak dan admin fee&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'PGR Vol. 11 @Jakarta' AND ev.venue = 'JIExpo Kemayoran, Jakarta Pusat'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PGR Vol. 11 - FESTIVAL PRESALE');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PGR Vol. 11 - VIP PRESALE', 250000, 300, 30
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PGR Vol. 11 - VIP PRESALE', 250000, 300, 30, '&lt;ul&gt; &lt;li&gt;&lt;em&gt;&lt;strong&gt;Harga Belum termasuk pajak dan admin fee&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt; &lt;/ul&gt;'
 FROM events ev WHERE ev.title = 'PGR Vol. 11 @Jakarta' AND ev.venue = 'JIExpo Kemayoran, Jakarta Pusat'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PGR Vol. 11 - VIP PRESALE');
 
@@ -1246,17 +1246,17 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'JONGFEST 2026', 'Music', '', '🎉 JONGFEST 2026 🎉 THE BIG FESTIVAL MUSIC LIVE IN MESUJI Bersiaplah menjadi bagian dari salah satu festival musik terbesar di Kabupaten Mesuji! JONG MESOEDJINEN dengan bangga memp'
 FROM organizers o WHERE o.email = 'demo.jong-mesoedjinen@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.jong-mesoedjinen@wavy.seed' AND a.name = 'JONGFEST 2026');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'JONGFEST 2026', 'Music', 'Alun-Alun Simpang Pematang Mesuji, Kab. Tulang Bawang', '2026-11-10 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260717192631_6a5a1f77042a2.jpg', '🎉 JONGFEST 2026 🎉 THE BIG FESTIVAL MUSIC LIVE IN MESUJI Bersiaplah menjadi bagian dari salah satu festival musik terbesar di Kabupaten Mesuji! JONG MESOEDJINEN dengan bangga mempersembahkan JONGFEST 2026 , menghadirkan penampilan spesial dari xxxxx xxxx xxxxx , xxxxxxxxx , xxxxxxxxxx dan xxxxx xxxx dalam satu panggung spektakuler. Nikmati malam penuh hiburan dengan lagu-lagu hits yang akan membuat seluruh penonton bernyanyi bersama. Selain konser musik, pengunjung juga dapat menikmati berbagai tenant kuliner UMKM, area festival, serta beragam aktivitas menarik lainnya. Jangan lewatkan kesempatan menjadi bagian dari sejarah festival musik terbesar di Mesuji! 🎤 Line Up xxxxx xxxx xxxxx xxxxxxxxxx xxxxxxxxx xxxxx xxxx INFUSE BAND (Line Up akan ditampilkan bertahap setelah tiket Early Bird terpenuhi!) 📅 Informasi Acara Tanggal: 10 November 2026 Waktu: 16.00 WIB – 22.00 WIB Lokasi: Alun-Alun Simpang Pematang Kecamatan Simpang Pematang, Kabupaten Mesuji, Lampung 🎟️ Kategori Tiket Early Bird (Kuota Terbatas) Presale Reguler VIP (jika tersedia) Tiket yang telah dibeli tidak dapat dikembalikan atau ditukar kecuali acara dibatalkan oleh penyelenggara.', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'JONGFEST 2026', 'Music', 'Alun-Alun Simpang Pematang Mesuji, Kab. Tulang Bawang', '2026-11-10 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260717192631_6a5a1f77042a2.jpg', '🎉 JONGFEST 2026 🎉 THE BIG FESTIVAL MUSIC LIVE IN MESUJI Bersiaplah menjadi bagian dari salah satu festival musik terbesar di Kabupaten Mesuji! JONG MESOEDJINEN dengan bangga mempersembahkan JONGFEST 2026 , menghadirkan penampilan spesial dari xxxxx xxxx xxxxx , xxxxxxxxx , xxxxxxxxxx dan xxxxx xxxx dalam satu panggung spektakuler. Nikmati malam penuh hiburan dengan lagu-lagu hits yang akan membuat seluruh penonton bernyanyi bersama. Selain konser musik, pengunjung juga dapat menikmati berbagai tenant kuliner UMKM, area festival, serta beragam aktivitas menarik lainnya. Jangan lewatkan kesempatan menjadi bagian dari sejarah festival musik terbesar di Mesuji! 🎤 Line Up xxxxx xxxx xxxxx xxxxxxxxxx xxxxxxxxx xxxxx xxxx INFUSE BAND (Line Up akan ditampilkan bertahap setelah tiket Early Bird terpenuhi!) 📅 Informasi Acara Tanggal: 10 November 2026 Waktu: 16.00 WIB – 22.00 WIB Lokasi: Alun-Alun Simpang Pematang Kecamatan Simpang Pematang, Kabupaten Mesuji, Lampung 🎟️ Kategori Tiket Early Bird (Kuota Terbatas) Presale Reguler VIP (jika tersedia) Tiket yang telah dibeli tidak dapat dikembalikan atau ditukar kecuali acara dibatalkan oleh penyelenggara.', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'JONGFEST 2026'
 WHERE o.email = 'demo.jong-mesoedjinen@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'JONGFEST 2026' AND ev.venue = 'Alun-Alun Simpang Pematang Mesuji, Kab. Tulang Bawang');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'NORMAL FESTIVAL', 119000, 1200, 120
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'NORMAL FESTIVAL', 119000, 1200, 120, 'Dapatkan harga terbaik JONGFEST 2026! Kuota FESTIVAL terbatas. Berlaku hingga kuota habis. Amankan tiketmu sekarang!.'
 FROM events ev WHERE ev.title = 'JONGFEST 2026' AND ev.venue = 'Alun-Alun Simpang Pematang Mesuji, Kab. Tulang Bawang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'NORMAL FESTIVAL');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'NORMAL VIP', 139000, 700, 70
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'NORMAL VIP', 139000, 700, 70, 'Dapatkan harga terbaik JONGFEST 2026! Kuota VIP terbatas. Berlaku hingga kuota habis. Amankan tiketmu sekarang!'
 FROM events ev WHERE ev.title = 'JONGFEST 2026' AND ev.venue = 'Alun-Alun Simpang Pematang Mesuji, Kab. Tulang Bawang'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'NORMAL VIP');
 
@@ -1269,14 +1269,19 @@ INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
 SELECT o.id, 'HIGH SCHOOL FEST 2026', 'Music', '', 'School is back, but make it a festival!🎒 High School Fest is The Biggest School Themed Festival Ever! So, saatnya seru-seruan menikmati musik, main bareng, dan ngerasain kembali v'
 FROM organizers o WHERE o.email = 'demo.new-gen-entertainment@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.new-gen-entertainment@wavy.seed' AND a.name = 'HIGH SCHOOL FEST 2026');
-INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-SELECT o.id, a.id, 'HIGH SCHOOL FEST 2026', 'Music', 'Stadiun Madya B, GBK, Jakarta Selatan', '2026-11-28 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260821130357_6a87ea4d14a1a.jpg', 'School is back, but make it a festival!🎒 High School Fest is The Biggest School Themed Festival Ever! So, saatnya seru-seruan menikmati musik, main bareng, dan ngerasain kembali vibes sekolah dengan line up yang ga kalah asik dari tahun sebelumnya!! 28–29 November 2026, Stadion Madya GBK, Jakarta. DON’T MISS IT!', 'published'
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'HIGH SCHOOL FEST 2026', 'Music', 'Stadiun Madya B, GBK, Jakarta Selatan', '2026-11-28 18:00:00'::timestamptz, 'https://assets.loket.com/neo/production/images/banner/20260821130357_6a87ea4d14a1a.jpg', 'School is back, but make it a festival!🎒 High School Fest is The Biggest School Themed Festival Ever! So, saatnya seru-seruan menikmati musik, main bareng, dan ngerasain kembali vibes sekolah dengan line up yang ga kalah asik dari tahun sebelumnya!! 28–29 November 2026, Stadion Madya GBK, Jakarta. DON’T MISS IT!', 'published', '[]', ''
 FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'HIGH SCHOOL FEST 2026'
 WHERE o.email = 'demo.new-gen-entertainment@wavy.seed'
 AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'HIGH SCHOOL FEST 2026' AND ev.venue = 'Stadiun Madya B, GBK, Jakarta Selatan');
-INSERT INTO ticket_categories (event_id, name, price, quota, sold)
-SELECT ev.id, 'PRESALE 1 - (2 DAYS PASS) 28-29 November 2026', 180000, 1000, 100
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'PRESALE 1 - (2 DAYS PASS) 28-29 November 2026', 180000, 1000, 100, '&lt;p&gt;DAY 1&lt;/p&gt;'
 FROM events ev WHERE ev.title = 'HIGH SCHOOL FEST 2026' AND ev.venue = 'Stadiun Madya B, GBK, Jakarta Selatan'
 AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'PRESALE 1 - (2 DAYS PASS) 28-29 November 2026');
+
+
+-- fallback: events tanpa gallery pakai poster sebagai gallery
+UPDATE events SET gallery = ('["' || replace(replace(poster_url, '\\', '\\\\'), '"', '\\"') || '"]')
+WHERE gallery IS NULL OR gallery = '[]' OR gallery = ' ';
 
 COMMIT;

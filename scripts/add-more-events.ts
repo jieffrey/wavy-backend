@@ -16,7 +16,23 @@ const slugify = (s: string) =>
   (s ?? "").toLowerCase().replace(/&/g, "and").replace(/["'<>]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "").slice(0, 48);
 
 function stripHtml(s?: string | null) {
-  return (s ?? "").replace(/<br\s*\/?>/gi, "\n").replace(/<\/p>/gi, "\n").replace(/<[^>]*>/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+  return (s ?? "")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>/gi, "\n")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// pisahkan bagian "Syarat & Ketentuan" dari deskripsi (kalau ada)
+function splitSNK(desc: string) {
+  const m = desc.match(/(syarat\s*(&|dan)\s*ketentuan|syarat\s+ketentuan)/i);
+  if (!m) return { description: desc, terms: "" };
+  const i = m.index ?? -1;
+  if (i <= 0) return { description: desc, terms: "" };
+  return { description: desc.slice(0, i).trim(), terms: desc.slice(i).trim() };
 }
 
 async function getJson(url: string) {
@@ -49,7 +65,14 @@ async function scrapeArtatix() {
           category: d?.eventCategory?.name ?? "",
           image: `https://assets.artatix.co.id/${d?.image ?? it.image}`,
           link: `https://www.artatix.co.id/event/${it.slug}`,
-          description: stripHtml(d?.description),
+          description: (() => {
+            const { description, terms } = splitSNK(stripHtml(d?.description));
+            return description || (d?.description ? "Konser " + (stripHtml(d?.description) || it.name) : "");
+          })(),
+          terms_conditions: (() => {
+            const { terms } = splitSNK(stripHtml(d?.description));
+            return terms || "";
+          })(),
         });
       } catch {
         /* skip detail failures */
@@ -96,7 +119,9 @@ async function scrapeLoket() {
       e.organizer = d.organization_name ?? "";
       e.category = "Konser";
       e.image = d.event_banner ?? "";
-      e.description = stripHtml(d.description);
+      const { description, terms } = splitSNK(stripHtml(d.description));
+      e.description = description || (d.description ? "Konser " + (stripHtml(d.description) || e.title) : "");
+      e.terms_conditions = terms;
       e.gallery = (d.event_gallery ?? []).map((g: any) => g.image_path).filter(Boolean);
       e.tiers = ((d.schedules?.[0]?.groups ?? []).flatMap((g: any) => g.tickets ?? []))
         .filter((t: any) => t.available !== false && Number(t.price) > 0)
@@ -105,6 +130,7 @@ async function scrapeLoket() {
           price: Number(t.price),
           quota: Math.min(Number(t.quantity) || 500, 5000),
           sold: Math.min(Math.floor(Number(t.quantity ?? 0) * 0.1), 400),
+          benefits: stripHtml(t.description),
         }));
       enriched.push(e);
     } catch {

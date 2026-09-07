@@ -24,6 +24,8 @@ type ConcertDetailRow = {
   date: Date;
   poster_url: string;
   description: string;
+  gallery: string;
+  terms_conditions: string;
   status: string;
   artist_name: string;
   genre: string;
@@ -40,6 +42,7 @@ type CategoryRow = {
   quota: number;
   sold: number;
   remaining: number;
+  benefits: string;
 };
 
 type ReviewRow = {
@@ -73,7 +76,8 @@ export const concertService = {
     id: number,
   ): Promise<
     Result<
-      ConcertDetailRow & {
+      Omit<ConcertDetailRow, "gallery"> & {
+        gallery: string[];
         ticket_categories: CategoryRow[];
         reviews: ReviewRow[];
         avg_rating: number;
@@ -90,6 +94,12 @@ export const concertService = {
       WHERE e.id = ${id} AND e.status = 'published'
     `;
     if (!event) return fail(404, "concert not found");
+    let gallery: string[] = [];
+    try {
+      gallery = JSON.parse(event.gallery || "[]");
+    } catch {
+      gallery = [];
+    }
     const ticket_categories = await sql<CategoryRow[]>`
       SELECT tc.*, (tc.quota - tc.sold) AS remaining
       FROM ticket_categories tc
@@ -109,6 +119,7 @@ export const concertService = {
     `;
     return ok({
       ...event,
+      gallery,
       ticket_categories,
       reviews,
       avg_rating: rating.avg_rating,

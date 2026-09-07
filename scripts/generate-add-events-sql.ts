@@ -5,6 +5,7 @@ const sqlPath = `${import.meta.dir}/seed-scraped.sql`;
 let sql = readFileSync(sqlPath, "utf8");
 
 const esc = (s: string) => (s ?? "").replace(/'/g, "''");
+const jsonEsc = (v: unknown) => esc(JSON.stringify(v ?? []));
 
 // existing organizer emails in the file (to reuse without dup)
 const existingOrgs = new Set([...sql.matchAll(/demo\.[a-z0-9-]+@wavy\.seed/g)].map((m) => m[0]));
@@ -32,9 +33,11 @@ for (const e of newEvents) {
   const low = Number(e.low ?? 0);
   const image = (e.image ?? "").trim() || (e.gallery && e.gallery[0]) || "";
   const description = (e.description ?? "").trim().slice(0, 3000);
+  const terms = (e.terms_conditions ?? "").trim().slice(0, 2000);
+  const gallery = (e.gallery ?? []).filter((g: any) => typeof g === "string").slice(0, 10);
   const org = e.organizer.trim() || "Event Organizer";
   const email = orgEmail(org);
-  const tiers = e.tiers && e.tiers.length ? e.tiers : [{ name: "Reguler", price: low, quota: 500, sold: 18 }];
+  const tiers = e.tiers && e.tiers.length ? e.tiers : [{ name: "Reguler", price: low, quota: 500, sold: 18, benefits: "" }];
 
   blocks.push(`-- Organizer: ${org}`);
   blocks.push(`INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)`);
@@ -45,8 +48,8 @@ for (const e of newEvents) {
   blocks.push(`SELECT o.id, '${esc(title)}', 'Music', '', '${esc(description).slice(0, 180)}'`);
   blocks.push(`FROM organizers o WHERE o.email = '${email}'`);
   blocks.push(`AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = '${email}' AND a.name = '${esc(title)}');`);
-  blocks.push(`INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)`);
-  blocks.push(`SELECT o.id, a.id, '${esc(title)}', 'Music', '${venue}', '${date} ${time}'::timestamptz, '${esc(image)}', '${esc(description)}', 'published'`);
+  blocks.push(`INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)`);
+  blocks.push(`SELECT o.id, a.id, '${esc(title)}', 'Music', '${venue}', '${date} ${time}'::timestamptz, '${esc(image)}', '${esc(description)}', 'published', '${jsonEsc(gallery)}', '${esc(terms)}'`);
   blocks.push(`FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = '${esc(title)}'`);
   blocks.push(`WHERE o.email = '${email}'`);
   blocks.push(`AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = '${esc(title)}' AND ev.venue = '${venue}');`);
@@ -54,8 +57,9 @@ for (const e of newEvents) {
     const price = Number(t.price ?? low);
     const quota = Math.min(Number(t.quota ?? 500) || 500, 5000);
     const sold = Math.min(Math.max(Number(t.sold ?? 0), 0), quota - 1);
-    blocks.push(`INSERT INTO ticket_categories (event_id, name, price, quota, sold)`);
-    blocks.push(`SELECT ev.id, '${esc(String(t.name ?? "Reguler"))}', ${price}, ${quota}, ${sold}`);
+    const benefits = (t.benefits ?? "").trim().slice(0, 500);
+    blocks.push(`INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)`);
+    blocks.push(`SELECT ev.id, '${esc(String(t.name ?? "Reguler"))}', ${price}, ${quota}, ${sold}, '${esc(benefits)}'`);
     blocks.push(`FROM events ev WHERE ev.title = '${esc(title)}' AND ev.venue = '${venue}'`);
     blocks.push(`AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = '${esc(String(t.name ?? "Reguler"))}');`);
     tierCount++;
@@ -65,6 +69,11 @@ for (const e of newEvents) {
 }
 
 const newBlock = blocks.join("\n");
-sql = sql.replace(/\nCOMMIT;$/m, `\n${newBlock}\nCOMMIT;`);
+const backfill = `
+-- fallback: events tanpa gallery pakai poster sebagai gallery
+UPDATE events SET gallery = ('["' || replace(replace(poster_url, '\\\\', '\\\\\\\\'), '"', '\\\\"') || '"]')
+WHERE gallery IS NULL OR gallery = '[]' OR gallery = ' ';
+`;
+sql = sql.replace(/\nCOMMIT;$/m, `\n${newBlock}\n${backfill}\nCOMMIT;`);
 writeFileSync(sqlPath, sql);
 console.log(`Appended ${eventCount} events (${tierCount} ticket categories) to seed-scraped.sql`);
