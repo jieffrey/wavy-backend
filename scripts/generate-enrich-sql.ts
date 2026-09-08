@@ -19,7 +19,7 @@ for (const e of merged) {
   const title = esc(e.title);
   const venue = esc(e.venue);
   const description = (e.description ?? "").trim().slice(0, 3000);
-  const terms = (e.terms_conditions ?? "").trim().slice(0, 2000);
+  const terms = (e.terms_conditions ?? "").trim();
   const gallery = (e.gallery ?? []).filter((g: any) => typeof g === "string").slice(0, 10);
   const gallerySql = gallery.length ? `'${jsonEsc(gallery)}'` : `gallery`;
   const seatmap = e.seatmap ? `'${jsonEsc(e.seatmap)}'` : `''`;
