@@ -79,7 +79,7 @@ export const concertService = {
     Result<
       Omit<ConcertDetailRow, "gallery" | "seatmap"> & {
         gallery: string[];
-        seatmap: { name: string; image: string } | null;
+        seatmap: { name: string; images: string[] } | null;
         ticket_categories: CategoryRow[];
         reviews: ReviewRow[];
         avg_rating: number;
@@ -102,9 +102,14 @@ export const concertService = {
     } catch {
       gallery = [];
     }
-    let seatmap: { name: string; image: string } | null = null;
+    let seatmap: { name: string; images: string[] } | null = null;
     try {
-      seatmap = JSON.parse(event.seatmap || "null");
+      const parsed = JSON.parse(event.seatmap || "null") as
+        | { name: string; image?: string; images?: string[] }
+        | null;
+      if (parsed) {
+        seatmap = { name: parsed.name, images: parsed.images?.length ? parsed.images : parsed.image ? [parsed.image] : [] };
+      }
     } catch {
       seatmap = null;
     }

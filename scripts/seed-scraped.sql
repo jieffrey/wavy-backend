@@ -6628,4 +6628,1355 @@ UPDATE events SET terms_conditions = '<table class="content toc"><tbody><tr></tr
 		</tr></tbody></table>' WHERE title = 'PGR Vol. 11 @Jakarta' AND venue = 'JIExpo Kemayoran, Jakarta Pusat';
 UPDATE events SET terms_conditions = '<p><strong>Peraturan Pengunjung</strong></p><ol><li>Wajib menunjukkan e-ticket beserta identitas diri saat masuk.</li><li>Dilarang membawa senjata tajam, narkoba, minuman keras, dan barang berbahaya lainnya.</li><li>Dilarang membawa makanan dan minuman dari luar area acara.</li><li>Penyelenggara berhak melakukan pemeriksaan barang bawaan demi keamanan bersama.</li><li>Dengan membeli tiket, pengunjung dianggap menyetujui seluruh ketentuan yang berlaku.</li></ol><p><br></p><p>Follow Instagram & tiktok: <strong>@jongmesoedjinen</strong> untuk informasi terbaru mengenai line up, rundown, dan berbagai kejutan lainnya.</p><p><br></p><p>Sampai jumpa di <strong>JONGFEST 2026</strong>! 🔥🎶</p>' WHERE title = 'JONGFEST 2026' AND venue = 'Alun-Alun Simpang Pematang Mesuji, Kab. Tulang Bawang';
 UPDATE events SET terms_conditions = '<p class="ql-align-center"><strong >TERMS & CONDITIONS</strong></p><p class="ql-align-center"><strong >HIGH SCHOOL FEST 2026</strong></p><p class="ql-align-center"><br></p><p class="ql-align-center"><em >28–29 November 2026 • Stadion Madya GBK, Jakarta</em></p><p><span >Dengan membeli tiket High School Fest 2026 (“HSF”), kamu dianggap telah membaca, memahami, menyetujui, dan bersedia mengikuti seluruh syarat dan ketentuan yang berlaku selama acara berlangsung. Please read this carefully before coming to the festival.</span></p><p><br></p><p><strong >1. PEMBELIAN & PENGGUNAAN TIKET</strong></p><ul><li><span >Tiket resmi hanya dapat dibeli melalui official ticketing partner yang ditunjuk oleh penyelenggara. Penyelenggara tidak bertanggung jawab atas tiket yang dibeli melalui pihak atau kanal tidak resmi.</span></li><li><span >1 (satu) tiket berlaku untuk 1 (satu) orang sesuai kategori dan tanggal yang tertera pada tiket.</span></li><li><span >Tiket tidak boleh diperjualbelikan atau digunakan untuk kepentingan komersial, promosi, kontes, giveaway, atau kegiatan lainnya tanpa persetujuan tertulis dari penyelenggara.</span></li><li><span >Penyelenggara berhak membatalkan tiket yang diperoleh atau digunakan dengan cara yang melanggar ketentuan.</span></li><li><span >Batas maksimal pembelian tiket per transaksi mengikuti ketentuan yang tercantum pada masing-masing kategori tiket.</span></li><li><span >Jaga tiket dan data pembelianmu. Penyelenggara tidak bertanggung jawab atas tiket atau e-ticket yang hilang, disalahgunakan, atau berpindah tangan karena kelalaian pemilik.</span></li><li><span >E-ticket akan dikirimkan dalam bentuk QR code yang akan di kirimkan via e-mail kalian.</span></li><li><span >Mohon data - data dapat diisi dengan benar pada halaman checkout, karena segala macam kesalahan dalam memasukkan data - data, bukan menjadi tanggung jawab pihak promotor.</span></li><li><strong >PIHAK PROMOTOR TIDAK MENYEDIAKAN ATAU MENJUAL TIKET DALAM BENTUK WRISTBAND, ID PASS, MAUPUN BENTUK TIKET FISIK LAINNYA</strong></li></ul><p><br></p><p><strong >2. E-TICKET & CHECK-IN</strong></p><ul><li><span >E-ticket akan tersedia melalui kanal resmi ticketing sesuai mekanisme pembelian.</span></li><li><span >Saat check-in atau penukaran tiket, pengunjung wajib menunjukkan e-ticket dan identitas yang sesuai apabila diminta oleh panitia atau crew ground-handling.</span></li><li><span >E-ticket bersifat pribadi dan tidak diperbolehkan untuk dibagikan ke orang lain. Barcode/QR code yang telah digunakan tidak dapat digunakan kembali.</span></li><li><span >Informasi mengenai check-in, penukaran tiket, dan gate akan diumumkan melalui kanal resmi High School Fest.</span></li></ul><p><br></p><p><strong >3. REFUND, EXCHANGE & EVENT CHANGES</strong></p><ul><li><span >Tiket yang telah dibeli bersifat final dan tidak dapat ditukar, dialihkan, maupun dikembalikan (refund) dengan alasan apa pun. </span></li><li><span >Apabila terjadi pembatalan acara, kebijakan refund akan mengikuti ketentuan resmi yang diumumkan oleh penyelenggara.</span></li><li><span >Jadwal, performer, program, venue area, dan ketentuan acara dapat berubah sewaktu-waktu. Setiap perubahan akan diinformasikan melalui kanal resmi HSF.</span></li><li><span >Biaya pribadi seperti transportasi, akomodasi, atau biaya lainnya di luar harga tiket bukan menjadi tanggung jawab penyelenggara.</span></li></ul><p><br></p><h3><strong >4. BARANG YANG DILARANG & DIPERBOLEHKAN</strong></h3><p><strong >        Barang yang tidak diperbolehkan dibawa masuk ke area acara:</strong></p><ul><li><span >Senjata tajam, senjata api, atau benda lain yang berpotensi membahayakan.</span></li><li><span >Rokok, </span><strong >kecuali dalam keadaan masih tersegel</strong><span >.</span></li><li><span >Narkotika, obat-obatan terlarang, dan zat ilegal lainnya.</span></li><li><span >Makanan dan minuman dari luar venue.</span></li><li><span >Payung.</span></li><li><span >Flare, kembang api, bahan mudah terbakar, laser pointer, dan benda lain yang berpotensi memicu kebakaran.</span></li><li><span >Drone, kamera profesional, serta lensa tele/jarak jauh.</span></li><li><span >Tongsis/selfie stick, tripod, monopod, pengeras suara/TOA, tiang banner, dan bendera.</span></li><li><span >Peralatan audio/video profesional lainnya yang tidak diperkenankan oleh penyelenggara.</span></li><li><span >Hewan peliharaan.</span></li><li><span >Benda lain yang dinilai dapat membahayakan atau mengganggu keamanan dan kenyamanan acara berdasarkan keputusan petugas.</span></li></ul><p><strong >        Barang yang diperbolehkan dibawa masuk dengan ketentuan:</strong></p><ul><li><span >Botol minum berbahan non-kaca, </span><strong >dalam keadaan kosong saat melewati pemeriksaan di gate</strong><span >.</span></li><li><span >Kosmetik dan kebutuhan pribadi dalam jumlah yang wajar.</span></li><li><span >Jas hujan.</span></li><li><span >Stroller anak dan kursi roda, dengan tetap mengikuti arahan petugas.</span></li><li><span >Parfum dengan kapasitas maksimal </span><strong >15 ml</strong><span > atau ukuran travel size.</span></li></ul><h3><strong >5. FOTO, VIDEO & KONTEN</strong></h3><ul><li><span >Kamera pribadi diperbolehkan selama tidak menggunakan peralatan yang termasuk dalam daftar barang yang dilarang.</span></li><li><span >Live streaming, penggunaan drone, serta aktivitas dokumentasi untuk kepentingan komersial tanpa izin dari penyelenggara tidak diperbolehkan.</span></li><li><span >Penggunaan flash dapat dibatasi atau dilarang pada momen tertentu demi menjaga kenyamanan performer dan pengunjung.</span></li><li><span >Penyelenggara berhak mengambil foto, video, atau rekaman suasana selama acara berlangsung yang dapat menampilkan pengunjung untuk keperluan dokumentasi, publikasi, dan promosi HSF.</span></li></ul><p><strong >6. ADMISSION & RE-ENTRY</strong></p><ul><li><span >Pengunjung wajib menggunakan tiket/tanda masuk sesuai ketentuan selama berada di area festival.</span></li><li><span >Barcode/QR pada tiket dapat dipindai saat memasuki venue.</span></li><li><span >Pengunjung yang tidak mematuhi prosedur security check dapat ditolak masuk.</span></li><li><span >Setelah keluar dari venue, pengunjung tidak dapat masuk kembali ke area venue.</span></li><li><span >Tiket atau akses masuk dapat dinyatakan hangus apabila ditemukan pelanggaran terhadap ketentuan HSF.</span></li></ul><p><strong >7. SAFETY & CODE OF CONDUCT</strong></p><ul><li><span >HSF berkomitmen menciptakan festival yang aman, nyaman, dan welcoming untuk semua.</span></li><li><span >Segala bentuk pelecehan, kekerasan, diskriminasi, tindakan mengganggu, atau perilaku yang membahayakan orang lain tidak ditoleransi.</span></li><li><span >Pengunjung wajib mengikuti arahan panitia dan petugas keamanan selama acara.</span></li><li><span >Penyelenggara berhak mengeluarkan pengunjung dari venue apabila melakukan pelanggaran, mengganggu ketertiban, atau dianggap membahayakan keamanan dan kenyamanan orang lain. Tiket yang telah dibeli tidak akan mendapatkan refund.</span></li><li><span >Dilarang melempar barang ke panggung atau area penonton. Keep yourself and everyone around you safe.</span></li><li><span >Acara dapat menggunakan suara dengan volume tinggi serta lighting/visual effects yang intens.</span></li></ul><p><strong >8. PERUBAHAN KETENTUAN</strong></p><p><span >Penyelenggara berhak mengubah, menambah, atau memperbarui Terms & Conditions ini apabila diperlukan. Pastikan kamu selalu mengecek informasi terbaru melalui kanal resmi High School Fest sebelum datang ke acara.</span></p><p><strong >FOR MORE INFO</strong></p><p><span >Follow dan cek seluruh update resmi High School Fest untuk informasi ticketing, lineup, rundown, venue, gate, dan ketentuan terbaru.</span></p>' WHERE title = 'HIGH SCHOOL FEST 2026' AND venue = 'Stadiun Madya B, GBK, Jakarta Selatan';
+-- ============================================================
+-- MANUAL T&C (pasted from official event sites) + SEATMAPS
+-- ============================================================
+UPDATE events SET terms_conditions = 'Terms & Conditions
+
+General
+
+Ticket(s) are sold by the Promoters directly to the consumer. Any tickets purchased by businesses or traders in breach of the Terms & Conditions of ticket sale will be canceled. By accepting these terms and conditions you confirm that you are a consumer.
+Tiket dijual secara langsung oleh Promotor ke konsumen. Tiket apa pun yang dibeli oleh pelaku usaha atau pedagang yang melanggar Syarat & Ketentuan penjualan tiket akan dibatalkan. Dengan menerima syarat dan ketentuan ini, Anda mengkonfirmasi bahwa Anda adalah konsumen.
+
+Tickets ownership cannot be transferred for commercial purposes, including but not limited to prizes, competitions, contests or sweepstakes. Tickets sold or used in breach of this condition may be nullified without a refund, where the Ticket Holder will be refused admission into the concert area with no exception. The promoter is not responsible for the negligence of the Ticket Buyer which results in the ticket falling into the hands of other parties which can be used as an entry requirement, thereby eliminating the Ticket Buyer''s rights to enter the venue area.
+Tiket tidak dapat dialihkan kepemilikan dengan tujuan komersial, termasuk namun tidak terbatas kepada hadiah, kompetisi, kontes, atau undian. Tiket yang dijual atau digunakan dengan melanggar persyaratan ini dapat dibatalkan tanpa pengembalian dana, dan Pemegang Tiket akan ditolak masuk ke dalam area acara tanpa terkecuali. Penyelenggara tidak bertanggung jawab atas kelalaian Pembeli Tiket yang mengakibatkan Tiket jatuh ke tangan orang lain dan dipergunakan sebagai tanda masuk, sehingga menghilangkan hak Pembeli Tiket untuk masuk ke area acara.
+
+Your Ticket/s will IMMEDIATELY BECOME INVALID if resold OR OFFERED FOR SALE. Tickets sold via third parties or other unauthorized outlets, including online auction sites are not valid for admission. The resale of a Ticket renders it invalid and may lead to refusal of entry.
+Tiket Anda LANGSUNG MENJADI TIDAK VALID jika dijual kembali ATAU DITAWARKAN UNTUK DIJUAL. Tiket yang dijual melalui pihak ketiga dan outlet tidak resmi lainnya, termasuk situs lelang online tidak berlaku untuk tiket masuk. Penjualan kembali Tiket menjadikannya tidak sah dan dapat menyebabkan penolakan masuk.
+
+Every Ticket Holder who comes to the event area is responsible for their own safety, health and personal security. The Band/promoter/Management are not responsible for, including but not limited to any injury or damage that may occur to Ticket Holders during or in the event.
+Setiap Pemegang Tiket yang datang ke area acara bertanggung jawab atas keselamatan, kesehatan, dan keamanan pribadinya sendiri. Para Band/Penyelenggara/Manajemen tidak bertanggung jawab untuk, termasuk namun tidak terbatas pada cedera atau kerusakan yang mungkin terjadi kepada Pemegang Tiket selama atau di dalam acara tersebut.
+
+Your Ticket purchase constitutes a personal, revocable license and, at all times, remains the property of the promoters.
+Tiket Anda merupakan lisensi pribadi yang dapat dibatalkan dan, sepanjang waktu, tetap menjadi milik promotor.
+
+All ticket sales are final. Tickets that have been sold cannot be exchanged and can not be cashed out.
+Semua penjualan Tiket adalah final. Tiket yang telah terjual tidak dapat ditukar dan tidak dapat diuangkan kembali.
+
+By purchasing the tickets for the ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA, you agree to the collection, storage and limited use of your personal data for the purposes of the ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA in accordance with Indonesian prevailing regulations concerning Personal Data Protection.
+Dengan membeli Tiket acara ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA, Anda telah menyetujui pengumpulan, penyimpanan dan penggunaan data pribadi Anda secara terbatas untuk keperluan acara ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA sesuai dengan ketentuan peraturan perundang-undangan yang berlaku di Indonesia terkait Perlindungan Data Pribadi.
+
+By purchasing tickets to the ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA, Ticket Buyers and Ticket Holders agree to comply with all the Terms & Conditions of the event that are determined and valid from time to time.
+Dengan membeli Tiket untuk ke acara konser ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA, maka Pembeli Tiket dan Pemegang Tiket setuju untuk menaati setiap dan seluruh Syarat & Ketentuan acara yang ditetapkan dan berlaku dari waktu ke waktu.
+
+The Ticket Holder grants the Promoter and the right to use, in perpetuity, all or any part of the recording of any video and still footage made of the Ticket holder''s appearance on any channels, including but not limited to magazine, social media, and TV for broadcast in any and all media globally used for advertising, publicity and promotions relating thereto without any further approval of yours.
+Pemegang Tiket memberikan hak kepada Penyelenggara acara untuk melakukan rekaman video dan gambar baik sebagian atau semua, pada kanal/platform apapun, termasuk namun tidak terbatas pada majalah, media sosial, dan saluran TV untuk disiarkan di media apapun di seluruh dunia, untuk iklan, publisitas dan promosi yang berkaitan dengan konser tanpa persetujuan lebih lanjut dari Pemegang Tiket.
+
+The promoter has the right to refuse admission to and/or evict Ticket-Holders who do not abide by the Terms and Conditions of the event.
+Penyelenggara acara memiliki hak untuk menolak masuk dan/atau mengeluarkan orang-orang yang tidak menaati syarat dan ketentuan acara.
+
+The promoter has the right to process and prosecute in accordance with the provisions of the prevailing laws and regulations, both civil procedure and criminal procedure against people who obtain tickets through illegal means, including but not limited to forging or duplicating valid tickets, or obtaining the tickets in a way that is not in accordance with what has been determined by the promoter, as stated in these Terms and Conditions.
+Penyelenggara berhak untuk memproses dan menuntut secara hukum sesuai dengan ketentuan peraturan perundang-undangan yang berlaku baik secara perdata maupun secara pidana terhadap orang-orang yang memperoleh Tiket dengan cara yang tidak sah termasuk namun tidak terbatas pada cara melakukan pemalsuan atau menggandakan Tiket yang sah atau memperoleh Tiket dengan cara yang tidak sesuai dengan yang telah ditentukan oleh Penyelenggara sebagaimana dalam Syarat dan Ketentuan ini.
+
+Please check our Instagram account (@pkentertainment.id) periodically for more information about the ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA.
+Mohon cek akun Instagram kami (@pkentertainment.id) secara berkala untuk informasi lebih lanjut seputar acara ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA.
+
+Ticketing
+
+Tickets can be purchased on Loket.com via enhypeninjakarta.com. Tickets are only for admission to the ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA.
+Tiket dapat dibeli di Loket.com melalui enhypeninjakarta.com. Tiket dapat digunakan untuk masuk ke acara konser ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA.
+
+Ticket price excludes 10% government tax, 6% ticketing platform fee and any other applicable fees.
+Harga Tiket tidak termasuk 10% pajak pemerintah, 6% biaya platform tiket dan biaya lain yang berlaku.
+
+ENGENE MEMBERSHIP Presale and General Onsale tickets are limited to a maximum of 6 (six) per transaction within the same category. 1 (one) email address and 1 (one) phone number is limited to 1 (one) transaction.
+Penjualan ENGENE MEMBERSHIP Presale dan General On-Sale dibatasi maksimal 6 (enam) per transaksi dalam kategori yang sama. 1 (satu) alamat email dan 1 (satu) nomor telepon dibatasi 1 (satu) transaksi.
+
+To participate in the ENGENE MEMBERSHIP PRESALE, you must apply for the ENGENE MEMBERSHIP PRESALE in advance on WEVERSE. Only ENGENE MEMBERSHIP (GLOBAL) holders are eligible to participate in the ENGENE MEMBERSHIP PRESALE. Please take note of the schedule, as application is not possible outside of the application period and make sure to check the correct time and date for different time zones.
+Untuk mengikuti ENGENE MEMBERSHIP PRESALE, Anda harus melakukan pendaftaran ENGENE MEMBERSHIP PRESALE terlebih dahulu melalui WEVERSE. Hanya pemegang ENGENE MEMBERSHIP (GLOBAL) yang berhak mengikuti ENGENE MEMBERSHIP PRESALE. Harap memperhatikan jadwal yang telah ditentukan, karena pendaftaran tidak dapat dilakukan di luar periode yang ditetapkan. Pastikan juga untuk memeriksa tanggal dan waktu yang sesuai dengan zona waktu masing-masing.
+
+Purchasing tickets for the ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA must use the name according to a valid photo ID. Make sure to buy tickets using your valid and correct data (ID Card/KK/KTP/SIM/Passport). Your ticket(s) cannot be changed and/or modified once the purchase has been made.
+Pembelian tiket konser ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA wajib menggunakan Nama sesuai dengan kartu identitas yang sah. Pastikan Anda melakukan pembelian Tiket dengan menggunakan data Anda yang sah dan benar (Kartu Identitas/KK/KTP/SIM/Paspor). Tiket Anda tidak dapat diubah dan/atau dimodifikasi setelah pembelian telah dilaksanakan.
+
+The Ticket Holder must occupy the seat or position that has been assigned by the promoter according to the category of ticket purchased.
+Pemegang Tiket wajib menempati tempat duduk atau posisi yang telah ditentukan oleh pihak Penyelenggara sesuai dengan kategori Tiket yang dibeli.
+
+In the event of a canceled concert, tickets will be refunded in accordance with the provisions of the promoter. Refunds do not include Platform Fees, Convenience Fees, or any other personal costs of the Ticket Buyer (e.g. travel expenses, accommodation expenses, etc).
+Jika terjadi pembatalan konser, maka Tiket akan dikembalikan sesuai dengan ketentuan Penyelenggara. Pengembalian harga Tiket tidak termasuk Biaya Platform, Biaya Lainnya dan biaya pribadi Pembeli Tiket (contoh biaya perjalanan, biaya akomodasi, dll).
+
+In order for Tickets to be valid on show day, the Ticket Buyer will be asked to provide the following items alongside their redeemed wristbands:
+a. Photo ID (ID Card/KK/KTP/SIM/Passport)
+Agar Tiket Anda valid di hari konser, Pembeli Tiket akan diminta untuk menyediakan barang dibawah ini bersama gelang Anda:
+a. Kartu identitas dengan foto (KK/KTP/SIM/Paspor)
+
+Reserve & Hold
+
+Reserve & Hold tickets are non-refundable and non-transferable. All payments made under the Reserve & Hold program are final and cannot be refunded, transferred, or exchanged for cash or other ticket categories.
+Tiket Reserve & Hold tidak dapat dikembalikan (non-refundable) dan tidak dapat dialihkan (non-transferable). Seluruh pembayaran yang telah dilakukan dalam program Reserve & Hold bersifat final dan tidak dapat dikembalikan, dialihkan, maupun ditukarkan dengan uang tunai atau kategori tiket lainnya.
+
+Ticket Buyers are required to complete payment according to the payment schedule provided at the time of purchase. Failure to complete any payment by the applicable deadline will result in the automatic cancellation and voiding of the reserved ticket, without prior notice. All payments already made will be forfeited and will not be refunded.
+Pembeli Tiket wajib menyelesaikan pembayaran sesuai dengan jadwal pembayaran yang telah ditentukan pada saat pembelian. Kegagalan untuk menyelesaikan salah satu pembayaran hingga batas waktu yang telah ditentukan akan mengakibatkan reservasi tiket secara otomatis dibatalkan dan dinyatakan tidak berlaku (void), tanpa pemberitahuan sebelumnya. Seluruh pembayaran yang telah dilakukan akan hangus dan tidak dapat dikembalikan.
+
+Payment deadlines are final. Requests for payment extensions, late payments, or reinstatement of cancelled tickets will not be accommodated.
+Batas waktu pembayaran bersifat final dan tidak dapat diperpanjang. Permintaan perpanjangan waktu pembayaran, pembayaran setelah batas waktu yang ditentukan, maupun pengaktifan kembali tiket yang telah dibatalkan tidak dapat dipenuhi.
+
+Reserve & Hold only secures the selected ticket(s) for the customer for the applicable payment period. It does not constitute full ticket ownership until the total ticket price has been fully paid. E-tickets will only be issued after the customer has successfully completed 100% of the total ticket payment and fulfilled all applicable payment requirements.
+Reserve & Hold hanya berfungsi untuk mengamankan tiket yang telah dipilih oleh Pembeli Tiket selama periode pembayaran yang berlaku. Reservasi tersebut belum dianggap sebagai kepemilikan tiket secara penuh sampai seluruh harga tiket telah dibayarkan. E-ticket hanya akan diterbitkan setelah Pembeli Tiket berhasil menyelesaikan 100% pembayaran harga tiket dan memenuhi seluruh persyaratan pembayaran yang berlaku.
+
+Wristband Redemption
+
+The time and place for wristband redemption will be announced and informed through the promoter''s social networking services (@pkentertainment.id), as well as the official website enhypeninjakarta.com. It is recommended to exchange the e-voucher beforehand to avoid queues on the day of the concert.
+Waktu dan tempat penukaran gelang akan diumumkan dan diinformasikan melalui media sosial promotor (@pkentertainment.id), serta situs web resmi www.enhypeninjakarta.com. Disarankan untuk menukarkan e-voucher sebelumnya untuk menghindari antrian pada hari konser.
+
+In order for Tickets to be valid for wristband redemption, the Ticket Buyer (Lead Booker) will be asked to provide all of the following items alongside their ticket(s):
+a. Photo ID (ID Card/KK/KTP/SIM/Passport)
+b. Loket.com E-Voucher
+Agar Tiket Anda valid untuk penukaran gelang, Pembeli Tiket (Pemesan Utama) akan diminta untuk menyediakan barang dibawah ini bersama tiket Anda:
+a. Kartu identitas asli (ID Card/KK/KTP/SIM/Paspor)
+b. E-Voucher Loket.com
+
+If wristband redemption is represented, please provide:
+a. Printed e-voucher
+b. Photo ID (ID Card/KK/KTP/SIM/Passpor) of the wristband redeemer
+c. Copy of the Photo ID (ID Card/KK/KTP/SIM/Passport) of the original ticket holder
+d. Power of Attorney signed on a Rp.10.000 Duty Stamp by the represented party
+Apabila penukaran gelang diwakili, mohon untuk menyediakan:
+a. E-voucher yang telah dicetak
+b. Kartu identitas asli (ID Card/KK/KTP/SIM/Paspor) penukar tiket
+c. Fotokopi identitas diri (KTP/KK/SIM/Paspor) pemesan tiket asli
+d. Surat Kuasa yang ditandatangani di atas materai Rp.10.000 oleh pihak yang diwakili
+
+The promoter will not, for any reason, replace lost or damaged wristbands.
+Penyelenggara tidak akan memberikan penggantian gelang yang hilang atau rusak karena alasan apa pun.
+
+Health and Safety
+
+For audiences who feel unwell, it is highly recommended to wear a mask throughout the event.
+Bagi penonton yang merasa kurang sehat, sangat disarankan untuk menggunakan masker selama acara berlangsung.
+
+For safety reasons, individuals with disabilities and pregnant women are advised not to be in the standing area. Children under the age of 12 (twelve) and individuals under the height of 1.2m are not allowed in the standing area. Please contact our customer support for more information.
+Demi alasan keamanan, penonton difabel dan wanita hamil disarankan untuk tidak berada di area standing. Anak-anak dibawah usia 12 (dua belas) tahun dan penonton dengan tinggi dibawah 1.2m tidak diperbolehkan untuk berada di area standing. Silakan hubungi layanan pelanggan kami untuk informasi lebih lanjut.
+
+Strobe, laser and haze effects may be used during the show. Patrons susceptible to photosensitive epilepsy or other photo sensitivities may be affected.
+Efek strobo, laser, dan kabut dapat digunakan selama pertunjukan. Pengunjung yang rentan terhadap epilepsi fotosensitif atau bentuk lain sensitivitas cahaya dapat terpengaruh.
+
+The promoter reserves all rights to add any additional Terms / Conditions related to health protocols in accordance with the prevailing law and/or regulations at the time of the event.
+Penyelenggara berhak untuk menambahkan Syarat/Ketentuan tambahan terkait protokol kesehatan sesuai dengan hukum dan/atau peraturan yang berlaku pada saat acara berlangsung.
+
+Special Needs Assistance
+
+Dedicated special needs / wheelchair accessible seating is only available in CAT 3. Ticket buyers requiring special needs assistance must purchase CAT 3 tickets.
+Area tempat duduk khusus bagi penyandang disabilitas / pengguna kursi roda hanya tersedia di kategori CAT 3. Pembeli tiket yang memerlukan bantuan atau akses khusus wajib membeli tiket kategori CAT 3.
+
+Ticket upgrades to CAT 3 may be required depending on ticket availability.
+Upgrade kategori tiket ke CAT 3 dapat diperlukan, bergantung pada ketersediaan tiket.
+
+There is a limited quota for wheelchair accessible seating and is subject to availability on a first-come, first served basis.
+Terdapat kuota dalam jumlah terbatas untuk tempat duduk yang dapat diakses dengan kursi roda dan bergantung pada ketersediaan berdasarkan urutan permintaan.
+
+To get your booking authorized, you must present a medical certificate as proof of disability. The Promoter only accepts medical certificates from legitimate institutions and/or physicians.
+Untuk mendapatkan otorisasi pemesanan tempat duduk ini, Anda diwajibkan untuk melampirkan Surat Keterangan Dokter yang sah. Penyelenggara Acara hanya menerima Surat Keterangan Dokter yang berasal dari institusi yang sah, baik klinik maupun rumah sakit.
+
+Relocation requests may be reviewed based on medical condition, seating availability, safety considerations and Promoter approval.
+Permohonan perpindahan tempat duduk dapat dipertimbangkan berdasarkan kondisi medis, ketersediaan tempat duduk, pertimbangan keselamatan, serta persetujuan Penyelenggara.
+
+For more information regarding wheelchair accessible seating and booking, please contact support@loket.com to process your booking.
+Untuk informasi lebih lanjut dan pemesanan, silakan hubungi layanan pelanggan support@loket.com untuk memproses pemesanan Anda.
+
+Age Restriction
+
+Children under the age of 14 (fourteen) must be accompanied by a parent or legal guardian aged 18 (eighteen) or over. Children under the age of 3 (three) are not allowed to attend the event. Parents/Guardians are responsible for their children''s safety at all times.
+Anak-anak yang berusia di bawah 14 (empat belas) tahun wajib didampingi oleh orang tua atau wali yang berusia 18 (delapan belas) tahun ke atas. Anak-anak yang berusia di bawah 3 (tiga) tahun tidak diperbolehkan menghadiri acara ini. Orang tua/wali bertanggung jawab atas keselamatan anak-anak mereka setiap saat.
+
+No Re-Entry Policy
+
+Re-entry to the venue is not permitted. This applies to all ticket holders and ticket categories. Once you enter, you won''t be able to leave and re-enter. The promoter reserves the right to deny venue access, even to holders of valid tickets/wristbands with barcodes, if the ticket/wristband has already been scanned.
+Tidak diperbolehkan untuk keluar masuk area konser. Hal ini berlaku untuk semua pemegang tiket dan kategori tiket. Setelah Anda masuk, Anda tidak dapat keluar dan masuk kembali. Penyelenggara berhak menolak akses masuk ke dalam venue, bahkan kepada pemegang tiket/gelang yang masih berlaku dengan barcode, jika tiket/gelang tersebut telah dipindai.
+
+Security Check and Prohibited Items
+
+We take your safety seriously. To ensure a smooth and secure entry process for everyone, we will be conducting thorough security checks, which may include:
+Kami sangat memprioritaskan keamanan Anda. Untuk memastikan proses masuk yang lancar dan aman bagi semuanya, kami akan melakukan pemeriksaan keamanan secara menyeluruh, termasuk:
+Visual inspections of bags and belongings.
+Inspeksi visual terhadap tas dan barang bawaan.
+Airport-style pat-down searches.
+Pemeriksaan tubuh secara menyeluruh dengan metode bandara.
+Electronic drug detection and K-9 screening.
+Detektor obat-obatan terlarang dan anjing pelacak (K-9).
+
+You have the right to refuse a search, but the promoter may deny you entry if you do.
+Anda memiliki hak untuk menolak pemeriksaan, tetapi penyelenggara dapat menolak Anda untuk masuk apabila Anda melakukannya.
+
+All ticket holders must comply with the following guidelines for permitted bags:
+Seluruh pemegang tiket wajib mengikuti panduan untuk tas yang diizinkan sebagai berikut:
+Bags must not exceed the designated size limit, which is no larger than A4 size or 210mm x 297mm.
+Tas tidak diizinkan untuk melebihi batas ukuran yang ditentukan, yaitu tidak lebih besar dari ukuran A4 atau 210 mm x 297 mm.
+Event attendees are prohibited to bring more than one (1) bag, as the promoter does not offer a deposit box counter/booth.
+Penonton tidak diperbolehkan membawa lebih dari satu (1) tas. Penyelenggara tidak menyediakan konter/tempat penitipan barang.
+
+The following items are not permitted in the event and may be ejected with or without the owner from the venue area:
+Barang-barang berikut tidak diizinkan dalam acara dan akan dikeluarkan dengan atau tanpa pemilik dari area acara tersebut:
+Professional camera/recording equipment (any camera with a detachable lens, any professional video or audio recording devices, including ''GoPro'' style devices and tablets).
+Alat perekam (kamera profesional, alat perekam video dan alat perekam suara, termasuk perangkat sejenis GoPro dan tablet)
+Liquids, alcohol, cigarettes and banned substances including outside food and drink;
+Cairan, alkohol, segala jenis rokok, dan barang-barang terlarang lainnya termasuk makanan dan minuman;
+Pyrotechnic items or explosives including fireworks, candles, lighters;
+Benda piroteknik atau benda yang bersifat meledak termasuk kembang api, lilin atau korek api;
+Flammable material including alcohol, gasoline, kerosene, pressurized cologne;
+Bahan mudah terbakar termasuk alkohol, bensin, minyak tanah, cologne;
+Lasers, lights or flashlights.
+Laser, lampu atau senter.
+Dangerous or potentially hazardous objects, including but not limited to sports equipment, weapons, knives, firearms, iron bars, sharp objects, helmets, metal/plastic knuckles, self-defense spray (tear gas, pepper-spray), stun guns (tasers) or any electric shock devices;
+Benda berbahaya atau berpotensi berbahaya termasuk namun tidak terbatas pada alat olahraga, senjata, pisau, senjata api, perangkat laser, bar besi, bilah kayu, benda atau bahan tajam, helm, keling besi/plastic, semprotan pertahan diri (gas air mata, semprotan merica), senjata kejut listrik atau perangkat sengatan listrik lainnya;
+Any other items that pose a risk to public safety including glass items, tools, chemicals, suspicious powder, umbrellas, selfie sticks, and other poles or tripods.
+Benda-benda kasual yang mencurigakan yang bisa dijadikan senjata atau proyektil termasuk barang kaca, peralatan, bahan kimia, bubuk mencurigakan, payung, tongkat swafoto dan jenis-jenis tiang atau tripod lainnya.
+
+The promoter reserves the right to remove disruptive attendees without a refund.
+Penyelenggara berhak mengeluarkan pengunjung yang mengganggu tanpa pengembalian dana.
+
+The promoter is not responsible for lost or damaged belongings.
+Penyelenggara tidak bertanggung jawab atas barang yang hilang atau rusak.
+
+All attendees, including the media, are subject to these security measures.
+Semua pengunjung, termasuk media, wajib mengikuti tahapan keamanan ini.
+
+Promoters
+
+ABOUT PK ENTERTAINMENT
+
+PK Entertainment is Indonesia''s leading music promoter, established in 2015 by a collective of visionary strategists and creators. We are dedicated to curating and presenting world-class concerts that deliver exceptional live music experiences and create unforgettable memories for concertgoers.
+
+Over the years, PK Entertainment has built a strong legacy of bringing some of the world''s biggest superstars and most exciting emerging artists to Indonesia and Thailand. Our portfolio includes internationally acclaimed acts such as Coldplay, Ed Sheeran, Celine Dion, Westlife, LANY, Shawn Mendes, Charlie Puth, Calum Scott, keshi, Tom Jones, ONE OK ROCK, YOASOBI, RADWIMPS, Fujii Kaze, Ado, Eve, Maroon 5, LINKIN PARK, Bruno Mars, BABYMONSTER and ATEEZ.
+
+For more than a decade, we have been at the forefront of Indonesia''s live entertainment industry, producing world-class concerts. Building on this momentum, we are preparing an even more exciting lineup for 2026 and 2027, featuring internationally acclaimed artists such as ENHYPEN, BIGBANG, BOYNEXTDOOR, and many more.
+
+PK Entertainment operates under PK Entertainment Group, alongside its business units including PK Events, PK Films, PK Music, and PK Capital, forming an integrated entertainment ecosystem and positioning us as Indonesia''s one-stop entertainment and event powerhouse, delivering diverse, world-class experiences across live events, concerts, music, film, and creative production.
+
+Customer Service Info
+
+For more information about ticket purchase, wheelchair accessible seating please contact:
+
+Loket.com
+Phone: 021-30003160
+Email: support@loket.com
+
+PK Entertainment
+Email: contact@pk-ent.com
+
+Copyright
+
+(c) 2026 PK ENTERTAINMENT GROUP INDONESIA. ALL RIGHTS RESERVED.
+
+(c) 2026 LOKET (PT Global Loket Sejahtera). ALL RIGHTS RESERVED.' WHERE title = 'ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA' AND venue = 'Jakarta Utara';
+UPDATE events SET seatmap = '{"name":"Jakarta International Stadium - Seating & Zone","images":["https://res.cloudinary.com/pbzbhdg3/image/upload/v1789026855/WhatsApp_Image_2026-09-10_at_2.50.23_PM.jpg"]}' WHERE title = 'ENHYPEN WORLD TOUR ''BLOOD SAGA'' IN JAKARTA' AND venue = 'Jakarta Utara';
+UPDATE events SET terms_conditions = 'T.O.P PRE-STUDIO 2026 in JAKARTA
+
+T.O.P akan hadir di Jakarta untuk sebuah acara fan event eksklusif, T.O.P PRE-STUDIO 2026 in JAKARTA, yang mengundang para penggemar untuk menjadi bagian dari sebuah pengalaman di mana momenmomen tak terlupakan diciptakan bersama.
+
+PRE-STUDIO adalah tempat di mana T.O.P dan para penggemarnya berkumpul untuk berbagi, terhubung, dan merayakan ikatan yang telah mereka bangun selama bertahun-tahun. Setiap penampilan, setiap interaksi, dan setiap momen yang dibagikan mencerminkan kerinduan T.O.P untuk kembali bertemu dengan para penggemarnya serta menciptakan kenangan baru bersama.
+
+Bergabunglah bersama T.O.P saat ia membuka pintu PRE-STUDIO, sebuah pengalaman di mana setiap penggemar menjadi bagian dari perjalanan, dan setiap momen yang dibagikan akan menjadi kenangan yang akan selalu dikenang.
+
+T.O.P is coming to Jakarta for an exclusive fan event, T.O.P PRE-STUDIO 2026 in JAKARTA, inviting fans to step into an experience where unforgettable moments are created together.
+
+PRE-STUDIO is where T.O.P and his fans come together to share, connect, and celebrate the bond they have built over the years. Every performance, every interaction, and every shared experience reflects T.O.P''s desire to reconnect with his fans and create new memories together.
+
+Join T.O.P as he opens the doors to PRE-STUDIO, where every fan becomes part of the journey, and every shared moment becomes a memory to cherish.
+
+Terms & Conditions
+
+SYARAT & KETENTUAN
+
+GENERAL REGULATIONS
+
+Tiket hanya dapat dibeli melalui www.topinjakarta2026.com. Tiket hanya berlaku untuk masuk ke acara T.O.P PRE-STUDIO 2026 in Jakarta.
+Tickets can only be purchased through www.topinjakarta2026.com. Tickets are only valid for admission to T.O.P PRE-STUDIO 2026 in Jakarta.
+Harga tiket tidak termasuk pajak pemerintah 10%, biaya admin 5%, dan biaya layanan platform.
+Ticket prices exclude 10% government tax, 5% admin fee, and platform service fee.
+Setelah pembelian berhasil, e-ticket akan dikirimkan ke email Anda.
+Upon successful purchase, an e-ticket will be sent to your email.
+Mohon membawa identitas asli yang masih berlaku (KTP/KK/Paspor/SIM/Kartu Pelajar) yang sesuai dengan data pada e-ticket di aplikasi Loket-X saat penukaran wristband/tiket.
+Please bring a valid original ID card (KTP/KK/Passport/Driving License/Student Card) that matches the information reflected on your e-ticket in order to redeem your wristband/ticket.
+Dengan membeli tiket T.O.P PRE-STUDIO 2026 in Jakarta, Anda menyetujui pengumpulan, penyimpanan, dan penggunaan data pribadi secara terbatas untuk keperluan acara.
+By purchasing tickets to T.O.P PRE-STUDIO 2026 in Jakarta, you agree to the collection, storage, and limited use of your personal data for event purposes.
+Semua penjualan tiket bersifat final. Tiket yang telah terjual tidak dapat ditukar maupun diuangkan kembali.
+All ticket sales are final. Tickets sold cannot be exchanged or refunded.
+E-ticket menggunakan sistem barcode dan hanya berlaku untuk satu kali penukaran wristband. Tanda masuk ke venue adalah wristband resmi yang telah ditukarkan dari e-ticket.
+The e-ticket contains a barcode and is valid for one-time wristband redemption only. Only ticket holders with valid official wristbands will be permitted to enter the venue.
+Dilarang membagikan barcode e-ticket dalam bentuk apa pun. Barcode bersifat rahasia dan tidak boleh rusak atau disebarluaskan hingga Anda masuk ke venue.
+Please do not share or disseminate the barcode in any form (photo uploads, emails, screenshots, etc.). The barcode is confidential and must not be damaged or shared until you have successfully entered the venue.
+Penyelenggara tidak bertanggung jawab atas kelalaian pembeli yang menyebabkan e-ticket digunakan pihak lain.
+The promoter is not responsible for any misuse of the e-ticket caused by the buyer''s negligence. Such tickets may be deemed invalid.
+Fanmeeting terdiri dari 5 kategori tiket (VIP, CAT 1, CAT 2, CAT 3, CAT 4) dengan tempat duduk bernomor.
+There are five ticket categories (VIP, CAT 1, CAT 2, CAT 3, CAT 4), all with numbered seating.
+Setelah Anda berhasil melakukan pembelian tiket, e-ticket akan dikirimkan ke email Anda mendekati jadwal acara. Seat number akan muncul di e-ticket yang telah Anda dapatkan sebelumnya. Anda perlu me-refresh link e-ticket tersebut. Nomor kursi akan di generate oleh sistem dan tidak dapat diubah atau di modifikasi.
+Upon purchasing the ticket successfully, e-ticket will be sent to your email closer to the event date. The seat number will be assigned to your ticket, and it will appear on the same e-ticket that you received previously. You will need to refresh the same e-ticket link received upon purchase to see your seat number. The seat number will be automatically generated and assigned by the system. The assigned seat number reflected on your e-ticket cannot be changed or modified.
+Pemegang tiket wajib menempati tempat duduk sesuai kategori yang dibeli.
+Ticket holders must occupy the assigned seat according to their ticket category.
+Penyelenggara berhak mengubah atau menambahkan syarat dan ketentuan tanpa pemberitahuan sebelumnya.
+The promoter reserves the right to change or add conditions without prior notice.
+
+INFORMASI PEMBELIAN TIKET : TOPSX GLOBAL MEMBERSHIP PRESALE
+
+TICKET PURCHASE INFORMATION : TOPSX GLOBAL MEMBERSHIP PRESALE
+
+Nomor T.O.P Global Membership [TOPSX] adalah kode yang akan digunakan dalam periode TOPSX Global Membership Presale.
+The T.O.P Global Membership [TOPSX] number is the code that will be used during the TOPSX Global Membership Presale period.
+Pembelian tiket pada TOPSX Global Membership Presale hanya dapat diakses menggunakan nomor membership yang telah didaftarkan selama periode registrasi yang telah ditentukan.
+Ticket purchases during the TOPSX Global Membership Presale can only be accessed using the membership number registered during the designated registration period.
+Kode yang telah didaftarkan hanya dapat digunakan untuk 1 (satu) kali transaksi selama periode TOPSX Global Membership Presale.
+The registered code can only be used for 1 (one) transaction during the TOPSX Global Membership Presale period.
+Pembelian dibatasi maksimal 2 (dua) tiket selama periode TOPSX Global Membership Presale.
+Purchases are limited to a maximum of 2 (two) tickets during the TOPSX Global Membership Presale period.
+Jadwal TOPSX Global Membership Presale
+TOPSX Global Membership Presale Schedule
+Hari / Tanggal : Kamis, 13 Agustus 2026
+Day / Date : Thursday, 13 August 2026
+Waktu : Pukul 12:00 WIB - 23:59 WIB
+Time : 12:00 WIB - 23:59 WIB
+Tempat : topinjakarta2026.com
+Place : topinjakarta2026.com
+Pembelian tiket pada TOPSX Global Membership Presale dapat dilakukan menggunakan beberapa metode pembayaran, yaitu Virtual Account, E-wallet, QRIS, Paylater, bank transfer, dan kartu kredit.
+Ticket purchases during the TOPSX Global Membership Presale can be made using several payment methods, including Virtual Account, E-wallet, QRIS, Paylater, bank transfer, and credit card.
+Pembayaran menggunakan kartu kredit hanya dapat dilakukan dengan kartu kredit yang mendukung sistem 3D Secure.
+Payments made by credit card can only be completed using credit cards that support 3D Secure.
+
+INFORMASI PEMBELIAN TIKET : GENERAL SALE
+
+TICKET PURCHASE INFORMATION : GENERAL SALE
+
+Setiap akun dibatasi untuk melakukan 1 (satu) kali transaksi, dengan pembelian maksimum 4 (empat) tiket selama periode General Sale.
+Each account is limited to 1 (one) transaction, with a maximum purchase of 4 (four) tickets during the General Sale period.
+Pembelian ulang tidak dapat dilakukan menggunakan NIK, alamat email, dan nomor telepon yang sama.
+Repeat purchases cannot be made using the same National Identification Number (NIK), email address, and phone number.
+Jadwal General Sale
+General Sale Schedule
+Hari / Tanggal : Jumat, 14 Agustus 2026
+Day / Date : Friday, 14 August 2026
+Waktu : Pukul 12:00 WIB
+Time : 12:00 WIB
+Tempat : topinjakarta2026.com
+Place : topinjakarta2026.com
+Pembelian tiket pada General Sale dapat dilakukan menggunakan beberapa metode pembayaran, yaitu Virtual Account, E-wallet, QRIS, Paylater, bank transfer, dan kartu kredit.
+Ticket purchases during the TOPSX Global General Sale can be made using several payment methods, including Virtual Account, E-wallet, QRIS, Paylater, bank transfer, and credit card.
+Pembayaran menggunakan kartu kredit hanya dapat dilakukan dengan kartu kredit yang mendukung sistem 3D Secure.
+Payments made by credit card can only be completed using credit cards that support 3D Secure.
+
+INFORMASI PENUKARAN WRISTBAND
+
+WRISTBAND REDEMPTION
+
+Waktu dan lokasi penukaran wristband akan diinformasikan melalui media sosial resmi Tonz Entertainment, Three Mountains Ave dan Loket.
+Further details regarding wristband redemption will be announced through Tonz Entertainment, Three Mountains Ave and Loket official social media accounts.
+
+BATASAN UMUR
+
+AGE RESTRICTIONS
+
+Anak di bawah usia 12 tahun harus didampingi orang tua/wali sah berusia minimal 18 tahun. Anak di bawah usia 8 tahun tidak diperbolehkan menghadiri acara ini.
+Children under 12 years old must be accompanied by a parent or legal guardian aged 18 or above. Children under 8 years old are not allowed to attend the event.
+
+LAYANAN KEBUTUHAN KHUSUS
+
+SPECIAL NEED SERVICE
+
+Tersedia kuota terbatas untuk kursi roda. Pemohon wajib melampirkan Surat Keterangan Dokter dari institusi resmi serta surat pernyataan bermaterai dari keluarga/wali. Kirim file PDF ke specialneeds0001@gmail.com paling lambat 5 September 2026 dengan subjek: "T.O.P PRE-STUDIO 2026 IN JAKARTA - SPECIAL NEED" dengan mencantumkan:
+- Nama Lengkap
+- Nomor Invoice
+- Jumlah Pendamping
+- Surat Keterangan Dokter
+Wheelchair-accessible seating is available in limited quantities. A valid medical certificate from a legitimate institution and a stamped statement letter from a family member/guardian are required. Please send documents in PDF format to specialneeds0001@gmail.com by 5 September 2026 with the subject "T.O.P PRE-STUDIO 2026 IN JAKARTA - SPECIAL NEED"
+- Full name
+- Invoice Number
+- Number of companions
+- Medical Certificate or Doctor''s Note
+Pengguna kursi roda atau individu dengan disabilitas hanya dapat membeli tiket di kategori CAT 1.
+Wheelchair users or individuals with disabilities will only be able to purchase tickets in CAT 1.
+
+KEBIJAKAN TIDAK KELUAR MASUK
+
+NO RE-ENTRY
+
+Tidak diperbolehkan masuk kembali setelah keluar dari area venue.
+No re-entry is allowed.
+Penyelenggara berhak menolak masuk apabila barcode telah digunakan sebelumnya.
+The promoter reserves the right to deny entry if the barcode has already been scanned.
+
+PEMERIKSAAN SAAT MASUK ACARA
+SECURITY CHECK UPON ENTRY
+
+Keselamatan dan keamanan Anda adalah prioritas kami. Setiap pengunjung dan barang bawaan akan melalui pemeriksaan keamanan sebelum memasuki area acara. Dengan memasuki area acara, Anda menyetujui untuk mengikuti prosedur pemeriksaan yang berlaku. Apabila Anda menolak pemeriksaan, Penyelenggara berhak untuk menolak akses masuk. Penyelenggara juga berhak meminta Anda meninggalkan area acara apabila perilaku Anda dianggap membahayakan keselamatan atau keamanan peserta lainnya. Dalam hal penolakan masuk atau permintaan untuk meninggalkan acara, tidak akan ada pengembalian dana.
+Your safety and security are our top priorities. All attendees and their belongings will be subject to a security check prior to entering the event area. By entering the venue, you agree to comply with the applicable security procedures. If you refuse to undergo inspection, the promoter reserves the right to deny entry. The promoter also reserves the right to require you to leave the event if your behavior is deemed to compromise the safety or security of other attendees. In the event of denied entry or removal from the venue, no refund will be provided.
+
+KEBIJAKAN UMUM
+
+GENERAL POLICIES
+
+Setiap pemegang tiket bertanggung jawab atas keselamatan dan keamanan pribadi masing-masing.
+Each attendee is responsible for their own safety and security.
+Tiket resmi hanya dijual melalui channel resmi yang diumumkan di @tonzentofficial, @threemountainsave dan www.topinjakarta2026.com.
+Official tickets are only sold through platforms announced on @tonzentofficial, @threemountainsave and www.topinjakarta2026.com.
+Jika konser dibatalkan karena alasan di luar kendali penyelenggara, pengembalian tiket mengikuti ketentuan penyelenggara dan tidak termasuk biaya platform maupun biaya pribadi.
+In the event of cancellation beyond the promoter''s control, refunds will follow promoter policies and will exclude platform fees and personal expenses.
+Tiket yang dibeli untuk tujuan penjualan kembali dianggap melanggar syarat dan ketentuan dan dapat dibatalkan.
+Tickets purchased for resale purposes are in violation of these Terms & Conditions and may be invalidated.
+Pemegang tiket memberikan hak kepada penyelenggara untuk merekam dan menggunakan foto/video untuk kepentingan promosi.
+Ticket holders grant the promoter the right to record and use video and images for promotional purposes.
+Penyelenggara menentang segala bentuk SARA, pelecehan, dan perundungan.
+The promoter does not permit any form of harassment and/or bullying.
+Demi menjaga kenyamanan, keamanan, dan kelancaran jalannya acara Fan Meeting, segala bentuk surat maupun hadiah dari penggemar untuk artis tidak dapat diterima. Mohon pengertian dan kerjasamanya.
+In order to ensure the comfort, safety, and smooth execution of the Fan Meeting, any form of letters or gifts from fans for the artist will not be accepted. Your understanding and cooperation are greatly appreciated.
+
+Mohon cek Instagram @tonzentofficial dan @threemountainsave secara berkala untuk informasi terbaru.
+Please check @tonzentofficial and @threemountainsave Instagram account regularly for updates regarding the event.
+
+Contact Us
+
+For more information about ticket purchase:
+
+Loket.com
+Phone: 021-30003160
+Email: support@loket.com
+
+For more information about wheelchair accessible seating, please contact:
+
+Email: specialneeds0001@gmail.com
+
+For strategic partnership, marketing, and promotional collaboration, please contact:
+
+Email: info@threemountainsave.com' WHERE title = 'T.O.P PRE-STUDIO 2026 in Jakarta' AND venue = 'Jakarta Pusat';
+UPDATE events SET terms_conditions = 'Terms & Conditions
+
+SYARAT & KETENTUAN
+
+GENERAL REGULATIONS
+
+Tiket hanya dapat dibeli melalui www.hwanginyoupinjakarta2026.com. Tiket hanya berlaku untuk masuk ke acara 2026 HWANG IN YOUP FANMEETING TOUR <To you> in JAKARTA.
+Tickets can only be purchased through www.hwanginyoupinjakarta2026.com. Tickets are only valid for admission to 2026 HWANG IN YOUP FANMEETING TOUR <To you> in JAKARTA.
+Nama sesuai dengan kartu identitas yang sah wajib digunakan untuk membeli tiket. Pastikan Anda melakukan pembelian dengan data yang sah dan benar (KTP/KK/Kartu Pelajar/SIM/Paspor). Tiket tidak dapat diubah dan/atau dimodifikasi setelah pembelian dilakukan.
+You will be required to provide your name in accordance with your valid personal identification to purchase tickets to the 2026 HWANG IN YOUP FANMEETING TOUR <To you> in JAKARTA. The provided name must match the name indicated on your personal identification document (ID Card/KTP/KK/Student Card/SIM/Passport). Your ticket(s) cannot be changed, modified, or transferred once purchased.
+1 akun hanya dapat membeli maksimal 4 (empat) tiket per transaksi. Akun dengan NIK, alamat email, dan nomor telepon yang sama tidak dapat melakukan pembelian berulang.
+Each account can purchase a maximum of 4 (four) tickets per transaction. Accounts with the same NIK, email address, and telephone number will be blocked from attempting repeated purchases.
+Harga tiket tidak termasuk pajak pemerintah 10%, biaya admin 5%, dan biaya lainnya.
+Ticket prices exclude 10% government tax, 5% admin fee, and any other applicable charges.
+Setelah pembelian berhasil, booking confirmation akan dikirimkan ke email Anda.
+Upon successful purchase, a booking confirmation will be sent to your email.
+Mohon membawa identitas asli yang masih berlaku (KTP/KK/Paspor/SIM/Kartu Pelajar) yang sesuai dengan data pada e-ticket di aplikasi Loket-X saat penukaran wristband/tiket.
+Please bring a valid original ID card (KTP/KK/Passport/Driving License/Student Card) that matches the information reflected on your e-ticket in order to redeem your wristband/ticket.
+Dengan membeli tiket, Anda menyetujui pengumpulan, penyimpanan, dan penggunaan data pribadi secara terbatas untuk keperluan acara.
+By purchasing tickets to 2026 HWANG IN YOUP FANMEETING TOUR <To you> in JAKARTA, you agree to the collection, storage, and limited use of your personal data for event purposes.
+Semua penjualan tiket bersifat final. Tiket yang telah terjual tidak dapat ditukar maupun diuangkan kembali.
+All ticket sales are final. Tickets sold cannot be exchanged or refunded.
+E-ticket menggunakan sistem barcode dan hanya berlaku untuk satu kali penukaran wristband. Tanda masuk ke venue adalah wristband resmi yang telah ditukarkan dari e-ticket.
+The e-ticket contains a barcode and is valid for one-time wristband redemption only. Only ticket holders with valid official wristbands will be permitted to enter the venue.
+Dilarang membagikan barcode e-ticket dalam bentuk apa pun. Barcode bersifat rahasia dan tidak boleh rusak atau disebarluaskan hingga Anda masuk ke venue.
+Please do not share or disseminate the barcode in any form (photo uploads, emails, screenshots, etc.). The barcode is confidential and must not be damaged or shared until you have successfully entered the venue.
+Penyelenggara tidak bertanggung jawab atas kelalaian pembeli yang menyebabkan e-ticket digunakan pihak lain.
+The promoter is not responsible for any misuse of the e-ticket caused by the buyer''s negligence. Such tickets may be deemed invalid.
+Fanmeeting terdiri dari 2 kategori tiket (FOREVER, ALWAYS) dengan tempat duduk bernomor.
+There are two ticket categories (FOREVER, ALWAYS), all with numbered seating.
+Setelah Anda berhasil melakukan pembelian tiket, e-ticket akan dikirimkan ke email Anda mendekati jadwal acara. Seat number akan muncul di e-ticket yang telah Anda dapatkan sebelumnya. Anda perlu me-refresh link e-ticket tersebut. Nomor kursi akan di generate oleh sistem dan tidak dapat diubah atau di modifikasi.
+Upon purchasing the ticket successfully, e-ticket will be sent to your email closer to the event date. The seat number will be assigned to your ticket, and it will appear on the same e-ticket that you received previously. You will need to refresh the same e-ticket link received upon purchase to see your seat number. The seat number will be automatically generated and assigned by the system. The assigned seat number reflected on your e-ticket cannot be changed or modified.
+Pemegang tiket wajib menempati tempat duduk sesuai kategori yang dibeli.
+Ticket holders must occupy the assigned seat according to their ticket category.
+Penyelenggara berhak mengubah atau menambahkan syarat dan ketentuan tanpa pemberitahuan sebelumnya.
+The promoter reserves the right to change or add conditions without prior notice.
+
+INFORMASI PENUKARAN WRISTBAND
+
+WRISTBAND REDEMPTION
+
+Waktu dan lokasi penukaran wristband akan diinformasikan melalui media sosial resmi Three Mountains Ave dan Loket.
+Further details regarding wristband redemption will be announced through Three Mountains Ave and Loket official social media accounts.
+
+BATASAN UMUR
+
+AGE RESTRICTIONS
+
+Anak di bawah usia 12 tahun harus didampingi orang tua/wali sah berusia minimal 18 tahun. Anak di bawah usia 8 tahun tidak diperbolehkan menghadiri acara ini.
+Children under 12 years old must be accompanied by a parent or legal guardian aged 18 or above. Children under 8 years old are not allowed to attend the event.
+
+LAYANAN KEBUTUHAN KHUSUS
+
+SPECIAL NEED SERVICE
+
+Tersedia kuota terbatas untuk kursi roda. Pemohon wajib melampirkan Surat Keterangan Dokter dari institusi resmi serta surat pernyataan bermaterai dari keluarga/wali. Kirim file PDF ke info@threemountainsave.com paling lambat 10 Oktober 2026 dengan subjek: "HWANG IN YOUP IN JAKARTA 2026 - SPECIAL NEED" dengan mencantumkan:
+- Nama Lengkap
+- Nomor Invoice
+- Jumlah Pendamping
+- Surat Keterangan Dokter
+Wheelchair-accessible seating is available in limited quantities. A valid medical certificate from a legitimate institution and a stamped statement letter from a family member/guardian are required. Please send documents in PDF format to info@threemountainsave.com by 10 October 2026 with the subject "HWANG IN YOUP IN JAKARTA 2026 - SPECIAL NEED"
+- Full name
+- Invoice Number
+- Number of companions
+- Medical Certificate or Doctor''s Note
+Pengguna kursi roda atau individu dengan disabilitas hanya dapat membeli tiket di kategori FOREVER.
+Wheelchair users or individuals with disabilities will only be able to purchase tickets in FOREVER.
+
+KEBIJAKAN TIDAK KELUAR MASUK
+
+NO RE-ENTRY
+
+Tidak diperbolehkan masuk kembali setelah keluar dari area venue.
+No re-entry is allowed.
+Penyelenggara berhak menolak masuk apabila barcode telah digunakan sebelumnya.
+The promoter reserves the right to deny entry if the barcode has already been scanned.
+
+PEMERIKSAAN SAAT MASUK ACARA
+SECURITY CHECK UPON ENTRY
+
+Keselamatan dan keamanan Anda adalah prioritas kami. Setiap pengunjung dan barang bawaan akan melalui pemeriksaan keamanan sebelum memasuki area acara. Dengan memasuki area acara, Anda menyetujui untuk mengikuti prosedur pemeriksaan yang berlaku. Apabila Anda menolak pemeriksaan, Penyelenggara berhak untuk menolak akses masuk. Penyelenggara juga berhak meminta Anda meninggalkan area acara apabila perilaku Anda dianggap membahayakan keselamatan atau keamanan peserta lainnya. Dalam hal penolakan masuk atau permintaan untuk meninggalkan acara, tidak akan ada pengembalian dana.
+Your safety and security are our top priorities. All attendees and their belongings will be subject to a security check prior to entering the event area. By entering the venue, you agree to comply with the applicable security procedures. If you refuse to undergo inspection, the promoter reserves the right to deny entry. The promoter also reserves the right to require you to leave the event if your behavior is deemed to compromise the safety or security of other attendees. In the event of denied entry or removal from the venue, no refund will be provided.
+
+KEBIJAKAN UMUM
+
+GENERAL POLICIES
+
+Setiap pemegang tiket bertanggung jawab atas keselamatan dan keamanan pribadi masing-masing.
+Each attendee is responsible for their own safety and security.
+Tiket resmi hanya dijual melalui channel resmi yang diumumkan di @threemouintansave dan www.hwanginyoupinjakarta2026.com.
+Official tickets are only sold through platforms announced on @threemouintansave and www.hwanginyoupinjakarta2026.com.
+Jika konser dibatalkan karena alasan di luar kendali penyelenggara, pengembalian tiket mengikuti ketentuan penyelenggara dan tidak termasuk biaya platform maupun biaya pribadi.
+In the event of cancellation beyond the promoter''s control, refunds will follow promoter policies and will exclude platform fees and personal expenses.
+Tiket yang dibeli untuk tujuan penjualan kembali dianggap melanggar syarat dan ketentuan dan dapat dibatalkan.
+Tickets purchased for resale purposes are in violation of these Terms & Conditions and may be invalidated.
+Pemegang tiket memberikan hak kepada penyelenggara untuk merekam dan menggunakan foto/video untuk kepentingan promosi.
+Ticket holders grant the promoter the right to record and use video and images for promotional purposes.
+Penyelenggara menentang segala bentuk SARA, pelecehan, dan perundungan.
+The promoter does not permit any form of harassment and/or bullying.
+Demi menjaga kenyamanan, keamanan, dan kelancaran jalannya acara Fan Meeting, segala bentuk hadiah dari penggemar untuk artis tidak dapat diterima. Mohon pengertian dan kerjasamanya.
+In order to ensure the comfort, safety, and smooth execution of the Fan Meeting, any form of gifts from fans for the artist will not be accepted. Your understanding and cooperation are greatly appreciated.
+
+Mohon cek Instagram @threemouintansave secara berkala untuk informasi terbaru.
+Please check @threemouintansave Instagram account regularly for updates regarding the event.
+
+Promoters
+
+Tentang Promotor
+
+Three Mountains Ave adalah promotor acara berbasis di Indonesia yang berkomitmen menghadirkan konser dan fan meeting berkualitas tinggi dengan perhatian penuh terhadap detail serta standar produksi yang prima. Dengan fokus pada penciptaan pengalaman yang bermakna dan berkesan, Three Mountains Ave berkomitmen untuk memberikan kenangan tak terlupakan bagi artis maupun para penggemar.
+
+About the Promoter
+
+Three Mountains Ave is an Indonesia-based event promoter committed to delivering high-quality concerts and fan meetings with meticulous attention to detail and excellent production standards. With a focus on creating meaningful and memorable experiences, Three Mountains Ave is dedicated to providing unforgettable moments for both artists and their fans.
+
+Customer Service Info
+
+For more information about ticket purchase and wheelchair accessible seating, please contact:
+
+Loket.com
+Phone: 021-30003160
+Email: support@loket.com
+
+For strategic partnership, marketing, and promotional collaboration, please contact:
+
+info@threemountainsave.com
+
+Copyright
+
+(c) 2026 THREE MOUNTAINS AVE. ALL RIGHTS RESERVED.
+
+(c) 2026 LOKET (PT Global Loket Sejahtera). ALL RIGHTS RESERVED.' WHERE title = '2026 HWANG IN YOUP FANMEETING TOUR <To you> in JAKARTA' AND venue = 'Jakarta Pusat';
+UPDATE events SET seatmap = '{"name":"Jakarta Concert Hall - Denah Tempat Duduk","images":["https://res.cloudinary.com/pbzbhdg3/image/upload/v1789026916/WhatsApp_Image_2026-09-10_at_2.50.23_PM_1.jpg","https://res.cloudinary.com/pbzbhdg3/image/upload/v1789026917/WhatsApp_Image_2026-09-10_at_2.50.23_PM_2.jpg"]}' WHERE title = '2026 HWANG IN YOUP FANMEETING TOUR <To you> in JAKARTA' AND venue = 'Jakarta Pusat';
+UPDATE events SET terms_conditions = 'TERMS & CONDITIONS OF TICKET PURCHASE
+
+YE LIVE IN JAKARTA · GELORA BUNG KARNO · 24 OKTOBER 2026
+
+Diselenggarakan oleh / Presented by: RAW VISION COLLECTIVE (RVC)
+
+Dengan melakukan pembelian tiket, Pembeli dan Pemegang Tiket dianggap telah membaca, memahami, dan menyetujui seluruh Syarat & Ketentuan yang tercantum di bawah ini.
+By purchasing a ticket, the Buyer and Ticket Holder are deemed to have read, understood, and agreed to all Terms & Conditions set out below.
+
+Dalam hal terdapat perbedaan antara versi Bahasa Indonesia dan versi Bahasa Inggris, maka versi Bahasa Indonesia yang berlaku.
+In the event of conflict between the Indonesian and English versions, the Indonesian version shall prevail.
+
+A. PEMBELIAN TIKET / TICKET PURCHASE
+
+Tiket resmi hanya dijual melalui yejakarta.com dan platform resmi yang ditunjuk oleh Penyelenggara (Loket.com). Penyelenggara tidak bertanggung jawab atas kerugian yang timbul akibat pembelian tiket melalui pihak tidak resmi, termasuk namun tidak terbatas pada calo.
+Official tickets are sold exclusively through yejakarta.com and designated official platforms (Loket.com). The Organiser accepts no liability for losses arising from purchases made through unauthorised channels, including but not limited to scalpers.
+Setiap pembelian tiket wajib menggunakan nama dan data yang sesuai dengan identitas resmi yang masih berlaku (KTP / Paspor / Kartu Keluarga / SIM / Kartu Pelajar). Data tidak dapat diubah atau dimodifikasi setelah transaksi selesai.
+All ticket purchases must be made using a name and details that match a valid official identity document (ID Card / Passport / Family Card / Driver''s License / Student ID). Details cannot be altered or modified once the transaction has been completed.
+Acara ini terdiri dari 8 kategori tiket: Festival (standing), Super Fans Festival (standing) dan VIP West, VIP East, CAT 1, CAT 2, CAT 3 dan CAT 4 dengan tempat duduk bernomor.
+This event features 8 ticket categories: Festival (standing), Super Fans Festival (standing), and VIP West, VIP East, CAT 1, CAT 2, CAT 3, and CAT 4 with numbered seating.
+Pembelian dibatasi maksimal 8 (delapan) tiket per transaksi dan bisa untuk kategori yang berbeda. 1 (satu) alamat email, 1 (satu) nomor identitas diri dan 1 (satu) nomor telepon dibatasi 1 (satu) transaksi.
+Purchases are limited to a maximum of 8 (eight) tickets per transaction, and purchasing tickets across different categories is permitted. 1 (one) email address, 1 (one) ID number, and 1 (one) phone number are limited to 1 (one) transaction.
+Harga tiket belum termasuk pajak pemerintah 10%, biaya platform 6% dan biaya lain yang berlaku. Total biaya yang harus dibayarkan oleh Pembeli dapat dilihat pada saat checkout.
+Ticket prices exclude 10% government tax, platform fees 6% and applicable service charges. The total amount of money that need to be paid by the Buyer can be seen upon checkout.
+Setelah pembelian tiket berhasil, e-ticket dapat diakses melalui aplikasi LOKET X menggunakan akun/email yang terdaftar pada saat pembelian.
+After the ticket purchase is successful, the e-ticket can be accessed through the LOKET X application using the account/email registered at the time of purchase.
+Penyelenggara dan partner ticketing resmi yang ditunjuk hanya akan menerbitkan e-ticket kepada Pembeli yang sah.
+The organiser and designated official ticketing partners will only issue e-tickets to legitimate Buyers.
+Pemegang Tiket wajib menempati tempat duduk atau posisi yang telah ditentukan oleh system sesuai dengan kategori tiket yang dibeli. Bagi Pemegang Tiket kategori dengan tempat duduk bernomer (CAT 1, 2, 3, 4 dan VIP), maka nomor kursi akan tersedia beberapa hari sebelum konser melalui aplikasi LOKET X.
+Ticket Holders are required to occupy the seat or position designated by the system according to the purchased ticket category. For Ticket Holders in the Numbered Seat category (1, 2, 3, 4 and VIP), the seat number will be available to the Ticket Holder a few days before the concert via the LOKET X application.
+Tidak diperbolehkan membagikan dan menyebarluaskan nomor barcode di dalam e-ticket baik dalam bentuk unggahan apapun (foto, email, tangkapan layar dan lainnya). Barcode yang tercantum pada e-ticket bersifat rahasia, tidak boleh rusak dan disebarluaskan hingga Anda menukarkan wristband dan berhasil memasuki venue acara.
+Do not share or disseminate the barcode and/or barcode number in the e-ticket in any form (photo uploads, emails, screen shots, and others). The barcode listed on e-ticket is confidential and must not be damaged until you have redeemed your wristband and successfully entered the venue.
+Penyelenggara tidak bertanggung jawab atas kelalaian pembeli tiket yang mengakibatkan tiket jatuh ke tangan orang lain (dalam penguasaan orang lain) untuk dipergunakan sebagai tanda masuk tempat pertunjukkan yang menghilangkan hak dari pembeli tiket.
+The Organiser is not responsible for situations in which the negligence of the ticket buyer leads to the use/tampering/appropriation of the ticket and its contents by another individual. Upon discovery of such situations, the e-ticket will be nulled and deemed invalid, and the buyer will forfeit the rights previously entitled to the ticket holder.
+Semua penjualan tiket adalah final. Tiket yang telah terjual tidak dapat ditukar dan tidak dapat diuangkan kembali, kecuali dalam hal pembatalan acara oleh Penyelenggara sebagaimana diatur pada Pasal J.
+All ticket sales are final. Tickets sold cannot be exchanged, cashed out or refunded, except in the event of cancellation by the Organiser as set out in Section J.
+
+B. VALIDASI & AKSES MASUK / ENTRY VALIDATION
+
+Pastikan Anda memiliki e-ticket yang tersedia di aplikasi LOKET X. Screenshot e-ticket tidak diperkenankan dan tidak akan diterima sebagai akses masuk ke venue.
+Make sure you have an e-ticket available in the LOKET X application. Screenshots of the e-ticket are not allowed and will not be accepted for entry into the venue.
+Pastikan Anda telah login ke akun LOKET X yang digunakan saat pembelian tiket sebelum tiba di lokasi acara untuk memperlancar proses validasi dan masuk ke venue.
+Make sure you have logged into the LOKET X account used during the ticket purchase before arriving at the event location to ensure a smooth validation process and entry into the venue.
+Penyelenggara berhak menolak masuk atau mengeluarkan siapapun yang tidak mematuhi Syarat & Ketentuan ini, berada dalam kondisi mabuk atau membahayakan, atau dianggap mengancam keselamatan orang lain. Tidak ada pengembalian dana atas tiket yang tidak digunakan akibat penolakan tersebut.
+The Organiser reserves the right to refuse entry or remove any person who does not comply with these Terms & Conditions, is intoxicated or dangerous, or is deemed a threat to others'' safety. No refund will be issued for unused tickets as a result of such refusal.
+
+C. KEBIJAKAN TIDAK KELUAR MASUK / NO RE-ENTRY POLICY
+
+Tidak ada gelang pengganti yang akan dikeluarkan dalam kondisi apa pun jika hilang dan rusak karena alasan apapun. Penyelenggara tidak bertanggung jawab atas gelang yang hilang, dicuri atau rusak.
+No replacement wristbands will be issued under any circumstances if lost or damaged for any reason. The Organiser is not responsible for lost, stolen, or damaged wristband.
+Pemegang Tiket tidak diperkenankan untuk masuk kembali ke area venue setelah keluar. Setiap tiket hanya berlaku untuk satu kali masuk, tanpa pengecualian, terlepas dari kategori tiket yang dimiliki.
+Ticket Holders are not allowed to re-enter the venue area once they have left. Each ticket is valid for one-time entry only, with no exceptions, regardless of the ticket category held.
+Penyelenggara berhak menolak akses masuk apabila wristband atau barcode diketahui telah digunakan sebelumnya oleh Pemegang Tiket lain.
+The Organiser''s reserves the right to deny entry if the wristband or barcode is found to have been previously used by another Ticket Holders.
+
+D. BATASAN USIA / AGE RESTRICTION
+
+Penting dibaca sebelum membeli / Important — read before purchasing
+
+Anak di bawah usia 7 (tujuh) tahun DILARANG memasuki area venue tanpa pengecualian, karena pertimbangan keselamatan, tingkat kebisingan, efek pyroteknik, dan kepadatan kerumunan.
+Children under 7 (seven) years of age are PROHIBITED from entering the venue without exception, due to safety considerations, sound levels, pyrotechnic effects, and crowd density.
+Anak di bawah usia 15 (lima belas) tahun wajib didampingi secara terus-menerus oleh orang tua atau wali berusia paling sedikit 18 (delapan belas) tahun yang juga memiliki tiket pada kategori yang sama.
+Children under the age of 15 (fifteen) must be continuously accompanied by parent or guardian aged at least 18 (eighteen) years who also holds a ticket in the same category.
+Orang tua atau wali yang mendampingi anak di bawah usia 15 (lima belas) tahun bertanggung jawab penuh untuk memastikan anak berada di area yang sesuai kategori tiketnya. Kegagalan untuk mematuhi ketentuan penempatan area ini sepenuhnya menjadi tanggung jawab orang tua atau wali yang bersangkutan, dan Penyelenggara tidak dapat dimintai pertanggungjawaban atas insiden yang timbul karenanya.
+Parents or guardians accompanying children under the age 15 (fifteen) years old bear full responsibility for ensuring the child remains in the appropriate zone matching their ticket category. Failure to comply with area placement rules is entirely the responsibility of the parent or guardian, and the Organiser accepts no liability for incidents arising therefrom.
+Dengan membeli tiket untuk anak di bawah umur, orang tua atau wali mengakui bahwa mereka memahami sifat konser langsung, termasuk suara keras, piroteknik, kepadatan kerumunan, dan kemungkinan pergerakan kerumunan secara tiba-tiba, serta secara sukarela menanggung risiko-risiko tersebut atas nama anak di bawah umur.
+By purchasing a ticket for a minor, the parent or guardian acknowledges that they understand the nature of a live concert, including loud sound, pyrotechnics, crowd density, and the possibility of sudden crowd movement, and voluntarily assumes these risks on behalf of the minor.
+Petugas keamanan venue berhak memindahkan atau mengeluarkan penonton — termasuk anak-anak — dari area yang tidak sesuai atau dianggap membahayakan, tanpa pengembalian dana.
+Venue security personnel have the right to relocate or remove attendees — including children — from areas deemed inappropriate or unsafe, without refund.
+
+E. PENERIMAAN RISIKO / ASSUMPTION OF RISK
+
+Dengan membeli tiket dan memasuki lokasi acara, Pembeli tiket dan Pemegang Tiket mengakui dan menerima risiko yang melekat pada kehadiran di konser berskala besar, termasuk namun tidak terbatas pada kepadatan penonton, desakan massa, tingkat kebisingan yang tinggi, kondisi cuaca, serta penggunaan efek khusus seperti piroteknik, asap, lampu strobo, dan laser. Kehadiran merupakan risiko yang ditanggung sendiri oleh Pemegang Tiket. Individu dengan kondisi medis yang mungkin terdampak oleh efek-efek tersebut—termasuk epilepsi, gangguan pernapasan, atau sensitivitas terhadap cahaya—disarankan untuk berkonsultasi dengan tenaga medis profesional sebelum hadir. Memasuki lokasi acara berarti menyetujui ketentuan-ketentuan ini.
+By purchasing a ticket and entering the venue, the Ticket Buyer and Ticket Holder acknowledges and accepts the inherent risks associated with attending a large-scale concert, including but not limited to crowd congestion, crowd surges, high noise levels, weather conditions, and the use of special effects such as pyrotechnics, smoke, strobe lighting, and lasers. Attendance is at the Ticket Holder''s own risk. Individuals with medical conditions that may be affected by these effects, including epilepsy, respiratory conditions, or light sensitivity, are advised to consult a medical professional before attending. Entry into the venue constitutes acceptance of these conditions.
+Demi alasan keselamatan, area Festival Standing tidak direkomendasikan bagi Pemegang Tiket dengan kondisi medis khusus, ibu hamil dan penyandang disabilitas. Anak yang berusia di bawah 15 (lima belas) tahun tidak diperbolehkan berada di area Festival Standing. Tersedia kuota terbatas untuk area yang dapat diakses oleh pengguna kursi roda. Untuk memperoleh persetujuan pemesanan, Anda wajib melampirkan Surat Keterangan Dokter dari rumah sakit atau klinik yang sah sebagai bukti kebutuhan aksesibilitas, serta Surat Pernyataan bermaterai yang ditandatangani oleh suami/istri, anggota keluarga, atau wali. Dokumen hanya diterima apabila diterbitkan oleh institusi medis yang sah. Mohon kirimkan seluruh dokumen dalam format PDF ke support@loket.com paling lambat 24 Agustus 2026 dengan subjek email "WHEELCHAIR ACCESS REQUEST - YE JAKARTA 2026".
+For safety reasons, the Festival Standing area is not recommended for Ticket Holders with special medical conditions, pregnant women and, people with disabilities., Children and those under the age of 15 (fifteen) are not allowed in Festival Standing area16 years of age. A limited quota is available for areas accessible to wheelchair users. To obtain booking approval, you are required to attach a valid Doctor''s Certificate from a legitimate hospital or clinic as proof of accessibility needs, as well as a stamped Statement Letter signed by a spouse, family member, or guardian. Documents will only be accepted if issued by a legitimate medical institution. Please send all documents in PDF format to support@loket.com no later than 24 Agustus 2026 with the subject "WHEELCHAIR ACCESS REQUEST - YE JAKARTA 2026".
+
+F. BARANG LARANGAN / PROHIBITED ITEMS
+
+Barang-barang berikut dilarang dibawa ke dalam tempat acara diselenggarakan:
+The following items are prohibited inside the venue:
+Alkohol, obat-obatan terlarang, rokok, vape / Alcohol, narcotics, cigarettes, vape
+Makanan dan minuman dari luar venue / Food and beverages from outside the venue
+Segala jenis kamera, alat perekam audio dan video termasuk lensa tambahan untuk handphone dan tripod / All types of cameras, audio and video recording equipment, including add-on lenses for mobile phones.
+Tripod, selfie stick.
+Segala jenis perangkat tablet / All types of tablet devices.
+Drone / Drones
+Benda piroteknik, kembang api, korek api / Pyrotechnics, fireworks, lighters
+Parfum botol kaca / glass bottle perfume
+Senjata, benda tajam, tongkat, tiang bendera / Weapons, sharp objects, poles, flag poles
+Laser pointer / Laser pointers
+Tas berukuran besar (melebihi 30x30cm) / Oversized bags (exceeding 30x30cm)
+Payung berukuran besar / Large umbrellas
+Hewan peliharaan / Pets
+
+Penyelenggara tidak menyediakan tempat penitipan barang. Setiap barang yang disita atau dibuang di area gate sepenuhnya menjadi tanggung jawab Pemegang Tiket. Penyelenggara tidak bertanggung jawab dan tidak akan memberikan ganti rugi atas barang yang disita, dibuang, atau tidak diperkenankan masuk ke dalam venue
+No safety deposit facilities are provided by the Organiser. Any items confiscated or discarded at the gate shall be the sole responsibility of the Ticket Holder. The Organiser shall not be responsible and shall not provide any compensation for items that are confiscated, discarded, or not permitted to enter the venue.
+
+G. PEREKAMAN & HAK CITRA / RECORDING & IMAGE RIGHTS
+
+Dilarang melakukan perekaman audio/video profesional atau live streaming.
+Professional audio/video recording or live streaming is prohibited.
+Dengan memasuki venue, Pemegang Tiket memberikan izin kepada Penyelenggara dan pihak-pihak yang ditunjuk untuk merekam, mengambil foto, dan menggunakan citra/suara Pemegang Tiket yang terekam selama acara berlangsung untuk keperluan publikasi, dokumentasi, dan promosi, tanpa kompensasi tambahan. Penggunaan citra bersifat insidental dan tidak dimaksudkan sebagai penonjonal individu.
+By entering the venue, the Ticket Holder grants the Organiser and its designated parties the right to record, photograph, and use the Ticket Holder''s captured image/voice during the event for publication, documentation, and promotional purposes, without additional compensation. The use of such images is incidental and is not intended as the highlighting of any individual.
+
+H. KESELAMATAN & KEAMANAN / SAFETY & SECURITY
+
+Penyelenggara akan menyediakan petugas keamanan, tenaga medis, dan fasilitas medis darurat di venue. Namun Penyelenggara tidak dapat menjamin kondisi bebas risiko sepenuhnya mengingat sifat acara massa berskala besar.
+The Organiser will provide security personnel, medical staff, and Emergency Medical Services (EMS) facilities at the venue. However, the Organiser cannot guarantee a fully risk-free environment given the nature of large-scale mass events.
+Penyelenggara berhak mengubah tata letak venue, akses pintu masuk, dan konfigurasi area demi pertimbangan keselamatan, tanpa pemberitahuan sebelumnya.
+The Organiser reserves the right to change the venue layout, entry access, and area configuration for safety reasons, without prior notice.
+
+I. PEMBATASAN TANGGUNG JAWAB / LIMITATION OF LIABILITY
+
+Sejauh diizinkan oleh hukum yang berlaku di Indonesia, tanggung jawab Penyelenggara kepada Pemegang Tiket atas segala klaim yang timbul dari atau sehubungan dengan kehadiran di acara ini dibatasi hingga sebesar harga tiket pokok yang dibayarkan. Penyelenggara tidak bertanggung jawab atas kerugian tidak langsung, kerugian konsekuensial, kehilangan keuntungan, biaya perjalanan, atau biaya akomodasi dalam kondisi apapun.
+To the extent permitted by applicable Indonesian law, the Organiser''s liability to Ticket Holders for any claim arising from or in connection with attendance at this event is limited to the face value of the ticket purchased. The Organiser is not liable for indirect losses, consequential losses, lost profits, travel costs, or accommodation costs under any circumstances.
+Penyelenggara tidak bertanggung jawab atas kehilangan, pencurian, atau kerusakan barang pribadi Pemegang Tiket di dalam atau di luar area tempat acara diselenggarakan.
+The Organiser is not responsible for loss, theft, or damage to Ticket Holders'' personal property inside or outside the venue.
+
+J. KEADAAN KAHAR / FORCE MAJEURE
+
+Penyelenggara berhak membatalkan, menunda, atau mengubah acara akibat keadaan di luar kendali yang wajar (keadaan kahar / force majeure), termasuk namun tidak terbatas pada bencana alam, keputusan pemerintah, gangguan keamanan, atau kondisi cuaca ekstrem.
+The Organiser reserves the right to cancel, postpone, or modify the event due to circumstances beyond reasonable control (force majeure), including but not limited to natural disaster, government order, security disruption, or extreme weather.
+Dalam hal terjadi pembatalan konser oleh Penyelenggara, maka Tiket akan dikembalikan sesuai dengan ketentuan Penyelenggara.
+In the event of a concert cancellation by the Organiser, ticket will be refunded in accordance with the Organiser''s terms and conditions.
+Penyelenggara tidak bertanggung jawab atas biaya perjalanan, akomodasi, atau kerugian lain yang timbul akibat perubahan atau pembatalan acara, termasuk dalam kondisi keadaan kahar / force majeure.
+The Organiser''s is not responsible for travel, accommodation expenses, or any other losses arising from event changes or cancellations, including in force majeure conditions.
+
+K. DATA PRIBADI / PERSONAL DATA
+
+Dengan membeli tiket dan/atau memasuki venue, Pembeli dan Pemegang Tiket memberikan persetujuan kepada Penyelenggara untuk mengumpulkan, menyimpan, memproses, dan menggunakan data pribadinya untuk keperluan pelaksanaan acara, termasuk pemenuhan kontrak tiket, pengendalian akses, keamanan, komunikasi terkait acara, serta pemenuhan kewajiban hukum. Data pribadi dapat dibagikan kepada instansi pemerintah yang berwenang dan pihak ketiga yang ditunjuk (antara lain penyedia layanan tiket, keamanan dan penyedia teknologi) sepanjang diperlukan untuk tujuan tersebut dan sesuai peraturan perundang-undangan yang berlaku.
+By purchasing a ticket and/or entering the venue, the Ticket Buyer and Ticket Holder provides consent to the Organiser to collect, store, process, and use their personal data for the purposes of the event implementation, including ticket contract fulfillment, access control, security, event-related communication, and compliance with legal obligations. Personal data may be shared with competent government authorities and designated third parties (including ticket service providers, security providers, and technology providers) to the extent necessary for such purposes and in accordance with applicable laws and regulations.
+
+L. KETENTUAN UMUM / GENERAL
+
+Penyelenggara berhak mengubah Syarat & Ketentuan ini sewaktu-waktu. Perubahan akan diumumkan melalui yejakarta.com. Penggunaan tiket setelah perubahan dianggap sebagai penerimaan atas perubahan tersebut.
+The Organiser reserves the right to amend these Terms and Conditions at any time. Changes will be announced via yejakarta.com. Use of the ticket after amendments constitutes acceptance thereof.
+Syarat & Ketentuan ini tunduk pada hukum Republik Indonesia. Setiap sengketa yang timbul akan diselesaikan melalui musyawarah dan apabila tidak tercapai kesepakatan, diselesaikan melalui Pengadilan Negeri Jakarta Selatan.
+These Terms are governed by the laws of the Republic of Indonesia. Any disputes shall first be resolved through good-faith negotiation and, if unresolved, through the South Jakarta District Court.
+Ketidakpatuhan terhadap salah satu ketentuan di atas dapat mengakibatkan pembatalan tiket atau penolakan akses tanpa pengembalian dana.
+Non-compliance with any of the above terms may result in ticket cancellation or entry refusal without refund.
+
+TERMS & CONDITIONS RESERVE & HOLD PROGRAM
+
+Pembelian tiket melalui program Reserve & Hold bersifat final dan tidak dapat dikembalikan. Seluruh pembayaran yang telah dilakukan dalam program Reserve & Hold bersifat final dan tidak dapat dikembalikan maupun ditukarkan dengan uang tunai atau kategori tiket lainnya. Larangan pengalihan ini berlaku sampai pelunasan 100% harga tiket; setelah e-ticket diterbitkan, tiket bersifat transferable sebagaimana diatur dalam ketentuan mengenai identitas Pembeli Tiket.
+Ticket purchases made through the Reserve & Hold program are final and non-refundable. All payments made under the Reserve & Hold program are final and cannot be refunded or exchanged for cash or for tickets in any other category. The restriction on transfer applies until 100% of the ticket price has been paid; after the e-ticket is issued, the ticket is transferable as set out in the Ticket Buyer identity provision.
+Pembeli Tiket wajib menyelesaikan pembayaran sesuai dengan jadwal pembayaran yang telah ditentukan sebagaimana tercantum di bawah ini. Kegagalan untuk menyelesaikan salah satu pembayaran hingga batas waktu yang telah ditentukan akan mengakibatkan reservasi tiket secara otomatis dibatalkan dan dinyatakan tidak berlaku (void), tanpa pemberitahuan sebelumnya. Seluruh pembayaran yang telah dilakukan akan hangus dan tidak dapat dikembalikan. Kegagalan menyelesaikan pembayaran pada Termin 1 dan/atau pelunasan pada Termin 2 sampai dengan batas waktu yang ditentukan merupakan wanprestasi (gagal bayar). Dalam hal gagal bayar, reservasi batal secara otomatis dan seluruh dana yang telah dibayarkan, termasuk pembayaran Termin 1, hangus serta tidak dapat dikembalikan.
+Ticket Buyers are required to complete payments in accordance with the payment schedule set forth below. Failure to complete any payment by the applicable deadline will result in the automatic cancellation and voiding of the ticket reservation, without prior notice. All payments already made will be forfeited and will not be refunded. Failure to complete the Term 1 payment and/or the Term 2 settlement by the applicable deadline constitutes default. In the event of default, the reservation is automatically cancelled and all amounts already paid, including the Term 1 payment, are forfeited and will not be refunded.
+TERM 1 - RESERVATION
+START: SEPTEMBER 5TH, 2026 10:00 WIB
+DUE DATE: SEPTEMBER 20TH, 2026 23:59 WIB
+TERM 2 - FINAL PAYMENT
+START: SEPTEMBER 21ST, 2026 00:00 WIB
+DUE DATE: OCTOBER 11TH, 2026 23:59 WIB
+Program Reserve & Hold disediakan masing-masing 5 (lima) kategori yaitu; (a) Super Fans Festival, (b) CAT 1, (c) CAT 2, (d) CAT 3, dan (e) Festival.
+The Reserve & Hold program is offered across 5 (five) categories; (a) Super Fans Festival, (b) CAT 1, (c) CAT 2, (d) CAT 3, dan (e) Festival.
+Batas waktu pembayaran bersifat final dan tidak dapat diperpanjang. Segala permintaan perpanjangan waktu pembayaran ataupun permintaan pengaktifan kembali tiket atau reservasi yang telah dibatalkan tidak dapat dipenuhi.
+All payment deadlines are final and cannot be extended. Any requests for an extension of the payment deadline or for the reinstatement of cancelled tickets or reservation will not be accommodated.
+Pembelian tiket melalui program Reserve & Hold bertujuan untuk mengamankan tiket yang telah dipilih oleh Pembeli Tiket di termin ke-1. Pembeli Tiket baru dianggap memiliki hak penuh atas tiket setelah berhasil melakukan pelunasan atas sisa harga tiket pada termin ke-2, sehingga seluruh harga tiket (100%) telah dibayarkan penuh, pembayaran sebesar 100% dari harga tiket pada termin ke-2 dan memenuhi seluruh persyaratan pembayaran yang berlaku. E-ticket hanya akan diterbitkan setelah Pembeli Tiket berhasil menyelesaikan pembayaran sebesar 100% dari harga tiket dan memenuhi seluruh persyaratan pembayaran yang berlaku.
+Ticket purchases through the Reserve & Hold program are intended to secure the tickets selected by the Ticket Buyer during Term 1. The Ticket Buyer will only be deemed to have full rights to the tickets upon settlement of the remaining balance of the ticket price during Term 2, such that 100% of the ticket price has been paid in full, and fulfillment of all applicable payment requirements. E-tickets will only be issued after the Ticket Buyer has successfully completed 100% payment of the ticket price and fulfilled all applicable payment requirements.
+Reservasi dalam program Reserve & Hold hanya dapat didaftarkan dan dilanjutkan atas satu nama Pembeli Tiket yang tercatat pada saat pemesanan Termin 1. Nama tersebut tidak dapat diubah, dialihkan, atau digantikan oleh pihak lain sampai dengan pelunasan 100% harga tiket. Setelah pelunasan 100% harga tiket dan penerbitan e-ticket, tiket bersifat transferable sesuai mekanisme dan syarat yang berlaku pada platform penjualan tiket.
+A reservation under the Reserve & Hold program may only be registered and continued under the single Ticket Buyer name recorded at the time of the Term 1 booking. That name may not be changed, assigned, or substituted by any other party until 100% of the ticket price has been paid. After 100% payment and issuance of the e-ticket, the ticket is transferable in accordance with the then-applicable ticket platform mechanism and terms.
+
+TERMS AND CONDITIONS OF HOTEL BUNDLING
+
+Paket Hotel Bundling YE JAKARTA 2026 tersedia dalam beberapa pilihan bundling mencakup 2 tiket konser yang dipadukan dengan pilihan akomodasi menginap selama 1 (satu) malam atau 2 (dua) malam. Pilihan paket yang tersedia meliputi:
+YE JAKARTA 2026 Hotel Bundling packages are available in several options, offering a choice of either a 1-night or 2-night stay combined with two (2) concert tickets. The available packages are as follows:
+CAT 1
+CAT 1 Artotel Mangkuluhur - Artotel Mangkuluhur, Atelier
+CAT 1 Artotel Mangkuluhur - Artotel Mangkuluhur, Premium
+CAT 1 Ayana - Ayana, Deluxe
+CAT 1 Gran Mahakam - Gran Mahakam, Deluxe
+CAT 1 Gran Mahakam - Gran Mahakam, Junior Suite
+CAT 1 Gran Mahakam - Gran Mahakam, Deluxe Suite
+CAT 1 Grand Hyatt - Grand Hyatt, Grand Room City
+CAT 1 Hermitage - Hermitage, Deluxe
+CAT 1 Kempinski - Kempinski, Deluxe
+CAT 1 Kempinski - Kempinski, Grand Deluxe
+CAT 1 Kempinski - Kempinski, Executive
+CAT 1 Mandarin Oriental - Mandarin Oriental, Deluxe
+CAT 1 Pullman Thamrin - Pullman Thamrin, Premium Superior
+CAT 1 The Westin - The Westin, Deluxe Skyline
+CAT 1 The Westin - The Westin, Westin Room
+CAT 1 Le Meridien - Le Meridien, Premier Room
+CAT 2
+CAT 2 Four Points - Four Points, Deluxe
+CAT 2 Four Points - Four Points, Premium Deluxe
+CAT 2 GranDhika Iskandarsyah - GranDhika Iskandarsyah, Deluxe
+CAT 2 Mercure Gatot Subroto - Mercure Gatot Subroto, Superior
+Setiap Paket Bundling Hotel hanya berlaku untuk periode menginap pada tanggal 23-25 Oktober 2026 atau 24-25 Oktober 2026. Paket mencakup akomodasi hotel dan 2 (dua) tiket konser sesuai kategori yang dipilih.
+Each Hotel Bundling Package is valid exclusively for stay periods between October 23-25, 2026, or October 24-25, 2026. Each package includes hotel accommodation and two (2) concert tickets for the selected category.
+Penjualan paket Hotel Bundling YE JAKARTA 2026 secara resmi hanya tersedia melalui situs resmi yejakarta.com.
+YE JAKARTA 2026 Hotel Bundling packages are sold exclusively through the official website at yejakarta.com.
+Pembelian wajib menggunakan nama sesuai identitas resmi (KTP, KK, SIM, atau paspor), untuk proses reservasi hotel. Nama tidak dapat diubah setelah transaksi selesai.
+All purchases must be made under a name that matches an official government ID (ID Card/KTP, Family Card/KK, Driver''s License/SIM, or Passport) for hotel reservation purposes. Names cannot be changed after the transaction is completed.
+Pembelian paket Hotel Bundling YE JAKARTA 2026 dibatasi maksimal 2 (dua) paket per transaksi.
+Purchases of YE JAKARTA 2026 Hotel Bundling packages are limited to a maximum of 2 (two) packages per transaction.
+Seluruh paket Hotel Bundling YE JAKARTA 2026 yang telah dibeli tidak dapat dibatalkan, tidak dapat dipindahtangankan, atau dimodifikasi dengan alasan apa pun. Paket Hotel Bundling yang diperjualbelikan atau digunakan tidak sesuai ketentuan berpotensi dibatalkan tanpa pengembalian dana, serta pemegang tiket dapat ditolak masuk ke area acara. Penyelenggara tidak bertanggung jawab atas penyalahgunaan tiket oleh pihak lain akibat kelalaian pembeli.
+All purchased YE JAKARTA 2026 Hotel Bundling packages are strictly non-refundable, non-transferable, and non-modifiable for any reason. Tickets that are resold or used in violation of these terms may be canceled without a refund, and ticket holders may be denied entry to the event venue. The organizer is not responsible for any ticket misuse resulting from buyer negligence.
+Dengan melakukan pembelian, pembeli dianggap telah membaca, memahami, dan menyetujui seluruh syarat dan ketentuan yang berlaku.
+By completing the purchase, buyers are considered to have read, understood, and agreed to all applicable terms and conditions.
+Check-in hotel dapat dilakukan mulai pukul 14.00 WIB. Setiap paket menjamin kamar untuk 2 (dua) orang. Permintaan extra bed (jika diperlukan) akan dikenakan biaya tambahan dan diatur langsung dengan pihak hotel.
+Hotel check-in starts at 2:00 PM WIB. Each package guarantees accommodation for two (2) guests. Requests for an extra bed (if required) will incur additional charges and must be arranged directly with the hotel.
+Jika terjadi pembatalan event, pemesanan hotel tidak dapat di-refund. Namun, kamar hotel tetap dapat digunakan sesuai dengan tanggal pemesanan awal. Ketentuan terkait tiket akan mengikuti Syarat dan Ketentuan Pembelian Tiket yang berlaku.
+In the event of a concert cancellation, the hotel reservation is non-refundable; however, the room will remain available for use on the originally booked dates. Any matters relating to the tickets shall be governed by the applicable Terms and Conditions of Ticket Purchase.
+Dengan melakukan pemesanan, Tamu memberikan persetujuan kepada Penyelenggara dan/atau hotel untuk mengumpulkan, menyimpan, dan menggunakan data pribadi yang diberikan semata-mata untuk keperluan pemrosesan reservasi hotel, komunikasi terkait pemesanan, dan pemenuhan kewajiban hukum yang berlaku. Penggunaan data pribadi akan tunduk pada ketentuan peraturan perundang-undangan mengenai Perlindungan Data pribadi di Indonesia.
+By making a reservation, the Guest concerts to the collection, storage, and use of the personal data provided solely for the purpose of processing the hotel reservation, related communications, and compliance with applicable legal obligations. The processing of personal data shall be subject to the prevailing personal data protection laws and regulations in Indonesia.
+Penjualan paket Hotel Bundling hanya dibuka hingga tanggal 30 September 2026. Setelah tanggal tersebut, paket Hotel Bundling dengan harga dan kategori yang tertera di atas tidak lagi berlaku. Pengecualian berlaku untuk Ayana Hotel (hingga 15 September 2026) dan Pullman Thamrin Hotel (hingga 23 September 2026).
+Sales of the Hotel Bundling packages are available only until September 30, 2026, after which the rates and categories specified above will no longer be valid. Exceptions apply to Ayana Hotel (available until September 15, 2026) and Pullman Thamrin Hotel (available until September 23, 2026).
+Penyelenggara dan/atau hotel tidak bertanggung jawab atas kegagalan atau keterlambatan dalam melaksanakan kewajiban yang disebabkan oleh kejadian di luar kendali yang wajar, termasuk namun tidak terbatas pada bencana alam, pandemi, wabah, perang, kerusuhan, tindakan pemerintah, atau keadaan kahar lainnya (force majeure). Dalam hal terjadi force majeure, Penyelenggara akan berupaya memberitahukan Tamu dalam waktu yang wajar.
+Neither the Organizer nor the hotel shall be liable for any failure or delay in performing their obligations arising from events beyond their reasonable control, including but not limited to natural disasters, pandemics, epidemics, war, civil unrest, government actions, or other force majeure events. In the event of force majeure, the Organizer shall endeavor to notify the Guest within a reasonable time.
+Untuk informasi lebih lanjut:
+For further information:
+Ticket: LOKET Customer Service - support@loket.com / +62 21 3000 3160
+Hotel : Illa - +62 877-8111-6221
+
+FREQUENTLY ASKED QUESTIONS (FAQ)
+
+Di mana saya dapat membeli tiket resmi?
+Tiket resmi hanya dapat dibeli melalui yejakarta.com dan platform resmi yang ditunjuk oleh Penyelenggara (Loket.com). Pembelian melalui pihak lain atau calo sepenuhnya menjadi risiko pembeli. Pastikan Anda telah mendaftarkan di Loket.com untuk mempermudah transaksi pembelian.
+Pastikan Anda telah mendaftarkan di Loket.com untuk mempermudah transaksi pembelian.
+Where can I buy official tickets?
+Official tickets can only be purchased through yejakarta.com and the official ticketing partner appointed by the organizer, Loket.com. Purchases made through third parties or scalpers are entirely at the buyer''s own risk.
+Make sure you have registered a Loket.com account to facilitate your purchase transaction.
+
+Berapa banyak tiket yang bisa saya beli?
+Pembelian dibatasi maksimal 8 (delapan) tiket per transaksi dan bisa untuk kategori yang berbeda. 1 (satu) alamat email, 1 (satu) nomor identitas diri dan 1 (satu) nomor telepon dibatasi 1 (satu) transaksi.
+What is the maximum number of tickets I can buy?
+Purchases are limited to a maximum of 8 (eight) tickets per transaction, and purchasing tickets across different categories is permitted. 1 (one) email address, 1 (one) ID number, and 1 (one) phone number are limited to 1 (one) transaction.
+
+Kapan saya akan menerima tiket?
+Setelah transaksi pembelian berhasil, Booking Confirmation akan dikirimkan ke alamat email yang digunakan saat melakukan pembelian. Selanjutnya, e-ticket akan tersedia di aplikasi LOKET X menggunakan akun atau alamat email yang sama setelah tiket diterbitkan oleh Loket. E-ticket hanya dapat diakses melalui aplikasi LOKET X.
+When will I receive my ticket?
+After a successful purchase transaction, a Booking Confirmation will be sent to the email address used during purchase. Subsequently, the e-ticket will be available in the LOKET X app using the same account or email address once issued by the Loket. E-tickets can only be accessed through the LOKET X app.
+
+Kapan nomor kursi (seat number) saya tersedia?
+Bagi pemegang tiket kategori VIP, CAT 1, CAT 2, CAT 3 dan CAT 4, nomor kursi akan diumumkan mendekati hari konser melalui aplikasi LOKET X. Informasi ini tidak tersedia pada saat pembelian tiket.
+When will my seat number be available?
+For ticket holders categories: VIP, CAT 1, CAT 2, CAT 3, and CAT 4, seat numbers will be informed a few days before the concert via the LOKET X app. This information is not available at the time of ticket purchase.
+
+Apakah saya boleh menggunakan screenshot e-tiket untuk masuk ke venue?
+Tidak. QR yang tersedia di LOKET X tidak bisa di-screenshot. Anda wajib menunjukkan QR e-ticket asli yang tersedia di aplikasi LOKET X saat proses validasi di venue.
+Can I use a screenshot of the e-ticket to enter the venue?
+No. The QR code in LOKET X cannot be screenshotted. You must show the original QR e-ticket available in the LOKET X application during the validation process at the venue.
+
+Apakah e-tiket dapat dipindahkan kepada orang lain?
+Ya. Setelah QR e-tiket tersedia di aplikasi LOKET X, Anda dapat menggunakan fitur Transfer Tiket untuk mengirimkan e-ticket kepada teman atau anggota keluarga melalui aplikasi LOKET X. Setiap e-ticket hanya dapat ditransfer 1 (satu) kali.
+Can the e-ticket be transferred to someone else?
+Yes. Once the e-ticket is available in the LOKET X app, you can use the Ticket Transfer feature to send the e-ticket to a friend or family member via the LOKET X app. Each e-ticket can only be transferred 1 (one) time.
+
+Apakah saya dapat keluar dan masuk kembali ke venue?
+Tidak. Acara ini menerapkan kebijakan NO RE-ENTRY. Setelah keluar dari area venue, Anda tidak diperkenankan masuk kembali dengan alasan apa pun.
+Can I re-enter the venue?
+No. This event enforces a strict NO RE-ENTRY policy. Once you leave the venue area, you will not be allowed re-entry for any reason.
+
+Berapa batas usia untuk menghadiri konser?
+- Anak di bawah usia 15 tahun wajib didampingi secara terus-menerus oleh orang tua atau wali berusia minimal 18 tahun yang juga memiliki tiket pada kategori yang sama.
+- Orang tua atau wali bertanggung jawab penuh atas pengawasan anak, memastikan anak tetap berada di area sesuai kategori tiketnya, serta menerima seluruh risiko yang melekat pada konser, termasuk suara keras, piroteknik, kepadatan kerumunan, dan kemungkinan pergerakan kerumunan secara tiba-tiba.
+What is the age restriction for attending the concert?
+- Children under 15 years old must be continuously accompanied by a parent or legal guardian aged at least 18 years who also holds a ticket in the same ticket category.
+- Parents or guardians are fully responsible for supervising the child, ensuring the child remains in the correct ticket category area, and acknowledge the inherent risks of a live concert, including loud sound, pyrotechnics, crowd density, and possible sudden crowd movement.
+
+Barang apa saja yang tidak boleh dibawa ke dalam venue?
+Barang yang dilarang antara lain:
+- Alkohol, obat-obatan terlarang, rokok, vape;
+- Makanan dan minuman dari luar;
+- Kamera profesional, alat perekam video/audio, GoPro, tablet;
+- Drone;
+- Benda piroteknik, kembang api, korek;
+- Parfum botol kaca;
+- Senjata, benda tajam, tongkat, tiang bendera;
+- Laser pointer;
+- Tas berukuran besar (melebihi 30x30cm);
+- Payung berukuran besar;
+- Hewan peliharaan.
+Penyelenggara tidak menyediakan penitipan barang.
+What items are prohibited inside the venue?
+Prohibited items include:
+- Alcohol, narcotics, cigarettes, vape;
+- Food and beverages from outside the venue;
+- Professional cameras, video/audio recorders, GoPro, tablet devices;
+- Drones
+- Pyrotechnics, fireworks, lighters
+- Glass bottle perfume
+- Weapons, sharp objects, poles, flag poles;
+- Laser pointers
+- Oversized bags (exceeding 30x30cm);
+- Large umbrellas
+- Pets
+Note: The organizer does not provide luggage storage/cloakroom services.
+
+Apakah tiket dapat dibatalkan atau dikembalikan?
+Seluruh penjualan tiket bersifat final. Tiket yang telah dibeli tidak dapat ditukar maupun dikembalikan dananya, kecuali apabila acara dibatalkan oleh Penyelenggara sesuai ketentuan yang berlaku.
+Can tickets be canceled or refunded?
+All ticket sales are final. Tickets purchased cannot be exchanged or refunded, unless the event is canceled by the organizer in accordance with applicable regulations.
+
+Apa yang harus saya lakukan sebelum datang ke venue?
+Pastikan Anda:
+- Sudah login ke akun LOKET X yang digunakan saat membeli tiket.
+- Memastikan e-ticket telah tersedia di aplikasi.
+- Tidak membagikan QR e-tiket kepada siapa pun.
+- Membawa identitas diri yang masih berlaku apabila diperlukan untuk proses verifikasi.
+- Datang lebih awal agar proses validasi berjalan lancar.
+What should I do before arriving at the venue?
+Make sure you:
+- Are logged into the LOKET X account used to purchase the ticket.
+- Verify that your e-ticket is available in the app.
+- Do not share your QR e-ticket with anyone.
+- Bring a valid photo ID for verification if required.
+- Arrive early to ensure a smooth validation process.
+
+Bisakah saya dan teman saya mendapatkan tempat duduk bersebelahan jika membeli tiket secara terpisah?
+Untuk memastikan tempat duduk bersebelahan, tiket wajib dibeli dalam satu transaksi yang sama. Jika tiket dibeli melalui transaksi terpisah, nomor kursi akan dialokasikan secara otomatis oleh sistem dan tidak dapat diubah atau disesuaikan untuk memastikan tempat duduk bersebelahan.
+Can my friend and I get seats next to each other if we purchase our tickets separately?
+To guarantee seats next to each other, tickets must be purchased in a single transaction. If tickets are bought through separate transactions, seat numbers will be assigned automatically by the system and cannot be modified or adjusted to ensure adjacent seating.
+
+COPYRIGHT
+
+(c) 2026 RAW VISION COLLECTIVE & PT GLOBAL LOKET SEJAHTERA. ALL RIGHTS RESERVED.' WHERE title = 'YE JAKARTA 2026' AND venue = 'Jakarta Pusat';
+UPDATE events SET seatmap = '{"name":"Gelora Bung Karno - Denah Tempat Duduk","images":["https://res.cloudinary.com/pbzbhdg3/image/upload/v1789026916/WhatsApp_Image_2026-09-10_at_2.50.23_PM_3.jpg","https://res.cloudinary.com/pbzbhdg3/image/upload/v1789026917/WhatsApp_Image_2026-09-10_at_2.50.23_PM_4.jpg"]}' WHERE title = 'YE JAKARTA 2026' AND venue = 'Jakarta Pusat';
+UPDATE events SET terms_conditions = 'Terms & Conditions
+
+Ticket(s) are sold by the Promoters directly to the consumer. Any tickets purchased by businesses or traders in breach of the Terms & Conditions of ticket sale will be canceled. By accepting these terms and conditions you confirm that you are a consumer.
+Tiket dijual secara langsung oleh Promotor ke konsumen. Tiket apa pun yang dibeli oleh pelaku usaha atau pedagang yang melanggar Syarat & Ketentuan penjualan tiket akan dibatalkan. Dengan menerima syarat dan ketentuan ini, Anda mengkonfirmasi bahwa Anda adalah konsumen.
+
+Tickets ownership cannot be transferred for commercial purposes, including but not limited to prizes, competitions, contests or sweepstakes. Tickets sold or used in breach of this condition may be nullified without a refund, where the Ticket Holder will be refused admission into the concert area with no exception. The Promoter is not responsible for the negligence of the Ticket Buyer which results in the ticket falling into the hands of other parties which can be used as an entry requirement, thereby eliminating the Ticket Buyer''s rights to enter the venue area.
+Tiket tidak dapat dialihkan kepemilikan dengan tujuan komersial, termasuk namun tidak terbatas kepada hadiah, kompetisi, kontes, atau undian. Tiket yang dijual atau digunakan dengan melanggar persyaratan ini dapat dibatalkan tanpa pengembalian dana, dan Pemegang Tiket akan ditolak masuk ke dalam area acara tanpa terkecuali. Penyelenggara tidak bertanggung jawab atas kelalaian Pembeli Tiket yang mengakibatkan Tiket jatuh ke tangan orang lain dan dipergunakan sebagai tanda masuk, sehingga menghilangkan hak Pembeli Tiket untuk masuk ke area acara.
+
+Your Ticket/s will IMMEDIATELY BECOME INVALID if resold OR OFFERED FOR SALE. Tickets sold via third parties or other unauthorized outlets, including online auction sites are not valid for admission. The resale of a Ticket renders it invalid and may lead to refusal of entry.
+Tiket Anda LANGSUNG MENJADI TIDAK VALID jika dijual kembali ATAU DITAWARKAN UNTUK DIJUAL. Tiket yang dijual melalui pihak ketiga dan outlet tidak resmi lainnya, termasuk situs lelang online tidak berlaku untuk tiket masuk. Penjualan kembali Tiket menjadikannya tidak sah dan dapat menyebabkan penolakan masuk.
+
+Every Ticket Holder who comes to the event area is responsible for their own safety, health and personal security. The Sponsors/Band/Promoter/Management are not responsible for, including but not limited to any injury or damage that may occur to Ticket Holders during or in the event.
+Setiap Pemegang Tiket yang datang ke area acara bertanggung jawab atas keselamatan, kesehatan, dan keamanan pribadinya sendiri. Para Sponsor/Band/Penyelenggara/Manajemen tidak bertanggung jawab untuk, termasuk namun tidak terbatas pada cedera atau kerusakan yang mungkin terjadi kepada Pemegang Tiket selama atau di dalam acara tersebut.
+
+Your Ticket purchase constitutes a personal, revocable license and, at all times, remains the property of the promoters.
+Tiket Anda merupakan lisensi pribadi yang dapat dibatalkan dan, sepanjang waktu, tetap menjadi milik promotor.
+
+All ticket sales are final. Tickets that have been sold cannot be exchanged and can not be cashed out.
+Semua penjualan Tiket adalah final. Tiket yang telah terjual tidak dapat ditukar dan tidak dapat diuangkan kembali.
+
+By purchasing the tickets for the BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA., you agree to the collection, storage and limited use of your personal data for the purposes of the BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA. in accordance with Indonesian prevailing regulations concerning Personal Data Protection.
+Dengan membeli Tiket acara BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA., Anda telah menyetujui pengumpulan, penyimpanan dan penggunaan data pribadi Anda secara terbatas untuk keperluan acara BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA. sesuai dengan ketentuan peraturan perundang-undangan yang berlaku di Indonesia terkait Perlindungan Data Pribadi.
+
+By purchasing tickets to the BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA., Ticket Buyers and Ticket Holders agree to comply with all the Terms & Conditions of the event that are determined and valid from time to time.
+Dengan membeli Tiket untuk ke acara konser BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA., maka Pembeli Tiket dan Pemegang Tiket setuju untuk menaati setiap dan seluruh Syarat & Ketentuan acara yang ditetapkan dan berlaku dari waktu ke waktu.
+
+The Ticket Holder grants the Promoter and Sponsors the right to use, in perpetuity, all or any part of the recording of any video and still footage made of the Ticket holder''s appearance on any channels, including but not limited to magazine, social media, and TV for broadcast in any and all media globally used for advertising, publicity and promotions relating thereto without any further approval of yours.
+Pemegang Tiket memberikan hak kepada Penyelenggara acara dan para Sponsor untuk melakukan rekaman video dan gambar baik sebagian atau semua, pada kanal/platform apapun, termasuk namun tidak terbatas pada majalah, media sosial, dan saluran TV untuk disiarkan di media apapun di seluruh dunia, untuk iklan, publisitas dan promosi yang berkaitan dengan konser tanpa persetujuan lebih lanjut dari Pemegang Tiket.
+
+The Promoter has the right to refuse admission to and/or evict Ticket-Holders who do not abide by the Terms and Conditions of the event.
+Penyelenggara acara memiliki hak untuk menolak masuk dan/atau mengeluarkan orang-orang yang tidak menaati syarat dan ketentuan acara.
+
+The Promoter has the right to process and prosecute in accordance with the provisions of the prevailing laws and regulations, both civil procedure and criminal procedure against people who obtain tickets through illegal means, including but not limited to forging or duplicating valid tickets, or obtaining the tickets in a way that is not in accordance with what has been determined by the Promoter, as stated in these Terms and Conditions.
+Penyelenggara berhak untuk memproses dan menuntut secara hukum sesuai dengan ketentuan peraturan perundang-undangan yang berlaku baik secara perdata maupun secara pidana terhadap orang-orang yang memperoleh Tiket dengan cara yang tidak sah termasuk namun tidak terbatas pada cara melakukan pemalsuan atau menggandakan Tiket yang sah atau memperoleh Tiket dengan cara yang tidak sesuai dengan yang telah ditentukan oleh Penyelenggara sebagaimana dalam Syarat dan Ketentuan ini.
+
+Please check our Instagram account (@pkentertainment.id and @soundrhythm) periodically for more information about the BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA.
+Mohon cek akun Instagram kami (@pkentertainment.id dan @soundrhythm) secara berkala untuk informasi lebih lanjut seputar acara BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA.
+
+Tickets can be purchased on Loket.com via bigbanginjakarta.com. Tickets are only for admission to the BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA.
+Tiket dapat dibeli di Loket.com melalui bigbanginjakarta.com. Tiket dapat digunakan untuk masuk ke acara konser BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA.
+
+Ticket price excludes 10% government tax, 6% ticketing platform fee and any other applicable fees.
+Harga Tiket tidak termasuk 10% pajak pemerintah, 6% biaya platform tiket dan biaya lain yang berlaku.
+
+BIGBANG V.I.P MEMBERSHIP PRESALE is limited to a maximum of 2 (two) per transaction, 1 (one) membership code, 1 (one) email address, and 1 (one) phone number is limited to 1 (one) transaction.
+Penjualan BIGBANG V.I.P MEMBERSHIP Presale dibatasi maksimal 2 (dua) per transaksi, 1 (satu) kode keanggotaan, 1 (satu) alamat email dan 1 (satu) nomor telepon dibatasi 1 (satu) transaksi.
+
+BCA PRESALE and INDOSAT PRESALE are limited to a maximum of 2 (two) per transaction, 1 (one) email address and 1 (one) phone number is limited to 1 (one) transaction.
+Penjualan BCA PRESALE dan INDOSAT PRESALE dibatasi maksimal 2 (dua) per transaksi dalam kategori yang sama. 1 (satu) alamat email dan 1 (satu) nomor telepon dibatasi 1 (satu) transaksi.
+
+GENERAL ON SALE is limited to a maximum of 4 (four) per transaction, 1 (one) email address and 1 (one) phone number is limited to 1 (one) transaction.
+Penjualan GENERAL ON SALE dibatasi maksimal 4 (empat) per transaksi dalam kategori yang sama. 1 (satu) alamat email dan 1 (satu) nomor telepon dibatasi 1 (satu) transaksi.
+
+To participate in the BIGBANG V.I.P MEMBERSHIP PRESALE, you must apply for the BIGBANG V.I.P MEMBERSHIP PRESALE SURVEY in advance on B.Stage. Only BIGBANG V.I.P MEMBERSHIP holders are eligible to participate in the BIGBANG V.I.P MEMBERSHIP PRESALE. Please take note of the schedule, as application is not possible outside of the application period and make sure to check the correct time and date for different time zones.
+Untuk mengikuti BIGBANG V.I.P MEMBERSHIP PRESALE, Anda harus melakukan pendaftaran BIGBANG V.I.P MEMBERSHIP PRESALE SURVEY terlebih dahulu melalui B.Stage. Hanya pemegang BIGBANG V.I.P MEMBERSHIP yang berhak mengikuti BIGBANG V.I.P MEMBERSHIP PRESALE. Harap memperhatikan jadwal yang telah ditentukan, karena pendaftaran tidak dapat dilakukan di luar periode yang ditetapkan. Pastikan juga untuk memeriksa tanggal dan waktu yang sesuai dengan zona waktu masing-masing.
+
+Purchasing tickets for the BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA. must use the name according to a valid photo ID. Make sure to buy tickets using your valid and correct data (ID Card/KK/KTP/SIM/Passport). Your ticket(s) cannot be changed and/or modified once the purchase has been made.
+Pembelian tiket konser BIGBANG 2026–2027 WORLD TOUR < XX : COSMOS > IN JAKARTA. wajib menggunakan Nama sesuai dengan kartu identitas yang sah. Pastikan Anda melakukan pembelian Tiket dengan menggunakan data Anda yang sah dan benar (Kartu Identitas/KK/KTP/SIM/Paspor). Tiket Anda tidak dapat diubah dan/atau dimodifikasi setelah pembelian telah dilaksanakan.
+
+The Ticket Holder must occupy the seat or position that has been assigned by the Promoter according to the category of ticket purchased.
+Pemegang Tiket wajib menempati tempat duduk atau posisi yang telah ditentukan oleh pihak Penyelenggara sesuai dengan kategori Tiket yang dibeli.
+
+In the event of a canceled concert, tickets will be refunded in accordance with the provisions of the Promoter. Refunds do not include Platform Fees, Convenience Fees, or any other personal costs of the Ticket Buyer (e.g. travel expenses, accommodation expenses, etc).
+Jika terjadi pembatalan konser, maka Tiket akan dikembalikan sesuai dengan ketentuan Penyelenggara. Pengembalian harga Tiket tidak termasuk Biaya Platform, Biaya Lainnya dan biaya pribadi Pembeli Tiket (contoh biaya perjalanan, biaya akomodasi, dll).
+
+In order for Tickets to be valid on show day, the Ticket Buyer will be asked to provide the following items alongside their redeemed wristbands:
+a. Photo ID (ID Card/KK/KTP/SIM/Passport)
+Agar Tiket Anda valid di hari konser, Pembeli Tiket akan diminta untuk menyediakan barang dibawah ini bersama gelang Anda:
+a. Kartu identitas dengan foto (KK/KTP/SIM/Paspor)
+
+The time and place for wristband redemption will be announced and informed through the promoter''s social networking services (@pkentertainment.id and @soundrhythm), as well as the official website www.bigbanginjakarta.com. It is recommended to exchange the e-voucher beforehand to avoid queues on the day of the concert.
+Waktu dan tempat penukaran gelang akan diumumkan dan diinformasikan melalui media sosial promotor (@pkentertainment.id dan @soundrhythm), serta situs web resmi www.bigbanginjakarta.com. Disarankan untuk menukarkan e-voucher sebelumnya untuk menghindari antrian pada hari konser.
+
+In order for Tickets to be valid for wristband redemption, the Ticket Buyer (Lead Booker) will be asked to provide all of the following items alongside their ticket(s):
+- Photo ID (ID Card/KK/KTP/SIM/Passport)
+- Loket.com E-Voucher
+Agar Tiket Anda valid untuk penukaran gelang, Pembeli Tiket (Pemesan Utama) akan diminta untuk menyediakan barang dibawah ini bersama tiket Anda:
+- Kartu identitas asli (ID Card/KK/KTP/SIM/Paspor)
+- E-Voucher Loket.com
+
+If wristband redemption is represented, please provide:
+- Printed e-voucher
+- Photo ID (ID Card/KK/KTP/SIM/Passport) of the wristband redeemer
+- Copy of the Photo ID (ID Card/KK/KTP/SIM/Passport) of the original ticket holder
+- Power of Attorney signed on a Rp.10.000 Duty Stamp by the represented party
+Apabila penukaran gelang diwakili, mohon untuk menyediakan:
+- E-voucher yang telah dicetak
+- Kartu identitas asli (ID Card/KK/KTP/SIM/Paspor) penukar tiket
+- Fotokopi identitas diri (KTP/KK/SIM/Paspor) pemesan tiket asli
+- Surat Kuasa yang ditandatangani di atas materai Rp.10.000 oleh pihak yang diwakili
+
+The Promoter will not, for any reason, replace lost or damaged wristbands.
+Penyelenggara tidak akan memberikan penggantian gelang yang hilang atau rusak karena alasan apa pun.
+
+For audiences who feel unwell, it is highly recommended to wear a mask throughout the event.
+Bagi penonton yang merasa kurang sehat, sangat disarankan untuk menggunakan masker selama acara berlangsung.
+
+For safety reasons, individuals with disabilities and pregnant women are advised not to be in the standing area. Children under the age of 12 (twelve) and individuals under the height of 1.2m are not allowed in the standing area. Please contact our customer support for more information.
+Demi alasan keamanan, penonton difabel dan wanita hamil disarankan untuk tidak berada di area standing. Anak-anak dibawah usia 12 (dua belas) tahun dan penonton dengan tinggi dibawah 1.2m tidak diperbolehkan untuk berada di area standing. Silakan hubungi layanan pelanggan kami untuk informasi lebih lanjut.
+
+Strobe, laser and haze effects may be used during the show. Patrons susceptible to photosensitive epilepsy or other photo sensitivities may be affected.
+Efek strobo, laser, dan kabut dapat digunakan selama pertunjukan. Pengunjung yang rentan terhadap epilepsi fotosensitif atau bentuk lain sensitivitas cahaya dapat terpengaruh.
+
+The promoter reserves all rights to add any additional Terms / Conditions related to health protocols in accordance with the prevailing law and/or regulations at the time of the event.
+Penyelenggara berhak untuk menambahkan Syarat/Ketentuan tambahan terkait protokol kesehatan sesuai dengan hukum dan/atau peraturan yang berlaku pada saat acara berlangsung.
+
+Dedicated special needs / wheelchair accessible seating is only available in CAT 2. Ticket buyers requiring special needs assistance must purchase CAT 2 tickets.
+Area tempat duduk khusus bagi penyandang disabilitas / pengguna kursi roda hanya tersedia di kategori CAT 2. Pembeli tiket yang memerlukan bantuan atau akses khusus wajib membeli tiket kategori CAT 2.
+
+Ticket upgrades to CAT 2 may be required depending on ticket availability.
+Upgrade kategori tiket ke CAT 2 dapat diperlukan, bergantung pada ketersediaan tiket.
+
+There is a limited quota for wheelchair accessible seating and is subject to availability on a first-come, first served basis.
+Terdapat kuota dalam jumlah terbatas untuk tempat duduk yang dapat diakses dengan kursi roda dan bergantung pada ketersediaan berdasarkan urutan permintaan.
+
+To get your booking authorized, you must present a medical certificate as proof of disability. The Promoter only accepts medical certificates from legitimate institutions and/or physicians.
+Untuk mendapatkan otorisasi pemesanan tempat duduk ini, Anda diwajibkan untuk melampirkan Surat Keterangan Dokter yang sah. Penyelenggara Acara hanya menerima Surat Keterangan Dokter yang berasal dari institusi yang sah, baik klinik maupun rumah sakit.
+
+Relocation requests may be reviewed based on medical condition, seating availability, safety considerations and Promoter approval.
+Permohonan perpindahan tempat duduk dapat dipertimbangkan berdasarkan kondisi medis, ketersediaan tempat duduk, pertimbangan keselamatan, serta persetujuan Penyelenggara.
+
+For more information regarding wheelchair accessible seating and booking, please contact support@loket.com to process your booking.
+Untuk informasi lebih lanjut dan pemesanan, silakan hubungi layanan pelanggan support@loket.com untuk memproses pemesanan Anda.
+
+Promoters
+
+Combining the power of the live event with a focus on true artist development, AEG Presents is a world leader in the music and entertainment industries.
+
+Operating across four continents, the company has an unparalleled commitment to artistry, creativity, and community. Its tentpole festivals and multi-day music events — which include the iconic Coachella Valley Music & Arts Festival and the legendary New Orleans Jazz & Heritage Festival alongside American Express Presents BST Hyde Park, Stagecoach, Hangout Festival, Electric Forest, and Firefly — continue to set the bar for the live music experience. AEG Presents promotes global tours for artists such as The Rolling Stones, Elton John, Taylor Swift, Celine Dion, Justin Bieber, Kenny Chesney, Paul McCartney, and Katy Perry, in addition to — through its network of clubs, theatres, arenas, stadiums and renowned partner brands such as Goldenvoice, Messina Touring Group, Concerts West, The Bowery Presents, PromoWest Productions, Marshall Arts, Madison House Presents, and Zero Mile Presents — creating and developing an unmatched infrastructure for artist development and audience reach.
+
+More information can be found at www.aegpresents.com.
+
+PK Entertainment is Indonesia''s leading music promoter, established in 2015 by a collective of visionary strategists and creators. We are dedicated to curating and presenting world-class concerts that deliver exceptional live music experiences and create unforgettable memories for concertgoers.
+
+Over the years, PK Entertainment has built a strong legacy of bringing some of the world''s biggest superstars and most exciting emerging artists to Indonesia and Thailand. Our portfolio includes internationally acclaimed acts such as Coldplay, Ed Sheeran, Celine Dion, Westlife, LANY, Shawn Mendes, Charlie Puth, Calum Scott, keshi, Tom Jones, ONE OK ROCK, YOASOBI, RADWIMPS, Fujii Kaze, Ado, Eve, Maroon 5, LINKIN PARK, Bruno Mars, BABYMONSTER and ATEEZ.
+
+For more than a decade, we have been at the forefront of Indonesia''s live entertainment industry, producing world-class concerts. Building on this momentum, we are preparing an even more exciting lineup for 2026 and 2027, featuring internationally acclaimed artists such as ENHYPEN, BIGBANG, BOYNEXTDOOR, and many more.
+
+PK Entertainment operates under PK Entertainment Group, alongside its business units including PK Events, PK Concerts, PK Films, PK Music, and PK Capital, forming an integrated entertainment ecosystem and positioning us as Indonesia''s one-stop entertainment and event powerhouse, delivering diverse, world-class experiences across live events, concerts, music, film, and creative production.
+
+Sound Rhythm - The Outsiders. We are not followers.
+
+Founded in 2002, Sound Rhythm''s DNA can be traced back way into the early 1990s when our founder is involved in the making of Air Supply (1994), Phil Collins (1995), Alanis Morissette (1996), Mr. BIG (1996), and 1996 Jakarta Alternative Festival (featuring Foo Fighters, Sonic Youth, Beastie Boys).
+
+Various international artists that Sound Rhythm has handled are Calvin Harris, Suede, 2PM, David Foster & Friends, David Guetta, I AM HARDWELL, ASOT - Armin Van Buuren, Blur, Creed, Phoenix, Jennifer Lopez, OneRepublic, Chicago, Katy Perry, One Direction, The Vamps, Celine Dion, Ed Sheeran, LAUV, Shawn Mendes, The 1975, Justin Bieber, Westlife, Fujii Kaze, One OK Rock, Niall Horan, and many more to come.
+
+In 2025, Sound Rhythm committed to expanding their horizon with not only promoting concerts but also promoting Sport and Family events.
+
+For more information about Sound Rhythm, please visit: http://SoundRhythm.id
+Instagram & X @SoundRhythm
+
+Sponsored By
+
+Customer Service Info
+
+For more information about ticket purchase, wheelchair accessible seating please contact:
+
+Loket.com
+Phone: 021-30003160
+Email: support@loket.com
+
+PK Entertainment
+Email: contact@pk-ent.com
+
+Copyright
+
+(c) 2026 PK ENTERTAINMENT GROUP INDONESIA. ALL RIGHTS RESERVED.
+
+(c) 2026 LOKET (PT Global Loket Sejahtera). ALL RIGHTS RESERVED.' WHERE title = 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN JAKARTA' AND venue = 'Jakarta Utara';
+UPDATE events SET seatmap = '{"name":"Jakarta International Stadium - Seating & Zone","images":["https://res.cloudinary.com/pbzbhdg3/image/upload/v1789026915/WhatsApp_Image_2026-09-10_at_2.50.23_PM_5.jpg"]}' WHERE title = 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN JAKARTA' AND venue = 'Jakarta Utara';
+UPDATE events SET terms_conditions = 'Syarat & Ketentuan - Snada Indonesia 2026
+
+Dengan membeli tiket Snada Indonesia 2026, Anda telah menyetujui seluruh Syarat & Ketentuan yang berlaku di bawah ini. Harap baca dengan saksama demi kenyamanan dan keselamatan semua pihak yang terlibat, terutama anak-anak dan keluarga.
+
+Dengan membeli dan/atau menggunakan tiket ini, pengunjung dianggap telah membaca, memahami, dan menyetujui seluruh isi dokumen ini sebagai bentuk perjanjian yang mengikat antara pengunjung dan penyelenggara. Syarat & Ketentuan ini berlaku setara dengan kontrak dan dapat dijadikan acuan hukum apabila terjadi pelanggaran.
+
+PEMBELIAN TIKET
+
+Tiket hanya dapat dibeli melalui snadaindonesia.com
+
+Harga tiket belum termasuk: Pajak Hiburan Daerah 10%, Biaya Admin 5%, dan Biaya platform pembayaran.
+
+Setiap transaksi General Admission maksimal dapat membeli 4 (empat) tiket menggunakan data diri yang berbeda.
+
+Satu tiket berlaku untuk satu orang dan dapat digunakan untuk keluar-masuk (re-entry).
+
+Gunakan data identitas yang valid (KTP/SIM/Paspor) saat membeli tiket. Tiket tidak dapat diubah setelah pembelian.
+
+Tiket bersifat digital dan akan tersedia H-5 konser melalui aplikasi Loket X (tersedia di Play Store dan App Store).
+
+Tiket ini hanya untuk keperluan pribadi. Dilarang dijual kembali atau digunakan untuk kepentingan komersial tanpa izin promotor.
+
+Pelanggaran terhadap ketentuan pembelian tiket dapat menyebabkan pembatalan tiket tanpa pengembalian dana.
+
+Semua penjualan bersifat final. Tidak ada pengembalian dana, pertukaran, atau pengalihan kepemilikan.
+
+BATASAN UMUR
+
+Usia 17 tahun ke atas: Diperbolehkan menonton konser dan membeli tiket secara mandiri.
+
+Usia 2-16 tahun: Diperbolehkan menonton konser dengan pendampingan orang dewasa (minimal berusia 17 tahun) dan wajib memiliki tiket. Pembelian tiket untuk anak harus dilakukan oleh orang dewasa yang mendampingi.
+
+Usia di bawah 0-2 tahun: Tidak diperbolehkan masuk ke area konser.
+
+KETERANGAN TIKET & TEMPAT DUDUK
+
+Kategori tiket meliputi kategori CAT Diamond Spot, VIP, Platinum, Gold, Silver, Bronze, Festival
+
+Promotor tidak menjual kursi yang terhalang sepenuhnya oleh pembatas/pilar.
+
+INFORMASI NOMOR KURSI
+
+Nomor kursi dipilih otomatis oleh sistem. Kursi akan diatur mulai dari barisan paling depan di setiap kategori, sesuai jumlah tiket dan waktu pembelian. First buy, first served.
+
+Pembelian lebih dari 1 tiket, kursi akan diatur bersebelahan sesuai dengan jumlah tiket yang dibeli, selama masih tersedia.
+
+Nomor kursi akan tersedia H-5 konser pada tiket Anda di aplikasi Loket X.
+
+PERINGATAN KESELAMATAN
+
+Konser akan menampilkan cahaya intens dan suara keras yang dapat menyebabkan gangguan kesehatan, terutama bagi pengunjung dengan kondisi medis seperti epilepsi fotosensitif, gangguan pendengaran, dan gangguan sensorik lainnya.
+
+Pengunjung dengan kondisi medis serius (seperti gangguan jantung, tekanan darah tinggi, gangguan pernapasan, atau kondisi kronis lainnya) sangat disarankan untuk tidak menghadiri konser demi keselamatan pribadi.
+
+Setiap pengunjung bertanggung jawab atas keselamatan diri sendiri dengan mempertimbangkan kondisi pribadi dan risiko yang mungkin timbul dari paparan cahaya intens, suara keras, kerumunan, serta kondisi area acara.
+
+INFORMASI PENONTON
+
+Tidak tersedia tempat penitipan barang pribadi. Hindari membawa koper, tas besar, atau barang berukuran besar lainnya.
+
+Tiket hanya berlaku untuk pemilik terdaftar. Tiket yang digandakan atau disalahgunakan akan dibatalkan tanpa pengembalian dana.
+
+Demi kenyamanan dan keamanan bersama, pengunjung wajib:
+Mengikuti seluruh petunjuk dari petugas keamanan dan panitia
+Tidak melakukan tindakan provokatif, berbahaya, atau mengganggu pengunjung lain
+Tidak memanjat panggung, pagar pembatas, atau area terlarang lainnya
+Tidak membuang sampah sembarangan
+
+Panitia berhak menolak masuk atau mengeluarkan pengunjung tanpa pengembalian dana jika:
+Tidak memiliki tiket sah
+Mengganggu kenyamanan atau keamanan
+Dalam pengaruh alkohol/narkoba
+Membawa barang terlarang
+Melanggar arahan keamanan atau tata tertib area acara
+
+Dalam kondisi force majeure (pembatalan dari artis, terjadi bencana alam, kebijakan pemerintah, dll.), pengembalian dana akan mengikuti kebijakan promotor. Biaya tambahan seperti penginapan dan transportasi tidak ditanggung penyelenggara.
+
+Penyelenggara, panitia, artis, dan pihak terkait lainnya tidak bertanggung jawab atas kehilangan, pencurian, kerusakan barang, atau kecelakaan di area konser.
+
+BARANG-BARANG DILARANG
+
+Demi keselamatan dan kelancaran acara, berikut adalah barang-barang yang tidak diperbolehkan dibawa ke dalam area konser:
+
+Makanan dan minuman dari luar
+
+Senjata tajam, senjata api, atau benda berbahaya lainnya
+
+Laser pointer, kembang api, petasan, dan benda eksplosif lainnya
+
+Kamera profesional (SLR/DSLR), kamera dengan lensa lepas, drone, tripod, monopod (selfie sticks), kamera aksi (GoPro dan sejenisnya)
+
+Peralatan perekam suara atau video
+
+Tablet, laptop, dan alat elektronik berukuran besar
+
+Brosur, pamflet, atau barang promosi tanpa izin
+
+Payung besar dan benda berukuran besar lainnya
+
+Hewan peliharaan
+
+Vape dan rokok tidak tersegel lebih dari 1 bungkus.
+
+Parfum lebih dari 50ml
+
+BARANG-BARANG YANG DIPERBOLEHKAN
+
+Kamera analog tanpa lensa lepas, digicam, dan polaroid
+
+Tumbler kosong atau berisi air mineral
+
+Barang-barang yang dilarang akan disita dan tidak dikembalikan. Pelanggaran terhadap aturan ini dapat mengakibatkan pengunjung dikeluarkan dari area konser tanpa pengembalian uang tiket.
+
+REKAMAN DAN PUBLIKASI
+
+Pengunjung dilarang mengunggah video konser berdurasi lebih dari 30 detik per lagu ke media sosial.
+
+Penyelenggara memiliki hak untuk merekam dan menggunakan dokumentasi konser, termasuk gambar atau pernyataan pengunjung, untuk keperluan promosi tanpa kompensasi.
+
+Dengan hadir di area konser, pengunjung melepaskan dan membebaskan penyelenggara serta afiliasinya dari segala bentuk klaim, tuntutan, atau kompensasi yang berkaitan dengan dokumentasi tersebut.
+
+PERUBAHAN DAN PENYESUAIAN
+
+Penyelenggara berhak mengubah layout acara, menyesuaikan Syarat & Ketentuan, dan mengambil tindakan pengamanan jika dibutuhkan tanpa pemberitahuan terlebih dahulu.
+
+Penyelenggara tidak bertanggung jawab atas kerugian tidak langsung, konsekuensial, atau insidental yang timbul akibat perubahan, penundaan, atau pembatalan acara.
+
+Setiap pembaruan akan diinformasikan melalui kanal resmi promotor.
+
+Dengan membeli tiket SNADA Indonesia 2026, Anda dianggap telah membaca, memahami, dan menyetujui seluruh Syarat & Ketentuan yang berlaku.
+
+Terima kasih telah menjadi bagian dari perjalanan ini.
+Mari kita rayakan setiap kisah dan karya Raisa dalam suasana yang aman, nyaman, dan penuh makna.
+
+Selamat menikmati SNADA Indonesia 2026.
+
+Informasi
+
+Untuk informasi kerja sama dan kolaborasi:
+
+Sponsorship
+E-mail: partnership@antarasuara.com
+Media Partnership
+E-mail: media@antarasuara.com
+
+Untuk informasi atau bantuan seputar tiket hubungi:
+Loket.com
+E-mail: support@loket.com
+Phone: 021-3000 3160' WHERE title = 'Snada Indonesia 2026' AND venue = 'Jakarta Pusat';
+UPDATE events SET terms_conditions = 'Next Gen(re) Parenting
+
+Program acara ini hadir sebagai wujud pergerakan ibu modern untuk meninggalkan mitos dan beralih ke pola asuh berbasis ilmiah.
+
+Tajuk ini membawa pesan pemberdayaan bahwa masa depan anak ditentukan oleh ketegasan keputusan ibu hari ini, bukan oleh tradisi atau stigma lingkungan.
+
+Konsep ini sekaligus menjawab kegelisahan para ibu dengan menegaskan pentingnya nutrisi dan kesehatan mental di 1000 Hari Pertama Kehidupan sebagai pondasi emas yang tidak bisa ditunda.
+
+Menghadirkan :
+
+MerdiOctav Sahetapy
+dr. Elvine Gunawan, Sp. KJ
+Dokter Spesialis Anak
+
+Syarat dan Ketentuan
+
+1 tiket berlaku untuk 1 Orang Tua dan 1 Anak
+
+Harga tiket termasuk:
+
+- Akses mengikuti sesi "Next Gen(re) Parenting"
+- Akses ke booth MIPP (Brainwave & Booth Emotion)
+- Produk Morinaga sesuai dengan pilihan
+- Phone Strap Soyacan
+- Pouch Morigro
+- Building Block
+- Photo Grid
+- Sticker Pack' WHERE title = 'Next Gen(re) Parenting - Semarang' AND venue = 'Kota Semarang';
+UPDATE events SET terms_conditions = 'Leading HR and Unlocking Organisational Performance: People & Performance Workshop
+
+Workshop selama dua hari ini mengupas tuntas mengenai bagaimana praktisi HR dapat memimpin personil dan organisasi secara efektif dan efisien, juga memaksimalkan performa keduanya dalam menghadapi besarnya tantangan AI bagi para pekerja dewasa ini.
+
+- Day 1: menghadirkan talkshow bersama para ahli, mengupas case studies berdasarkan kasus nyata, serta diskusi seputar memimpin organisasi yang human-centric di era AI.
+
+- Day 2: menerapkan knowledge menjadi real-world application melalui sistem Management Drives: disini peserta akan belajar mengenal pendorong perilaku (behavioural drivers), motivasi individual dari para pekerja, dan bagaimana pemahaman akan semua ini akan memperkuat kepemimpinan serta pengelolaan Human Resources di organisasi (people management).
+
+Tiket
+
+Loket Platform
+3 kategori tiket - Harga mulai dari Rp365.000
+
+Rp365.000
+Day 1 only (Normal Price)
+Penjualan berakhir 16 Sep 2026
+16.00 GMT+7
+available
+
+Rp5.200.000
+Day 2 only (Normal Price)
+Penjualan berakhir 16 Sep 2026
+16.00 GMT+7
+available
+
+Rp3.350.000
+Day 1 + Day 2 (Normal Price)
+Penjualan berakhir 16 Sep 2026
+16.00 GMT+7
+available
+
+Leading HR and Unlocking Organisational Performance: People & Performance Workshop
+Grand Sahid Jaya Hotel, Jakarta Pusat
+
+15-16 Sep 2026, 09:00 - 16:30 WIB
+Workshop & Pelatihan
+- Pengembangan Diri
+- Karir & Keterampilan Profesional
+
+Diselenggarakan oleh
+Emerge Consulting
+
+Tagar Event
+traininghrd
+humanresource
+seminarhrd
+humanresourcemanagement' WHERE title = 'Leading HR and Unlocking Organisational Performance: People & Performance Workshop' AND venue = 'Jakarta Pusat';
+UPDATE events SET terms_conditions = 'Adili Idola
+
+TENTANG ADILI IDOLA
+
+Adili Idola promoted by GOLDLive Indonesia dan Comika menjadi event "Roasting" yang menghadirkan sosok "Kontroversial" yang akan di-roasting oleh banyak pihak, seperti selebriti, komika, musisi, aktor, aktris, politisi dan masih banyak lagi.
+
+ROASTER ADILI IDOLA
+
+FATIH ANDHIKA
+OKI RENGGA
+RIGEN RAKELNA
+WHO''S THE NEXT?
+
+LOKASI NONTON LANGSUNG:
+
+Studio RCTI+
+Gedung RCTI, Raya, Jl. F Perjuangan No. 1, RT.11/RW.10, Kebon Jeruk, Kebonjeruk, West Jakarta City, Jakarta 11530
+
+FAQ TIKET OFFLINE
+
+Siapa saja yang akan tampil?
+Lineup terdiri dari roastee, roastmaster, para roaster, dan special guest. Daftar talent akan diumumkan secara bertahap.
+
+Berapa lama durasi pertunjukan?
+Pertunjukan berlangsung pukul 19.30-22.30 WIB. Open gate akan dibuka sebelum acara dimulai. Informasi mengenai waktu open gate akan diumumkan lebih lanjut melalui kanal resmi Adili Idola.
+
+Apakah ada batas usia penonton?
+Pembeli dan penonton wajib berusia di atas 17 (tujuh belas) tahun. Mohon untuk tidak melakukan pembelian tiket apabila belum memenuhi batas usia yang ditentukan, karena penyelenggara berhak menolak masuk dan tiket yang telah dibeli tidak dapat dikembalikan (non-refundable).
+
+Minimal 1 data bisa beli berapa tiket?
+Bagi yang sudah melakukan pre-registration, setiap 1 data diri dapat membeli maksimal 2 tiket Early Bird dengan kategori yang sama.
+
+Bagaimana alur masuk ke venue?
+Saat datang ke venue nanti, cukup bawa identitas diri (KTP/SIM/Paspor) dan e-voucher tiket yang sudah dikirimkan melalui email dari LOKET saat pembelian berhasil.
+
+FAQ LIVE STREAMING PAY-PER-VIEW
+
+Live streaming ini bisa ditonton di mana?
+Live streaming dapat disaksikan melalui aplikasi RCTI+ dan dapat diakses tanpa VPN, termasuk dari luar Indonesia.
+
+Apakah live streaming bisa ditonton dari luar kota atau luar negeri?
+Bisa. Live streaming dapat diakses dari mana saja selama memiliki koneksi internet yang stabil.
+
+Bagaimana cara membeli tiket live streaming pay-per-view?
+Tiket live streaming dapat dibeli melalui website adiliidola.id dengan memilih opsi Tiket Live Streaming Pay-Per-View. Jangan lupa download aplikasi RCTI+ terlebih dahulu, ya! Setelah pembayaran berhasil, kamu akan mendapatkan akses untuk menonton live streaming pay-per-view pada hari event.
+
+Apakah jika sudah berlangganan aplikasi RCTI+ harus membeli tiket lagi?
+Betul. Meskipun sudah berlangganan RCTI+, kamu tetap perlu membeli tiket Live Streaming Pay-Per-View Adili Idola untuk dapat menyaksikan seluruh rangkaian acara.
+
+Apakah live streaming bisa digunakan lebih dari satu perangkat?
+Tidak. Satu tiket hanya dapat digunakan pada satu perangkat.
+
+Apakah saat menonton nanti bisa diputar ulang dari awal?
+Bisa. Tayangan Adili Idola memiliki fitur playback/rewind di aplikasi RCTI+, sehingga kamu dapat memutar kembali tayangan yang sedang berlangsung.
+
+Bisa menonton siaran ulang tidak?
+Bisa. Tayangan Pay-Per-View Adili Idola dapat ditonton kembali hingga H+7 setelah acara live berakhir.
+
+Tayangan live streaming pay-per-view di RCTI+ bisa ditonton melalui platform apa saja?
+Tayangan dapat disaksikan melalui aplikasi RCTI+, website RCTI+, dan TV.
+
+Ketentuan Menonton Live Streaming Pay-Per-View
+
+Untuk menjaga kenyamanan bersama serta melindungi hak siar dan hak cipta acara, tayangan Pay-Per-View Adili Idola di RCTI+ tidak dapat direkam atau menggunakan fitur screen recording. Penonton juga tidak diperkenankan membagikan cuplikan maupun keseluruhan tayangan ke media sosial atau platform lainnya tanpa izin resmi.
+
+Ketentuan ini berlaku sebagaimana aturan di venue, di mana proses perekaman selama acara berlangsung juga tidak diperbolehkan. Apabila ditemukan aktivitas perekaman dan/atau pengunggahan tayangan RCTI+ secara tidak sah, penyelenggara bersama RCTI+ berhak mengambil tindakan yang diperlukan, termasuk penurunan konten, pembatasan akses tayangan, hingga langkah hukum sesuai dengan peraturan yang berlaku.
+
+Dengan membeli tiket Live Streaming Pay-Per-View, penonton dianggap telah membaca, memahami, dan menyetujui seluruh ketentuan yang berlaku, termasuk larangan merekam, mengambil tangkapan layar, melakukan screen recording, serta membagikan tayangan secara tidak sah. Terima kasih atas pengertian dan dukungannya untuk menikmati Adili Idola secara resmi melalui RCTI+.
+
+About GOLDLive Indonesia
+
+GOLDLive Indonesia berdiri sejak 2019 yang membangun ekosistem hiburan dengan mempromosikan berbagai artis lokal dan internasional yang terdiri dari berbagai jenis event: konser, festival, standup comedy, konferensi dan pameran. GoldLive indonesia memiliki pengalaman dalam menyelenggarakan berbagai jenis acara dan berkomitmen penuh untuk selalu memberikan pengalaman baru dan berharga bagi semua audiens. Dengan perhatian pada detail dan kualitas, GoldLive Indonesia terus mempersembahkan momen berkelas dalam dunia hiburan Tanah Air.
+
+About COMIKA
+
+Comika adalah perusahaan pengembangan Intellectual Property (IP) berbasis komedi dengan memanfaatkan ekosistem Stand-Up Comedy dari promotor event, talent management, platform digital, lembaga edukasi, dan merchandise.
+
+Customer Service Tiket Offline
+
+Untuk informasi lebih lanjut, dapat menghubungi Customer Service loket.com
+
+Telepon: +62 21 3000 3160
+Email: support@loket.com
+
+Customer Service Tiket Pay-Per-View
+
+Untuk informasi lebih lanjut, dapat menghubungi Customer Service RCTI+
+
+Telepon: +62 888-8988-880
+Email: cs@rctiplus.com' WHERE title = 'Adili Idola: Celebrity Roast' AND venue = 'Jakarta Barat';
+UPDATE events SET seatmap = '' WHERE title = 'SYNC 2026 ''Luminaria''' AND venue = 'TBA';
+UPDATE events SET seatmap = '' WHERE title = 'Moonverse Festival Vol  7' AND venue = 'TBA';
+UPDATE events SET seatmap = '' WHERE title = 'Ayo Fest 2026' AND venue = 'TBA';
+UPDATE events SET seatmap = '' WHERE title = 'Remember Fest 2026 X Cube Concert' AND venue = 'TBA';
+UPDATE events SET seatmap = '' WHERE title = 'SEMESTAMBYAR' AND venue = 'TBA';
+UPDATE events SET seatmap = '{"name":"Layout ARTERUN x Gendut Berlari - Pace of Joy","images":["https://api.artatix.co.id/event_layout/24GGKSHRGP.jpg"]}' WHERE title = 'ARTERUN x Gendut Berlari - Pace of Joy' AND venue = 'TBA';
+UPDATE events SET seatmap = '{"name":"Layout Riang dan Ceria","images":["https://api.artatix.co.id/event_layout/KDGNJBQCG9.png"]}' WHERE title = 'Riang dan Ceria Jambi' AND venue = 'TBA';
 COMMIT;
