@@ -92,6 +92,10 @@ const hotels: any[] = JSON.parse(readFileSync(HOTELS_JSON, "utf8"));
 let done = 0;
 for (const h of hotels) {
   const id: number = h.id;
+  if (h.image?.startsWith("https://res.cloudinary.com/")) {
+    console.log(`[${id}] ${h.name} <- already cloudinary (skip)`);
+    continue;
+  }
   const candidates = [...(EXTRA_SOURCES[id] ?? []), ...(h.image ? [h.image] : [])];
   if (candidates.length === 0) {
     console.log(`[${id}] ${h.name} <- no source (skip)`);
