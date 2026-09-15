@@ -8311,4 +8311,39 @@ AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND
 UPDATE events SET gallery = ('["' || replace(replace(poster_url, '\\', '\\\\'), '"', '\\"') || '"]')
 WHERE gallery IS NULL OR gallery = '[]' OR gallery = ' ';
 
+
+-- >>> PESTAPORA 2026 REFRESH (scraped from loket.com) (2026-09-15)
+UPDATE events SET
+  date = '2026-09-25 15:00:00'::timestamptz,
+  poster_url = 'https://assets.loket.com/neo/production/images/banner/20260819162030_6a85755e86d56.jpeg',
+  description = 'Pestapora 2026 adalah sebuah perayaan dan selebrasi selama tiga hari yang melibatkan berbagai komunitas dan menggabungkan lintas genre musik di Indonesia. 25, 26, 27 September 2026 adalah hari perayaan Pestapora selanjutnya. Nantikan dan mari berpestapora!',
+  terms_conditions = 'TERMS AND CONDITIONS TICKETING PESTAPORA 2026 Dengan membeli tiket, anda telah mengerti, menyetujui dan bersedia mematuhi seluruh syarat dan ketentuan selama Pestapora 2026 berlangsung yang telah ditentukan pihak penyelenggara. Untuk pengalaman terbaik di Pestapora 2026 , harap perhatikan hal-hal berikut: By purchasing a ticket, you understand, agree and comply with all terms and protocols for the event arranged by the organiser. For the best experience at Pestapora 2026 , please take note of the following: Tiket Presale adalah kategori tiket keluaran ketiga terbitan Pestapora 2026. Tiket ini dapat berlaku untuk tiga (3) hari yakni 25, 26, 27 September 2026 dan bebas masuk di waktu kapanpun ke area Pestapora sebelum close gate. Presale Tickets are the third ticket category issued by Pestapora 2026. These tickets can be valid for three (3) days, namely 25, 26, 27 September 2026 and are free to enter at any time to the Pestapora area before the gate closes. PEMBELIAN DAN PENGUMPULAN TIKET: TICKET PURCHASE AND COLLECTION: Tiket resmi hanya dapat dibeli dan didapatkan melalui loket.com. Pembelian tiket selain dari official ticketing partner, penyelenggara tidak menjamin keaslian tiket. Pihak penyelenggara tidak bertanggung jawab atas segala penipuan tiket yang dibeli melalui pihak lain. Tickets can only be purchased and collected through loket.com. By purchasing tickets from unauthorised sellers or other parties, buyers take on the risk that the validity of the tickets cannot be guaranteed, with no refunds possible. Tiket tidak boleh dijual dialihkan untuk tujuan komersil. Untuk tujuan promosi, kontes, undian, kegiatan amal atau kegiatan lain tanpa persetujuan tertulis sebelumnya dari pihak penyelenggara. Setiap tiket yang melanggar peraturan ini akan dicabut dan dinyatakan tidak berlaku, dan pelakunya akan dianggap sebagai pelanggar Pestapora. Penjualan kembali dapat menjadi lisensi penyelenggara untuk membatalkan tiket. Tickets may not be sold, transferred or used for',
+  gallery = '[]',
+  seatmap = ''
+WHERE title = 'Pestapora 2026';
+DELETE FROM ticket_categories tc USING events ev
+  WHERE tc.event_id = ev.id AND ev.title = 'Pestapora 2026';
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Regular - 3 Days Pass', 650000, 1500, 1500, '<ul> <li>Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.</li> </ul>'
+FROM events ev WHERE title = 'Pestapora 2026';
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Daily Pass - Day 1', 300000, 5000, 1500, '<ul> <li>Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.</li> </ul>'
+FROM events ev WHERE title = 'Pestapora 2026';
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Daily Pass - Day 2', 300000, 5000, 5000, '<ul> <li>Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.</li> </ul>'
+FROM events ev WHERE title = 'Pestapora 2026';
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Daily Pass - Day 3', 300000, 5000, 1500, '<ul> <li>Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.</li> </ul>'
+FROM events ev WHERE title = 'Pestapora 2026';
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Entry - Day 1', 225000, 1500, 450, '<ul> <li>Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.</li> <li>Masuk ke venue sebelum jam 16.00 WIB</li> </ul>'
+FROM events ev WHERE title = 'Pestapora 2026';
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Entry - Day 2', 225000, 1500, 1500, '<ul> <li>Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.</li> <li>Masuk ke venue sebelum jam 16.00 WIB</li> </ul>'
+FROM events ev WHERE title = 'Pestapora 2026';
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'Early Entry - Day 3', 225000, 1500, 450, '<ul> <li>Harga belum termasuk Pajak Hiburan Daerah, Biaya Admin, dan biaya lainnya.</li> <li>Masuk ke venue sebelum jam 16.00 WIB</li> </ul>'
+FROM events ev WHERE title = 'Pestapora 2026';
+-- <<< PESTAPORA 2026 REFRESH
+
 COMMIT;
