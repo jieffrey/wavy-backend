@@ -7979,4 +7979,336 @@ UPDATE events SET seatmap = '' WHERE title = 'Remember Fest 2026 X Cube Concert'
 UPDATE events SET seatmap = '' WHERE title = 'SEMESTAMBYAR' AND venue = 'TBA';
 UPDATE events SET seatmap = '{"name":"Layout ARTERUN x Gendut Berlari - Pace of Joy","images":["https://api.artatix.co.id/event_layout/24GGKSHRGP.jpg"]}' WHERE title = 'ARTERUN x Gendut Berlari - Pace of Joy' AND venue = 'TBA';
 UPDATE events SET seatmap = '{"name":"Layout Riang dan Ceria","images":["https://api.artatix.co.id/event_layout/KDGNJBQCG9.png"]}' WHERE title = 'Riang dan Ceria Jambi' AND venue = 'TBA';
+-- Organizer: Live Nation Singapore
+INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
+VALUES ('Live Nation Singapore', 'demo.live-nation-singapore@wavy.seed', '$2b$10$demoSeedHashNotForLogin', 'active', '', 'Music', '')
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
+SELECT o.id, 'Guns N'' Roses World Tour 2026', 'Music', '', 'Guns N'' Roses bring their electrifying live show to Singapore for a one-night-only performance at the National Stadium on 25 November 2026, as part of the 2026 World Tour.'
+FROM organizers o WHERE o.email = 'demo.live-nation-singapore@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.live-nation-singapore@wavy.seed' AND a.name = 'Guns N'' Roses World Tour 2026');
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Guns N'' Roses World Tour 2026', 'Music', 'National Stadium, Singapore', '2026-11-25 20:00:00'::timestamptz, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Guns_N_Roses_-_%22Chinese_Democracy_World_Tour%22_2010_1.jpg/960px-Guns_N_Roses_-_%22Chinese_Democracy_World_Tour%22_2010_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail', 'Guns N'' Roses bring their electrifying live show to Singapore for a one-night-only performance at the National Stadium on 25 November 2026, as part of the 2026 World Tour.', 'published', '["https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Guns_N_Roses_-_%22Chinese_Democracy_World_Tour%22_2010_1.jpg/960px-Guns_N_Roses_-_%22Chinese_Democracy_World_Tour%22_2010_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"]', 'Tiket tidak dapat dikembalikan. Pembelian maksimum 6 tiket per transaksi. Usia minimum 12 tahun. Pintu dibuka 1 jam sebelum acara.'
+FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Guns N'' Roses World Tour 2026'
+WHERE o.email = 'demo.live-nation-singapore@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Guns N'' Roses World Tour 2026' AND ev.venue = 'National Stadium, Singapore');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 5500000, 800, 600, 'Soundcheck + Meet & Greet'
+FROM events ev WHERE ev.title = 'Guns N'' Roses World Tour 2026' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 1', 4500000, 1500, 1100, ''
+FROM events ev WHERE ev.title = 'Guns N'' Roses World Tour 2026' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 1');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 2', 3600000, 2000, 1400, ''
+FROM events ev WHERE ev.title = 'Guns N'' Roses World Tour 2026' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 2');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 3', 2800000, 2500, 1600, ''
+FROM events ev WHERE ev.title = 'Guns N'' Roses World Tour 2026' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 3');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 4', 2000000, 3000, 2100, ''
+FROM events ev WHERE ev.title = 'Guns N'' Roses World Tour 2026' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 4');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 5', 1500000, 3500, 2800, ''
+FROM events ev WHERE ev.title = 'Guns N'' Roses World Tour 2026' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 5');
+
+-- Organizer: Live Nation Singapore
+INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
+VALUES ('Live Nation Singapore', 'demo.live-nation-singapore-1@wavy.seed', '$2b$10$demoSeedHashNotForLogin', 'active', '', 'Music', '')
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
+SELECT o.id, 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE', 'Music', '', 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE — a landmark four-night stadium engagement at the National Stadium, marking BTS longest-running Asia stop outside of Japan and Korea.'
+FROM organizers o WHERE o.email = 'demo.live-nation-singapore-1@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.live-nation-singapore-1@wavy.seed' AND a.name = 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE');
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE', 'Music', 'National Stadium, Singapore', '2026-12-17 19:30:00'::timestamptz, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg/960px-BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail', 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE — a landmark four-night stadium engagement at the National Stadium, marking BTS longest-running Asia stop outside of Japan and Korea.', 'published', '["https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg/960px-BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"]', 'Tiket tidak dapat dikembalikan. Pembelian maksimum 4 tiket per akun per hari pertunjukan. Usia minimum 6 tahun. Pintu dibuka 1 jam sebelum acara.'
+FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE'
+WHERE o.email = 'demo.live-nation-singapore-1@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE' AND ev.venue = 'National Stadium, Singapore');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 4700000, 1200, 1199, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 1', 4000000, 2000, 1999, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 1');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 2', 3500000, 2500, 2499, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 2');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 3', 2900000, 3000, 2999, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 3');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 4', 2500000, 3500, 3400, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 4');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 5', 2000000, 4000, 3800, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 5');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 6', 1800000, 4500, 4200, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN SINGAPORE' AND ev.venue = 'National Stadium, Singapore'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 6');
+
+-- Organizer: Live Nation Malaysia
+INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
+VALUES ('Live Nation Malaysia', 'demo.live-nation-malaysia@wavy.seed', '$2b$10$demoSeedHashNotForLogin', 'active', '', 'Music', '')
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
+SELECT o.id, 'Post Malone: The Big Stadium World Tour', 'Music', '', 'Post Malone Presents The BIG Stadium World Tour featuring Don Toliver at Stadium Nasional Bukit Jalil, Kuala Lumpur on 27 September 2026.'
+FROM organizers o WHERE o.email = 'demo.live-nation-malaysia@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.live-nation-malaysia@wavy.seed' AND a.name = 'Post Malone: The Big Stadium World Tour');
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'Post Malone: The Big Stadium World Tour', 'Music', 'Stadium Nasional Bukit Jalil, Kuala Lumpur', '2026-09-27 20:00:00'::timestamptz, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Post_Malone_2015.jpg/960px-Post_Malone_2015.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail', 'Post Malone Presents The BIG Stadium World Tour featuring Don Toliver at Stadium Nasional Bukit Jalil, Kuala Lumpur on 27 September 2026.', 'published', '["https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Post_Malone_2015.jpg/960px-Post_Malone_2015.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"]', 'Tiket tidak dapat dikembalikan. Pembelian maksimum 6 tiket per transaksi. Usia minimum 12 tahun. Pintu dibuka 1 jam sebelum acara.'
+FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'Post Malone: The Big Stadium World Tour'
+WHERE o.email = 'demo.live-nation-malaysia@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'Post Malone: The Big Stadium World Tour' AND ev.venue = 'Stadium Nasional Bukit Jalil, Kuala Lumpur');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 4250000, 1000, 800, ''
+FROM events ev WHERE ev.title = 'Post Malone: The Big Stadium World Tour' AND ev.venue = 'Stadium Nasional Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 1', 3260000, 2000, 1500, ''
+FROM events ev WHERE ev.title = 'Post Malone: The Big Stadium World Tour' AND ev.venue = 'Stadium Nasional Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 1');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 2', 2270000, 3000, 2100, ''
+FROM events ev WHERE ev.title = 'Post Malone: The Big Stadium World Tour' AND ev.venue = 'Stadium Nasional Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 2');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 3', 1610000, 4000, 2900, ''
+FROM events ev WHERE ev.title = 'Post Malone: The Big Stadium World Tour' AND ev.venue = 'Stadium Nasional Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 3');
+
+-- Organizer: Live Nation Malaysia
+INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
+VALUES ('Live Nation Malaysia', 'demo.live-nation-malaysia-1@wavy.seed', '$2b$10$demoSeedHashNotForLogin', 'active', '', 'Music', '')
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
+SELECT o.id, 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR', 'Music', '', 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR at TM Stadium Nasional Bukit Jalil on 12 December 2026, marking BTS return to Malaysia for the first time in seven years.'
+FROM organizers o WHERE o.email = 'demo.live-nation-malaysia-1@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.live-nation-malaysia-1@wavy.seed' AND a.name = 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR');
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR', 'Music', 'TM Stadium Nasional, Bukit Jalil, Kuala Lumpur', '2026-12-12 19:30:00'::timestamptz, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg/960px-BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail', 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR at TM Stadium Nasional Bukit Jalil on 12 December 2026, marking BTS return to Malaysia for the first time in seven years.', 'published', '["https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg/960px-BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"]', 'Tiket tidak dapat dikembalikan. Pembelian maksimum 4 tiket per akun per hari pertunjukan. Usia minimum 6 tahun.'
+FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR'
+WHERE o.email = 'demo.live-nation-malaysia-1@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR' AND ev.venue = 'TM Stadium Nasional, Bukit Jalil, Kuala Lumpur');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 4700000, 1200, 1199, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR' AND ev.venue = 'TM Stadium Nasional, Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 1', 4000000, 2000, 1999, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR' AND ev.venue = 'TM Stadium Nasional, Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 1');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 2', 3500000, 2500, 2499, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR' AND ev.venue = 'TM Stadium Nasional, Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 2');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 3', 2900000, 3000, 2999, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR' AND ev.venue = 'TM Stadium Nasional, Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 3');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 4', 2500000, 3500, 3400, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR' AND ev.venue = 'TM Stadium Nasional, Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 4');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 5', 2000000, 4000, 3800, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR' AND ev.venue = 'TM Stadium Nasional, Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 5');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 6', 1800000, 4500, 4200, ''
+FROM events ev WHERE ev.title = 'BTS WORLD TOUR ''ARIRANG'' IN KUALA LUMPUR' AND ev.venue = 'TM Stadium Nasional, Bukit Jalil, Kuala Lumpur'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 6');
+
+-- Organizer: Live Nation Tero
+INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
+VALUES ('Live Nation Tero', 'demo.live-nation-tero@wavy.seed', '$2b$10$demoSeedHashNotForLogin', 'active', '', 'Music', '')
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
+SELECT o.id, 'The Weeknd: After Hours Til Dawn Tour', 'Music', '', 'The Weeknd After Hours Til Dawn Stadium Tour with special guest Creepy Nuts at Rajamangala National Stadium, Bangkok on 11 October 2026.'
+FROM organizers o WHERE o.email = 'demo.live-nation-tero@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.live-nation-tero@wavy.seed' AND a.name = 'The Weeknd: After Hours Til Dawn Tour');
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'The Weeknd: After Hours Til Dawn Tour', 'Music', 'Rajamangala National Stadium, Bangkok', '2026-10-11 19:00:00'::timestamptz, 'https://upload.wikimedia.org/wikipedia/commons/3/32/The_Weeknd_performing_at_Coachella_2012.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo', 'The Weeknd After Hours Til Dawn Stadium Tour with special guest Creepy Nuts at Rajamangala National Stadium, Bangkok on 11 October 2026.', 'published', '["https://upload.wikimedia.org/wikipedia/commons/3/32/The_Weeknd_performing_at_Coachella_2012.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo"]', 'Tiket tidak dapat dikembalikan. Usia minimum 12 tahun. Pintu dibuka 1 jam sebelum acara.'
+FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'The Weeknd: After Hours Til Dawn Tour'
+WHERE o.email = 'demo.live-nation-tero@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'The Weeknd: After Hours Til Dawn Tour' AND ev.venue = 'Rajamangala National Stadium, Bangkok');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 4500000, 1500, 1100, ''
+FROM events ev WHERE ev.title = 'The Weeknd: After Hours Til Dawn Tour' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 1', 3200000, 2500, 1800, ''
+FROM events ev WHERE ev.title = 'The Weeknd: After Hours Til Dawn Tour' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 1');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 2', 2200000, 3500, 2400, ''
+FROM events ev WHERE ev.title = 'The Weeknd: After Hours Til Dawn Tour' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 2');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 3', 1500000, 4500, 3200, ''
+FROM events ev WHERE ev.title = 'The Weeknd: After Hours Til Dawn Tour' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 3');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 4', 1000000, 5000, 3600, ''
+FROM events ev WHERE ev.title = 'The Weeknd: After Hours Til Dawn Tour' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 4');
+
+-- Organizer: Live Nation Tero
+INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
+VALUES ('Live Nation Tero', 'demo.live-nation-tero-1@wavy.seed', '$2b$10$demoSeedHashNotForLogin', 'active', '', 'Music', '')
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
+SELECT o.id, 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK', 'Music', '', 'BIGBANG 2026-2027 WORLD TOUR XX COSMOS IN BANGKOK, marking the group 20th anniversary and grand return to Thailand''s biggest stage.'
+FROM organizers o WHERE o.email = 'demo.live-nation-tero-1@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.live-nation-tero-1@wavy.seed' AND a.name = 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK');
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK', 'Music', 'Rajamangala National Stadium, Bangkok', '2026-11-07 19:00:00'::timestamptz, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg/960px-Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail', 'BIGBANG 2026-2027 WORLD TOUR XX COSMOS IN BANGKOK, marking the group 20th anniversary and grand return to Thailand''s biggest stage.', 'published', '["https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg/960px-Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"]', 'Tiket tidak dapat dikembalikan. Pembelian maksimum 4 tiket per akun. Usia minimum 12 tahun.'
+FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK'
+WHERE o.email = 'demo.live-nation-tero-1@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK' AND ev.venue = 'Rajamangala National Stadium, Bangkok');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 3400000, 1500, 1499, ''
+FROM events ev WHERE ev.title = 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 1', 2600000, 2500, 2400, ''
+FROM events ev WHERE ev.title = 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 1');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 2', 1800000, 3500, 3200, ''
+FROM events ev WHERE ev.title = 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 2');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 3', 1120000, 4500, 3800, ''
+FROM events ev WHERE ev.title = 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 3');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 4', 720000, 5000, 3500, ''
+FROM events ev WHERE ev.title = 'BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 4');
+
+-- Organizer: Live Nation Tero
+INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
+VALUES ('Live Nation Tero', 'demo.live-nation-tero-2@wavy.seed', '$2b$10$demoSeedHashNotForLogin', 'active', '', 'Music', '')
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
+SELECT o.id, 'TATTOO COLOUR - LEO PRESENTS TATTOO STADIUM', 'Music', '', 'LEO PRESENTS the 6th grand concert TATTOO STADIUM by Thai rock icons Tattoo Colour, celebrating three decades of iconic hits at Rajamangala National Stadium.'
+FROM organizers o WHERE o.email = 'demo.live-nation-tero-2@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.live-nation-tero-2@wavy.seed' AND a.name = 'TATTOO COLOUR - LEO PRESENTS TATTOO STADIUM');
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, 'TATTOO COLOUR - LEO PRESENTS TATTOO STADIUM', 'Music', 'Rajamangala National Stadium, Bangkok', '2026-12-19 19:00:00'::timestamptz, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg/960px-Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail', 'LEO PRESENTS the 6th grand concert TATTOO STADIUM by Thai rock icons Tattoo Colour, celebrating three decades of iconic hits at Rajamangala National Stadium.', 'published', '["https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg/960px-Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"]', 'Tiket tidak dapat dikembalikan. Usia minimum 12 tahun.'
+FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = 'TATTOO COLOUR - LEO PRESENTS TATTOO STADIUM'
+WHERE o.email = 'demo.live-nation-tero-2@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = 'TATTOO COLOUR - LEO PRESENTS TATTOO STADIUM' AND ev.venue = 'Rajamangala National Stadium, Bangkok');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 2200000, 2000, 1500, ''
+FROM events ev WHERE ev.title = 'TATTOO COLOUR - LEO PRESENTS TATTOO STADIUM' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 1', 1400000, 3000, 2200, ''
+FROM events ev WHERE ev.title = 'TATTOO COLOUR - LEO PRESENTS TATTOO STADIUM' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 1');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 2', 800000, 4000, 2800, ''
+FROM events ev WHERE ev.title = 'TATTOO COLOUR - LEO PRESENTS TATTOO STADIUM' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 2');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 3', 480000, 5000, 3200, ''
+FROM events ev WHERE ev.title = 'TATTOO COLOUR - LEO PRESENTS TATTOO STADIUM' AND ev.venue = 'Rajamangala National Stadium, Bangkok'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 3');
+
+-- Organizer: Ilgan Sports
+INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
+VALUES ('Ilgan Sports', 'demo.ilgan-sports@wavy.seed', '$2b$10$demoSeedHashNotForLogin', 'active', '', 'Music', '')
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
+SELECT o.id, '2026 Korea Grand Music Awards (KGMA)', 'Music', '', 'The 2026 Korea Grand Music Awards (KGMA) returns for its third edition at Gocheok Sky Dome in Seoul, bringing together top-tier K-pop artists and global fans.'
+FROM organizers o WHERE o.email = 'demo.ilgan-sports@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.ilgan-sports@wavy.seed' AND a.name = '2026 Korea Grand Music Awards (KGMA)');
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, '2026 Korea Grand Music Awards (KGMA)', 'Music', 'Gocheok Sky Dome, Seoul', '2026-11-07 18:00:00'::timestamptz, 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Gocheok_Sky_Dome_interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo', 'The 2026 Korea Grand Music Awards (KGMA) returns for its third edition at Gocheok Sky Dome in Seoul, bringing together top-tier K-pop artists and global fans.', 'published', '["https://upload.wikimedia.org/wikipedia/commons/d/dd/Gocheok_Sky_Dome_interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo"]', 'Tiket tidak dapat dikembalikan. Usia minimum 7 tahun. Pintu dibuka 1 jam sebelum acara.'
+FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = '2026 Korea Grand Music Awards (KGMA)'
+WHERE o.email = 'demo.ilgan-sports@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = '2026 Korea Grand Music Awards (KGMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 2700000, 2000, 1800, ''
+FROM events ev WHERE ev.title = '2026 Korea Grand Music Awards (KGMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 1', 2250000, 3000, 2600, ''
+FROM events ev WHERE ev.title = '2026 Korea Grand Music Awards (KGMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 1');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 2', 1800000, 4000, 3200, ''
+FROM events ev WHERE ev.title = '2026 Korea Grand Music Awards (KGMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 2');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 3', 1350000, 5000, 3800, ''
+FROM events ev WHERE ev.title = '2026 Korea Grand Music Awards (KGMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 3');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 4', 900000, 5000, 4200, ''
+FROM events ev WHERE ev.title = '2026 Korea Grand Music Awards (KGMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 4');
+
+-- Organizer: Kakao Entertainment
+INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
+VALUES ('Kakao Entertainment', 'demo.kakao-entertainment@wavy.seed', '$2b$10$demoSeedHashNotForLogin', 'active', '', 'Music', '')
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
+SELECT o.id, '2026 Melon Music Awards (MMA)', 'Music', '', 'The 2026 Melon Music Awards (MMA), one of South Korea''s biggest annual music ceremonies, returns to the Gocheok Sky Dome in Seoul for two nights.'
+FROM organizers o WHERE o.email = 'demo.kakao-entertainment@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM artists a JOIN organizers o2 ON o2.id = a.organizer_id WHERE o2.email = 'demo.kakao-entertainment@wavy.seed' AND a.name = '2026 Melon Music Awards (MMA)');
+INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, gallery, terms_conditions)
+SELECT o.id, a.id, '2026 Melon Music Awards (MMA)', 'Music', 'Gocheok Sky Dome, Seoul', '2026-11-14 18:00:00'::timestamptz, 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Gocheok_Sky_Dome_interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo', 'The 2026 Melon Music Awards (MMA), one of South Korea''s biggest annual music ceremonies, returns to the Gocheok Sky Dome in Seoul for two nights.', 'published', '["https://upload.wikimedia.org/wikipedia/commons/d/dd/Gocheok_Sky_Dome_interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo"]', 'Tiket tidak dapat dikembalikan. Usia minimum 7 tahun. Pintu dibuka 1 jam sebelum acara.'
+FROM organizers o JOIN artists a ON a.organizer_id = o.id AND a.name = '2026 Melon Music Awards (MMA)'
+WHERE o.email = 'demo.kakao-entertainment@wavy.seed'
+AND NOT EXISTS (SELECT 1 FROM events ev WHERE ev.title = '2026 Melon Music Awards (MMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'VIP', 2700000, 2000, 1800, ''
+FROM events ev WHERE ev.title = '2026 Melon Music Awards (MMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'VIP');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 1', 2250000, 3000, 2600, ''
+FROM events ev WHERE ev.title = '2026 Melon Music Awards (MMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 1');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 2', 1800000, 4000, 3200, ''
+FROM events ev WHERE ev.title = '2026 Melon Music Awards (MMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 2');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 3', 1350000, 5000, 3800, ''
+FROM events ev WHERE ev.title = '2026 Melon Music Awards (MMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 3');
+INSERT INTO ticket_categories (event_id, name, price, quota, sold, benefits)
+SELECT ev.id, 'CAT 4', 900000, 5000, 4200, ''
+FROM events ev WHERE ev.title = '2026 Melon Music Awards (MMA)' AND ev.venue = 'Gocheok Sky Dome, Seoul'
+AND NOT EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = ev.id AND tc.name = 'CAT 4');
+
+
+-- fallback: events tanpa gallery pakai poster sebagai gallery
+UPDATE events SET gallery = ('["' || replace(replace(poster_url, '\\', '\\\\'), '"', '\\"') || '"]')
+WHERE gallery IS NULL OR gallery = '[]' OR gallery = ' ';
+
 COMMIT;

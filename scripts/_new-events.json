@@ -1,0 +1,194 @@
+[
+  {
+    "title": "Guns N' Roses World Tour 2026",
+    "venue": "National Stadium, Singapore",
+    "date": "2026-11-25",
+    "time": "20:00:00",
+    "low": 2000000,
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Guns_N_Roses_-_%22Chinese_Democracy_World_Tour%22_2010_1.jpg/960px-Guns_N_Roses_-_%22Chinese_Democracy_World_Tour%22_2010_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "description": "Guns N' Roses bring their electrifying live show to Singapore for a one-night-only performance at the National Stadium on 25 November 2026, as part of the 2026 World Tour.",
+    "gallery": [
+      "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Guns_N_Roses_-_%22Chinese_Democracy_World_Tour%22_2010_1.jpg/960px-Guns_N_Roses_-_%22Chinese_Democracy_World_Tour%22_2010_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    ],
+    "terms_conditions": "Tiket tidak dapat dikembalikan. Pembelian maksimum 6 tiket per transaksi. Usia minimum 12 tahun. Pintu dibuka 1 jam sebelum acara.",
+    "organizer": "Live Nation Singapore",
+    "tiers": [
+      { "name": "VIP", "price": 5500000, "quota": 800, "sold": 600, "benefits": "Soundcheck + Meet & Greet" },
+      { "name": "CAT 1", "price": 4500000, "quota": 1500, "sold": 1100, "benefits": "" },
+      { "name": "CAT 2", "price": 3600000, "quota": 2000, "sold": 1400, "benefits": "" },
+      { "name": "CAT 3", "price": 2800000, "quota": 2500, "sold": 1600, "benefits": "" },
+      { "name": "CAT 4", "price": 2000000, "quota": 3000, "sold": 2100, "benefits": "" },
+      { "name": "CAT 5", "price": 1500000, "quota": 3500, "sold": 2800, "benefits": "" }
+    ]
+  },
+  {
+    "title": "BTS WORLD TOUR 'ARIRANG' IN SINGAPORE",
+    "venue": "National Stadium, Singapore",
+    "date": "2026-12-17",
+    "time": "19:30:00",
+    "low": 1800000,
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg/960px-BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "description": "BTS WORLD TOUR 'ARIRANG' IN SINGAPORE — a landmark four-night stadium engagement at the National Stadium, marking BTS longest-running Asia stop outside of Japan and Korea.",
+    "gallery": [
+      "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg/960px-BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    ],
+    "terms_conditions": "Tiket tidak dapat dikembalikan. Pembelian maksimum 4 tiket per akun per hari pertunjukan. Usia minimum 6 tahun. Pintu dibuka 1 jam sebelum acara.",
+    "organizer": "Live Nation Singapore",
+    "tiers": [
+      { "name": "VIP", "price": 4700000, "quota": 1200, "sold": 1200, "benefits": "" },
+      { "name": "CAT 1", "price": 4000000, "quota": 2000, "sold": 2000, "benefits": "" },
+      { "name": "CAT 2", "price": 3500000, "quota": 2500, "sold": 2500, "benefits": "" },
+      { "name": "CAT 3", "price": 2900000, "quota": 3000, "sold": 3000, "benefits": "" },
+      { "name": "CAT 4", "price": 2500000, "quota": 3500, "sold": 3400, "benefits": "" },
+      { "name": "CAT 5", "price": 2000000, "quota": 4000, "sold": 3800, "benefits": "" },
+      { "name": "CAT 6", "price": 1800000, "quota": 4500, "sold": 4200, "benefits": "" }
+    ]
+  },
+  {
+    "title": "Post Malone: The Big Stadium World Tour",
+    "venue": "Stadium Nasional Bukit Jalil, Kuala Lumpur",
+    "date": "2026-09-27",
+    "time": "20:00:00",
+    "low": 1610000,
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Post_Malone_2015.jpg/960px-Post_Malone_2015.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "description": "Post Malone Presents The BIG Stadium World Tour featuring Don Toliver at Stadium Nasional Bukit Jalil, Kuala Lumpur on 27 September 2026.",
+    "gallery": [
+      "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Post_Malone_2015.jpg/960px-Post_Malone_2015.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    ],
+    "terms_conditions": "Tiket tidak dapat dikembalikan. Pembelian maksimum 6 tiket per transaksi. Usia minimum 12 tahun. Pintu dibuka 1 jam sebelum acara.",
+    "organizer": "Live Nation Malaysia",
+    "tiers": [
+      { "name": "VIP", "price": 4250000, "quota": 1000, "sold": 800, "benefits": "" },
+      { "name": "CAT 1", "price": 3260000, "quota": 2000, "sold": 1500, "benefits": "" },
+      { "name": "CAT 2", "price": 2270000, "quota": 3000, "sold": 2100, "benefits": "" },
+      { "name": "CAT 3", "price": 1610000, "quota": 4000, "sold": 2900, "benefits": "" }
+    ]
+  },
+  {
+    "title": "BTS WORLD TOUR 'ARIRANG' IN KUALA LUMPUR",
+    "venue": "TM Stadium Nasional, Bukit Jalil, Kuala Lumpur",
+    "date": "2026-12-12",
+    "time": "19:30:00",
+    "low": 1800000,
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg/960px-BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "description": "BTS WORLD TOUR 'ARIRANG' IN KUALA LUMPUR at TM Stadium Nasional Bukit Jalil on 12 December 2026, marking BTS return to Malaysia for the first time in seven years.",
+    "gallery": [
+      "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg/960px-BTS_Arirang_World_Tour_in_Paris_%2817_July_2026%29_-_intro_to_Act_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    ],
+    "terms_conditions": "Tiket tidak dapat dikembalikan. Pembelian maksimum 4 tiket per akun per hari pertunjukan. Usia minimum 6 tahun.",
+    "organizer": "Live Nation Malaysia",
+    "tiers": [
+      { "name": "VIP", "price": 4700000, "quota": 1200, "sold": 1200, "benefits": "" },
+      { "name": "CAT 1", "price": 4000000, "quota": 2000, "sold": 2000, "benefits": "" },
+      { "name": "CAT 2", "price": 3500000, "quota": 2500, "sold": 2500, "benefits": "" },
+      { "name": "CAT 3", "price": 2900000, "quota": 3000, "sold": 3000, "benefits": "" },
+      { "name": "CAT 4", "price": 2500000, "quota": 3500, "sold": 3400, "benefits": "" },
+      { "name": "CAT 5", "price": 2000000, "quota": 4000, "sold": 3800, "benefits": "" },
+      { "name": "CAT 6", "price": 1800000, "quota": 4500, "sold": 4200, "benefits": "" }
+    ]
+  },
+  {
+    "title": "The Weeknd: After Hours Til Dawn Tour",
+    "venue": "Rajamangala National Stadium, Bangkok",
+    "date": "2026-10-11",
+    "time": "19:00:00",
+    "low": 1000000,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/3/32/The_Weeknd_performing_at_Coachella_2012.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo",
+    "description": "The Weeknd After Hours Til Dawn Stadium Tour with special guest Creepy Nuts at Rajamangala National Stadium, Bangkok on 11 October 2026.",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/32/The_Weeknd_performing_at_Coachella_2012.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo"
+    ],
+    "terms_conditions": "Tiket tidak dapat dikembalikan. Usia minimum 12 tahun. Pintu dibuka 1 jam sebelum acara.",
+    "organizer": "Live Nation Tero",
+    "tiers": [
+      { "name": "VIP", "price": 4500000, "quota": 1500, "sold": 1100, "benefits": "" },
+      { "name": "CAT 1", "price": 3200000, "quota": 2500, "sold": 1800, "benefits": "" },
+      { "name": "CAT 2", "price": 2200000, "quota": 3500, "sold": 2400, "benefits": "" },
+      { "name": "CAT 3", "price": 1500000, "quota": 4500, "sold": 3200, "benefits": "" },
+      { "name": "CAT 4", "price": 1000000, "quota": 5000, "sold": 3600, "benefits": "" }
+    ]
+  },
+  {
+    "title": "BIGBANG 2026-2027 WORLD TOUR < XX : COSMOS > IN BANGKOK",
+    "venue": "Rajamangala National Stadium, Bangkok",
+    "date": "2026-11-07",
+    "time": "19:00:00",
+    "low": 720000,
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg/960px-Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "description": "BIGBANG 2026-2027 WORLD TOUR XX COSMOS IN BANGKOK, marking the group 20th anniversary and grand return to Thailand's biggest stage.",
+    "gallery": [
+      "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg/960px-Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    ],
+    "terms_conditions": "Tiket tidak dapat dikembalikan. Pembelian maksimum 4 tiket per akun. Usia minimum 12 tahun.",
+    "organizer": "Live Nation Tero",
+    "tiers": [
+      { "name": "VIP", "price": 3400000, "quota": 1500, "sold": 1500, "benefits": "" },
+      { "name": "CAT 1", "price": 2600000, "quota": 2500, "sold": 2400, "benefits": "" },
+      { "name": "CAT 2", "price": 1800000, "quota": 3500, "sold": 3200, "benefits": "" },
+      { "name": "CAT 3", "price": 1120000, "quota": 4500, "sold": 3800, "benefits": "" },
+      { "name": "CAT 4", "price": 720000, "quota": 5000, "sold": 3500, "benefits": "" }
+    ]
+  },
+  {
+    "title": "TATTOO COLOUR - LEO PRESENTS TATTOO STADIUM",
+    "venue": "Rajamangala National Stadium, Bangkok",
+    "date": "2026-12-19",
+    "time": "19:00:00",
+    "low": 480000,
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg/960px-Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "description": "LEO PRESENTS the 6th grand concert TATTOO STADIUM by Thai rock icons Tattoo Colour, celebrating three decades of iconic hits at Rajamangala National Stadium.",
+    "gallery": [
+      "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg/960px-Outside_View_of_Rajamangala_National_Stadium_%282026%29_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    ],
+    "terms_conditions": "Tiket tidak dapat dikembalikan. Usia minimum 12 tahun.",
+    "organizer": "Live Nation Tero",
+    "tiers": [
+      { "name": "VIP", "price": 2200000, "quota": 2000, "sold": 1500, "benefits": "" },
+      { "name": "CAT 1", "price": 1400000, "quota": 3000, "sold": 2200, "benefits": "" },
+      { "name": "CAT 2", "price": 800000, "quota": 4000, "sold": 2800, "benefits": "" },
+      { "name": "CAT 3", "price": 480000, "quota": 5000, "sold": 3200, "benefits": "" }
+    ]
+  },
+  {
+    "title": "2026 Korea Grand Music Awards (KGMA)",
+    "venue": "Gocheok Sky Dome, Seoul",
+    "date": "2026-11-07",
+    "time": "18:00:00",
+    "low": 900000,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Gocheok_Sky_Dome_interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo",
+    "description": "The 2026 Korea Grand Music Awards (KGMA) returns for its third edition at Gocheok Sky Dome in Seoul, bringing together top-tier K-pop artists and global fans.",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/d/dd/Gocheok_Sky_Dome_interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo"
+    ],
+    "terms_conditions": "Tiket tidak dapat dikembalikan. Usia minimum 7 tahun. Pintu dibuka 1 jam sebelum acara.",
+    "organizer": "Ilgan Sports",
+    "tiers": [
+      { "name": "VIP", "price": 2700000, "quota": 2000, "sold": 1800, "benefits": "" },
+      { "name": "CAT 1", "price": 2250000, "quota": 3000, "sold": 2600, "benefits": "" },
+      { "name": "CAT 2", "price": 1800000, "quota": 4000, "sold": 3200, "benefits": "" },
+      { "name": "CAT 3", "price": 1350000, "quota": 5000, "sold": 3800, "benefits": "" },
+      { "name": "CAT 4", "price": 900000, "quota": 6000, "sold": 4200, "benefits": "" }
+    ]
+  },
+  {
+    "title": "2026 Melon Music Awards (MMA)",
+    "venue": "Gocheok Sky Dome, Seoul",
+    "date": "2026-11-14",
+    "time": "18:00:00",
+    "low": 900000,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Gocheok_Sky_Dome_interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo",
+    "description": "The 2026 Melon Music Awards (MMA), one of South Korea's biggest annual music ceremonies, returns to the Gocheok Sky Dome in Seoul for two nights.",
+    "gallery": [
+      "https://upload.wikimedia.org/wikipedia/commons/d/dd/Gocheok_Sky_Dome_interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo"
+    ],
+    "terms_conditions": "Tiket tidak dapat dikembalikan. Usia minimum 7 tahun. Pintu dibuka 1 jam sebelum acara.",
+    "organizer": "Kakao Entertainment",
+    "tiers": [
+      { "name": "VIP", "price": 2700000, "quota": 2000, "sold": 1800, "benefits": "" },
+      { "name": "CAT 1", "price": 2250000, "quota": 3000, "sold": 2600, "benefits": "" },
+      { "name": "CAT 2", "price": 1800000, "quota": 4000, "sold": 3200, "benefits": "" },
+      { "name": "CAT 3", "price": 1350000, "quota": 5000, "sold": 3800, "benefits": "" },
+      { "name": "CAT 4", "price": 900000, "quota": 6000, "sold": 4200, "benefits": "" }
+    ]
+  }
+]
