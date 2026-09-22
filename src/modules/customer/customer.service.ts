@@ -14,6 +14,13 @@ type OrderRow = {
   status: string;
   expires_at: Date;
   created_at: Date;
+  full_name?: string;
+  email?: string;
+  phone?: string;
+  id_number?: string;
+  birth_date?: Date | string | null;
+  gender?: string | null;
+  wa_consent?: string | null;
 };
 type OrderInput = z.output<typeof createOrderSchema>;
 
@@ -26,8 +33,11 @@ export const customerService = {
 
     const total_price = Number(cat.price) * input.quantity;
     const [order] = await sql<OrderRow[]>`
-      INSERT INTO orders (customer_id, event_id, ticket_category_id, quantity, total_price, expires_at)
-      VALUES (${customerId}, ${input.event_id}, ${input.ticket_category_id}, ${input.quantity}, ${total_price}, now() + interval '15 minutes')
+      INSERT INTO orders (customer_id, event_id, ticket_category_id, quantity, total_price, expires_at,
+                          full_name, email, phone, id_number, birth_date, gender, wa_consent)
+      VALUES (${customerId}, ${input.event_id}, ${input.ticket_category_id}, ${input.quantity}, ${total_price}, now() + interval '15 minutes',
+              ${input.full_name ?? ""}, ${input.email ?? ""}, ${input.phone ?? ""}, ${input.id_number ?? ""},
+              ${input.birth_date || null}, ${input.gender || null}, ${input.wa_consent || null})
       RETURNING *
     `;
     return ok(order);
