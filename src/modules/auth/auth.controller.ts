@@ -3,7 +3,7 @@ import type { z } from "zod";
 import type { AppEnv } from "../../middleware/auth.middleware";
 import { respond, validBody } from "../../types/result";
 import { authService } from "./auth.service";
-import { loginSchema, organizerRegisterSchema, sendOtpSchema, verifyOtpSchema } from "./auth.schema";
+import { loginSchema, organizerRegisterSchema, sendOtpSchema, verifyOtpSchema, verifyOrganizerEmailSchema } from "./auth.schema";
 
 export const authController = {
   organizerLogin: async (c: Context<AppEnv>) => {
@@ -24,5 +24,10 @@ export const authController = {
   verifyOtp: async (c: Context<AppEnv>) => {
     const { email, code } = validBody<z.output<typeof verifyOtpSchema>>(c);
     return respond(c)(await authService.verifyOtp(email, code));
+  },
+
+  verifyOrganizerEmail: async (c: Context<AppEnv>) => {
+    const { email, code } = validBody<z.output<typeof verifyOrganizerEmailSchema>>(c);
+    return respond(c)(await authService.verifyOrganizerEmail(email, code));
   },
 };

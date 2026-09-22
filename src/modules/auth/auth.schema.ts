@@ -12,3 +12,4 @@ export const organizerRegisterSchema = z.object({
 });
 export const sendOtpSchema = z.object({ email: z.string().email() });
 export const verifyOtpSchema = z.object({ email: z.string().email(), code: z.string().length(6) });
+export const verifyOrganizerEmailSchema = z.object({ email: z.string().email(), code: z.string().length(6) });

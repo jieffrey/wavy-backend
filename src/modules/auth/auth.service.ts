@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { sql } from "../../db/client";
-import { sendOtpEmail } from "../../utils/email";
+import { sendOtpEmail, sendOrganizerVerificationEmail } from "../../utils/email";
 import { rateLimit } from "../../utils/rate-limit";
 import { ok, fail, type Result } from "../../types/result";
 
@@ -66,8 +66,21 @@ export const authService = {
       INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
       VALUES (${input.organizer_name}, ${input.email}, ${bcrypt.hashSync(input.password, 10)}, 'pending_verification', ${input.whatsapp}, ${input.event_types}, ${input.social_link ?? ""})
     `;
+
+    // Send verification OTP to organizer email
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    await sql`
+      INSERT INTO otp_codes (email, code, expires_at)
+      VALUES (${input.email}, ${code}, LOCALTIMESTAMP + interval '5 minutes')
+    `;
+    try {
+      await sendOrganizerVerificationEmail(input.email, code, input.organizer_name);
+    } catch (e) {
+      console.error("Failed to send organizer verification email:", e);
+    }
+
     return ok({
-      message: "Pengajuan kerja sama terkirim. Tim kami akan memverifikasi dan menghubungi Anda via WhatsApp/Email.",
+      message: "Pengajuan kerja sama terkirim. Silakan cek email Anda untuk kode verifikasi.",
       status: "pending_verification",
     });
   },
@@ -108,5 +121,30 @@ export const authService = {
       access_token: sign({ customer_id: customer.id }),
       customer: { id: customer.id, name: customer.name, email: customer.email },
     });
+  },
+
+  async verifyOrganizerEmail(email: string, code: string): Promise<Result<{ message: string }>> {
+    if (!rateLimit(`verify-org:${email}`, 5, 10 * 60 * 1000)) return fail(429, "too many attempts, try again later");
+
+    const [otp] = await sql<OtpRow[]>`
+      SELECT * FROM otp_codes
+      WHERE email = ${email} AND code = ${code} AND used = false
+        AND expires_at > LOCALTIMESTAMP
+      ORDER BY created_at DESC
+      LIMIT 1
+    `;
+    if (!otp) return fail(401, "kode OTP tidak valid atau sudah kedaluwarsa");
+
+    await sql`UPDATE otp_codes SET used = true WHERE id = ${otp.id}`;
+
+    // Activate the organizer account
+    const result = await sql`
+      UPDATE organizers SET status = 'active' WHERE email = ${email} AND status = 'pending_verification'
+    `;
+    if (result.count === 0) {
+      return fail(404, "organizer tidak ditemukan atau sudah terverifikasi");
+    }
+
+    return ok({ message: "Verifikasi berhasil! Akun Anda telah aktif. Silakan login." });
   },
 };

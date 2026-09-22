@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import type { AppEnv } from "../../middleware/auth.middleware";
-import { loginSchema, organizerRegisterSchema, sendOtpSchema, verifyOtpSchema } from "./auth.schema";
+import { loginSchema, organizerRegisterSchema, sendOtpSchema, verifyOtpSchema, verifyOrganizerEmailSchema } from "./auth.schema";
 import { authController } from "./auth.controller";
 
 const authRoutes = new Hono<AppEnv>();
@@ -25,6 +25,11 @@ authRoutes.post(
   "/verify-otp",
   zValidator<typeof verifyOtpSchema, "json", AppEnv, string>("json", verifyOtpSchema),
   authController.verifyOtp
+);
+authRoutes.post(
+  "/organizer/verify-email",
+  zValidator<typeof verifyOrganizerEmailSchema, "json", AppEnv, string>("json", verifyOrganizerEmailSchema),
+  authController.verifyOrganizerEmail
 );
 
 export default authRoutes;
