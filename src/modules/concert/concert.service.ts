@@ -23,6 +23,7 @@ type ConcertDetailRow = {
   venue: string;
   date: Date;
   poster_url: string;
+  banner_url: string;
   description: string;
   gallery: string;
   terms_conditions: string;
