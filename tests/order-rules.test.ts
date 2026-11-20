@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, test } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import {
   call,
   createCustomer,
@@ -10,10 +10,6 @@ import {
   sql,
   tokenFor,
 } from "./helpers";
-
-afterAll(async () => {
-  await sql.end();
-});
 
 const minutesFromNow = (m: number) => new Date(Date.now() + m * 60_000);
 
