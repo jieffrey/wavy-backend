@@ -129,6 +129,7 @@ Base: `/api/v1/organizer`
 → `201` event. Status default `draft`.
 
 **3.6** Publish → `200` event `status: "published"`.
+`400` `{ error: { code: "NO_TICKET_CATEGORY" } }` jika event belum punya kategori tiket.
 Saat publish, follower organizer/artist + subscriber notify-me dapat notifikasi (cek tabel `notifications`).
 
 **3.9** Body: `{ "name", "price", "quota" }` → `201`.

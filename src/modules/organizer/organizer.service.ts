@@ -117,12 +117,17 @@ export const organizerService = {
   },
 
   async publishEvent(organizerId: number, id: number): Promise<Result<EventRow>> {
+    // event tanpa kategori tiket tidak bisa dijual, jadi tidak boleh di-publish (syarat dicek di SQL yang sama)
     const [event] = await sql<EventRow[]>`
       UPDATE events SET status = 'published'
       WHERE id = ${id} AND organizer_id = ${organizerId}
+        AND EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = events.id)
       RETURNING *
     `;
-    if (!event) return fail(404, "event not found");
+    if (!event) {
+      if (!(await this.ownEvent(organizerId, id))) return fail(404, "event not found");
+      return fail(400, "add at least one ticket category before publishing", "NO_TICKET_CATEGORY");
+    }
     const followers = await sql<{ customer_id: number }[]>`
       SELECT customer_id FROM favorite_organizers WHERE organizer_id = ${organizerId}
       UNION
