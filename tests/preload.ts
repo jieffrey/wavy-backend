@@ -5,6 +5,7 @@
 //   - host lokal (localhost / 127.0.0.1)
 // Skema public di database test di-DROP dan dibangun ulang setiap run.
 
+import { afterAll } from "bun:test";
 import { join } from "node:path";
 
 const testUrl = process.env.TEST_DATABASE_URL;
@@ -34,3 +35,9 @@ const { migrateOrderRules } = await import("../src/db/migrations/order-rules");
 await sql.unsafe("DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public;");
 await sql.file(join(import.meta.dir, "fixtures", "schema.sql"));
 await migrateOrderRules(sql);
+
+// Satu client dipakai bersama semua file test; ditutup sekali di akhir run,
+// bukan per file (kalau per file, file berikutnya kena CONNECTION_ENDED).
+afterAll(async () => {
+  await sql.end();
+});

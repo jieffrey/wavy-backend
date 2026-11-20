@@ -10,7 +10,9 @@ export type ErrorCode =
   | "SALES_ENDED"
   | "QUOTA_EXCEEDED"
   | "ORDER_EXPIRED"
-  | "ORGANIZER_SUSPENDED";
+  | "ORGANIZER_SUSPENDED"
+  | "INVALID_QUANTITY"
+  | "VALIDATION_ERROR";
 
 export type Result<T> =
   | { ok: true; data: T }
