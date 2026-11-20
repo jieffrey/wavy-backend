@@ -1,6 +1,7 @@
 import { sql } from "../../db/client";
 import { ok, fail, type Result } from "../../types/result";
 import { remainingQuotaSql } from "../../utils/quota";
+import { categorySalesStatus, salesStatus, type SalesStatus } from "../../utils/sales-status";
 
 type ConcertRow = {
   id: number;
@@ -14,6 +15,8 @@ type ConcertRow = {
   organizer_name: string;
   min_price: string | null;
   remaining: number;
+  sales_start_at: Date | null;
+  sales_end_at: Date | null;
 };
 type ConcertDetailRow = {
   id: number;
@@ -36,6 +39,9 @@ type ConcertDetailRow = {
   bio: string;
   organizer_name: string;
   countdown_seconds: number;
+  sales_start_at: Date | null;
+  sales_end_at: Date | null;
+  now: Date;
 };
 type CategoryRow = {
   id: number;
@@ -57,32 +63,33 @@ type ReviewRow = {
 };
 
 export const concertService = {
-  async list(category?: string, q?: string) {
-    return ok(
-      await sql<ConcertRow[]>`
+  async list(category?: string, q?: string): Promise<Result<(ConcertRow & { sales_status: SalesStatus })[]>> {
+    const rows = await sql<(ConcertRow & { now: Date })[]>`
         SELECT e.id, e.title, e.category, e.venue, e.date, e.poster_url, e.status,
+               e.sales_start_at, e.sales_end_at, now() AS now,
                a.name AS artist_name, o.name AS organizer_name,
                (SELECT MIN(tc.price) FROM ticket_categories tc WHERE tc.event_id = e.id) AS min_price,
                (SELECT COALESCE(SUM(${remainingQuotaSql(sql)}), 0)::int FROM ticket_categories tc WHERE tc.event_id = e.id) AS remaining
         FROM events e
         JOIN artists a ON a.id = e.artist_id
         JOIN organizers o ON o.id = e.organizer_id
-        WHERE e.status = 'published'
+        WHERE e.status IN ('published', 'closed') -- draft tersembunyi; closed tampil dengan sales_status
           ${category ? sql`AND e.category = ${category}` : sql``}
           ${q ? sql`AND (e.title ILIKE ${`%${q}%`} OR a.name ILIKE ${`%${q}%`})` : sql``}
         ORDER BY e.date ASC
-      `,
-    );
+      `;
+    return ok(rows.map(({ now, ...row }) => ({ ...row, sales_status: salesStatus(row, row.remaining, now) })));
   },
 
   async detail(
     id: number,
   ): Promise<
     Result<
-      Omit<ConcertDetailRow, "gallery" | "seatmap"> & {
+      Omit<ConcertDetailRow, "gallery" | "seatmap" | "now"> & {
         gallery: string[];
         seatmap: { name: string; images: string[] } | null;
-        ticket_categories: CategoryRow[];
+        sales_status: SalesStatus;
+        ticket_categories: (CategoryRow & { sales_status: SalesStatus })[];
         reviews: ReviewRow[];
         avg_rating: number;
         review_count: number;
@@ -91,12 +98,13 @@ export const concertService = {
   > {
     const [event] = await sql<ConcertDetailRow[]>`
       SELECT e.*, a.name AS artist_name, a.genre, a.photo_url, a.bio, o.name AS organizer_name,
-        GREATEST(EXTRACT(EPOCH FROM (e.date - now()))::int, 0) AS countdown_seconds
+        GREATEST(EXTRACT(EPOCH FROM (e.date - now()))::int, 0) AS countdown_seconds, now() AS now
       FROM events e
       JOIN artists a ON a.id = e.artist_id
       JOIN organizers o ON o.id = e.organizer_id
-      WHERE e.id = ${id} AND e.status = 'published'
+      WHERE e.id = ${id} AND e.status IN ('published', 'closed')
     `;
+    // closed tetap tampil (sales_status = closed) supaya link lama tidak 404; draft tetap tersembunyi
     if (!event) return fail(404, "concert not found");
     let gallery: string[] = [];
     try {
@@ -115,11 +123,18 @@ export const concertService = {
     } catch {
       seatmap = null;
     }
-    const ticket_categories = await sql<CategoryRow[]>`
+    const categories = await sql<CategoryRow[]>`
       SELECT tc.*, ${remainingQuotaSql(sql)} AS remaining
       FROM ticket_categories tc
       WHERE tc.event_id = ${id}
     `;
+    const { now, ...eventFields } = event;
+    const totalRemaining = categories.reduce((sum, c) => sum + c.remaining, 0);
+    const sales_status = salesStatus(event, totalRemaining, now);
+    const ticket_categories = categories.map((c) => ({
+      ...c,
+      sales_status: categorySalesStatus(sales_status, c.remaining),
+    }));
     const [rating] = await sql<{ avg_rating: number; review_count: number }[]>`
       SELECT COALESCE(AVG(rating), 0)::float8 AS avg_rating, COUNT(*)::int AS review_count
       FROM reviews
@@ -133,9 +148,10 @@ export const concertService = {
       ORDER BY r.created_at DESC
     `;
     return ok({
-      ...event,
+      ...eventFields,
       gallery,
       seatmap,
+      sales_status,
       ticket_categories,
       reviews,
       avg_rating: rating.avg_rating,

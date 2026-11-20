@@ -12,7 +12,8 @@ export type ErrorCode =
   | "ORDER_EXPIRED"
   | "ORGANIZER_SUSPENDED"
   | "INVALID_QUANTITY"
-  | "VALIDATION_ERROR";
+  | "VALIDATION_ERROR"
+  | "NO_TICKET_CATEGORY";
 
 export type Result<T> =
   | { ok: true; data: T }

@@ -78,11 +78,11 @@ Contoh: `curl -H "Authorization: Bearer eyJ..." ...`
 | # | Method | Path | Auth | Deskripsi |
 |---|--------|------|------|-----------|
 | 2.1 | GET | `/homepage` | — | Homepage: featured events, popular artists, top organizers |
-| 2.2 | GET | `/concerts` | — | List konser published; filter `?category=` & `?q=` |
+| 2.2 | GET | `/concerts` | — | List konser published + closed (draft tersembunyi); filter `?category=` & `?q=` |
 | 2.3 | GET | `/concerts/:id` | — | Detail konser + kategori + rating/review + countdown |
 
 **2.1** → `200` `{ featured_events[], popular_artists[], organizers[] }`
-- `featured_events`: konser `published` dengan `date >= now()`, urut tanggal, max 6, tiap item ada `remaining_ticket`.
+- `featured_events`: konser `published` dengan `date >= now()`, urut tanggal, max 6, tiap item ada `remaining_ticket` (rumus sama dengan `/concerts`: dikurangi order pending aktif) dan `sales_status`.
 - `popular_artists`: urut `follower_count` DESC.
 - `organizers`: urut `follower_count` DESC.
 
@@ -92,8 +92,9 @@ Contoh: `curl -H "Authorization: Bearer eyJ..." ...`
 
 **2.3** → `200` `{ ...event, ticket_categories[], reviews[], avg_rating, review_count, countdown_seconds }`
 - `countdown_seconds` = detik tersisa ke tanggal konser (0 jika sudah lewat).
+- `sales_status`: `upcoming` | `open` | `closed` | `sold_out` (sumber: `src/utils/sales-status.ts`), plus `sales_start_at` / `sales_end_at` (null = tanpa batas). Tiap `ticket_categories[]` punya `sales_status` sendiri: `sold_out` jika `remaining` 0, selain itu ikut event. Daftar `/concerts` juga mengirim `sales_status` + tenggat.
 - `avg_rating`/`review_count` dari tabel `reviews`.
-- `404` jika konser tidak ada / belum `published`.
+- `404` jika konser tidak ada atau masih `draft`. Event `closed` tetap `200` dengan `sales_status: "closed"`.
 
 ---
 
@@ -128,6 +129,7 @@ Base: `/api/v1/organizer`
 → `201` event. Status default `draft`.
 
 **3.6** Publish → `200` event `status: "published"`.
+`400` `{ error: { code: "NO_TICKET_CATEGORY" } }` jika event belum punya kategori tiket.
 Saat publish, follower organizer/artist + subscriber notify-me dapat notifikasi (cek tabel `notifications`).
 
 **3.9** Body: `{ "name", "price", "quota" }` → `201`.
