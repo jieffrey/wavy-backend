@@ -16,7 +16,7 @@ Satu tiket berlaku untuk satu orang dan dapat digunakan untuk keluar-masuk (re-e
 
 Gunakan data identitas yang valid (KTP/SIM/Paspor) saat membeli tiket. Tiket tidak dapat diubah setelah pembelian.
 
-Tiket bersifat digital dan akan tersedia H-5 konser melalui aplikasi Loket X (tersedia di Play Store dan App Store).
+Tiket bersifat digital dan akan tersedia H-5 konser melalui aplikasi Wavy (tersedia di Play Store dan App Store).
 
 Tiket ini hanya untuk keperluan pribadi. Dilarang dijual kembali atau digunakan untuk kepentingan komersial tanpa izin promotor.
 
@@ -44,7 +44,7 @@ Nomor kursi dipilih otomatis oleh sistem. Kursi akan diatur mulai dari barisan p
 
 Pembelian lebih dari 1 tiket, kursi akan diatur bersebelahan sesuai dengan jumlah tiket yang dibeli, selama masih tersedia.
 
-Nomor kursi akan tersedia H-5 konser pada tiket Anda di aplikasi Loket X.
+Nomor kursi akan tersedia H-5 konser pada tiket Anda di aplikasi Wavy.
 
 PERINGATAN KESELAMATAN
 
@@ -144,6 +144,6 @@ Media Partnership
 E-mail: media@antarasuara.com
 
 Untuk informasi atau bantuan seputar tiket hubungi:
-Loket.com
-E-mail: support@loket.com
+Wavy
+E-mail: layanan pelanggan Wavy
 Phone: 021-3000 3160

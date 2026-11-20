@@ -12,8 +12,8 @@ In the event of conflict between the Indonesian and English versions, the Indone
 
 A. PEMBELIAN TIKET / TICKET PURCHASE
 
-Tiket resmi hanya dijual melalui yejakarta.com dan platform resmi yang ditunjuk oleh Penyelenggara (Loket.com). Penyelenggara tidak bertanggung jawab atas kerugian yang timbul akibat pembelian tiket melalui pihak tidak resmi, termasuk namun tidak terbatas pada calo.
-Official tickets are sold exclusively through yejakarta.com and designated official platforms (Loket.com). The Organiser accepts no liability for losses arising from purchases made through unauthorised channels, including but not limited to scalpers.
+Tiket resmi hanya dijual melalui yejakarta.com dan platform resmi yang ditunjuk oleh Penyelenggara (Wavy). Penyelenggara tidak bertanggung jawab atas kerugian yang timbul akibat pembelian tiket melalui pihak tidak resmi, termasuk namun tidak terbatas pada calo.
+Official tickets are sold exclusively through yejakarta.com and designated official platforms (Wavy). The Organiser accepts no liability for losses arising from purchases made through unauthorised channels, including but not limited to scalpers.
 Setiap pembelian tiket wajib menggunakan nama dan data yang sesuai dengan identitas resmi yang masih berlaku (KTP / Paspor / Kartu Keluarga / SIM / Kartu Pelajar). Data tidak dapat diubah atau dimodifikasi setelah transaksi selesai.
 All ticket purchases must be made using a name and details that match a valid official identity document (ID Card / Passport / Family Card / Driver's License / Student ID). Details cannot be altered or modified once the transaction has been completed.
 Acara ini terdiri dari 8 kategori tiket: Festival (standing), Super Fans Festival (standing) dan VIP West, VIP East, CAT 1, CAT 2, CAT 3 dan CAT 4 dengan tempat duduk bernomor.
@@ -22,12 +22,12 @@ Pembelian dibatasi maksimal 8 (delapan) tiket per transaksi dan bisa untuk kateg
 Purchases are limited to a maximum of 8 (eight) tickets per transaction, and purchasing tickets across different categories is permitted. 1 (one) email address, 1 (one) ID number, and 1 (one) phone number are limited to 1 (one) transaction.
 Harga tiket belum termasuk pajak pemerintah 10%, biaya platform 6% dan biaya lain yang berlaku. Total biaya yang harus dibayarkan oleh Pembeli dapat dilihat pada saat checkout.
 Ticket prices exclude 10% government tax, platform fees 6% and applicable service charges. The total amount of money that need to be paid by the Buyer can be seen upon checkout.
-Setelah pembelian tiket berhasil, e-ticket dapat diakses melalui aplikasi LOKET X menggunakan akun/email yang terdaftar pada saat pembelian.
-After the ticket purchase is successful, the e-ticket can be accessed through the LOKET X application using the account/email registered at the time of purchase.
+Setelah pembelian tiket berhasil, e-ticket dapat diakses melalui aplikasi Wavy menggunakan akun/email yang terdaftar pada saat pembelian.
+After the ticket purchase is successful, the e-ticket can be accessed through the Wavy application using the account/email registered at the time of purchase.
 Penyelenggara dan partner ticketing resmi yang ditunjuk hanya akan menerbitkan e-ticket kepada Pembeli yang sah.
 The organiser and designated official ticketing partners will only issue e-tickets to legitimate Buyers.
-Pemegang Tiket wajib menempati tempat duduk atau posisi yang telah ditentukan oleh system sesuai dengan kategori tiket yang dibeli. Bagi Pemegang Tiket kategori dengan tempat duduk bernomer (CAT 1, 2, 3, 4 dan VIP), maka nomor kursi akan tersedia beberapa hari sebelum konser melalui aplikasi LOKET X.
-Ticket Holders are required to occupy the seat or position designated by the system according to the purchased ticket category. For Ticket Holders in the Numbered Seat category (1, 2, 3, 4 and VIP), the seat number will be available to the Ticket Holder a few days before the concert via the LOKET X application.
+Pemegang Tiket wajib menempati tempat duduk atau posisi yang telah ditentukan oleh system sesuai dengan kategori tiket yang dibeli. Bagi Pemegang Tiket kategori dengan tempat duduk bernomer (CAT 1, 2, 3, 4 dan VIP), maka nomor kursi akan tersedia beberapa hari sebelum konser melalui aplikasi Wavy.
+Ticket Holders are required to occupy the seat or position designated by the system according to the purchased ticket category. For Ticket Holders in the Numbered Seat category (1, 2, 3, 4 and VIP), the seat number will be available to the Ticket Holder a few days before the concert via the Wavy application.
 Tidak diperbolehkan membagikan dan menyebarluaskan nomor barcode di dalam e-ticket baik dalam bentuk unggahan apapun (foto, email, tangkapan layar dan lainnya). Barcode yang tercantum pada e-ticket bersifat rahasia, tidak boleh rusak dan disebarluaskan hingga Anda menukarkan wristband dan berhasil memasuki venue acara.
 Do not share or disseminate the barcode and/or barcode number in the e-ticket in any form (photo uploads, emails, screen shots, and others). The barcode listed on e-ticket is confidential and must not be damaged until you have redeemed your wristband and successfully entered the venue.
 Penyelenggara tidak bertanggung jawab atas kelalaian pembeli tiket yang mengakibatkan tiket jatuh ke tangan orang lain (dalam penguasaan orang lain) untuk dipergunakan sebagai tanda masuk tempat pertunjukkan yang menghilangkan hak dari pembeli tiket.
@@ -37,10 +37,10 @@ All ticket sales are final. Tickets sold cannot be exchanged, cashed out or refu
 
 B. VALIDASI & AKSES MASUK / ENTRY VALIDATION
 
-Pastikan Anda memiliki e-ticket yang tersedia di aplikasi LOKET X. Screenshot e-ticket tidak diperkenankan dan tidak akan diterima sebagai akses masuk ke venue.
-Make sure you have an e-ticket available in the LOKET X application. Screenshots of the e-ticket are not allowed and will not be accepted for entry into the venue.
-Pastikan Anda telah login ke akun LOKET X yang digunakan saat pembelian tiket sebelum tiba di lokasi acara untuk memperlancar proses validasi dan masuk ke venue.
-Make sure you have logged into the LOKET X account used during the ticket purchase before arriving at the event location to ensure a smooth validation process and entry into the venue.
+Pastikan Anda memiliki e-ticket yang tersedia di aplikasi Wavy. Screenshot e-ticket tidak diperkenankan dan tidak akan diterima sebagai akses masuk ke venue.
+Make sure you have an e-ticket available in the Wavy application. Screenshots of the e-ticket are not allowed and will not be accepted for entry into the venue.
+Pastikan Anda telah login ke akun Wavy yang digunakan saat pembelian tiket sebelum tiba di lokasi acara untuk memperlancar proses validasi dan masuk ke venue.
+Make sure you have logged into the Wavy account used during the ticket purchase before arriving at the event location to ensure a smooth validation process and entry into the venue.
 Penyelenggara berhak menolak masuk atau mengeluarkan siapapun yang tidak mematuhi Syarat & Ketentuan ini, berada dalam kondisi mabuk atau membahayakan, atau dianggap mengancam keselamatan orang lain. Tidak ada pengembalian dana atas tiket yang tidak digunakan akibat penolakan tersebut.
 The Organiser reserves the right to refuse entry or remove any person who does not comply with these Terms & Conditions, is intoxicated or dangerous, or is deemed a threat to others' safety. No refund will be issued for unused tickets as a result of such refusal.
 
@@ -72,8 +72,8 @@ E. PENERIMAAN RISIKO / ASSUMPTION OF RISK
 
 Dengan membeli tiket dan memasuki lokasi acara, Pembeli tiket dan Pemegang Tiket mengakui dan menerima risiko yang melekat pada kehadiran di konser berskala besar, termasuk namun tidak terbatas pada kepadatan penonton, desakan massa, tingkat kebisingan yang tinggi, kondisi cuaca, serta penggunaan efek khusus seperti piroteknik, asap, lampu strobo, dan laser. Kehadiran merupakan risiko yang ditanggung sendiri oleh Pemegang Tiket. Individu dengan kondisi medis yang mungkin terdampak oleh efek-efek tersebut—termasuk epilepsi, gangguan pernapasan, atau sensitivitas terhadap cahaya—disarankan untuk berkonsultasi dengan tenaga medis profesional sebelum hadir. Memasuki lokasi acara berarti menyetujui ketentuan-ketentuan ini.
 By purchasing a ticket and entering the venue, the Ticket Buyer and Ticket Holder acknowledges and accepts the inherent risks associated with attending a large-scale concert, including but not limited to crowd congestion, crowd surges, high noise levels, weather conditions, and the use of special effects such as pyrotechnics, smoke, strobe lighting, and lasers. Attendance is at the Ticket Holder's own risk. Individuals with medical conditions that may be affected by these effects, including epilepsy, respiratory conditions, or light sensitivity, are advised to consult a medical professional before attending. Entry into the venue constitutes acceptance of these conditions.
-Demi alasan keselamatan, area Festival Standing tidak direkomendasikan bagi Pemegang Tiket dengan kondisi medis khusus, ibu hamil dan penyandang disabilitas. Anak yang berusia di bawah 15 (lima belas) tahun tidak diperbolehkan berada di area Festival Standing. Tersedia kuota terbatas untuk area yang dapat diakses oleh pengguna kursi roda. Untuk memperoleh persetujuan pemesanan, Anda wajib melampirkan Surat Keterangan Dokter dari rumah sakit atau klinik yang sah sebagai bukti kebutuhan aksesibilitas, serta Surat Pernyataan bermaterai yang ditandatangani oleh suami/istri, anggota keluarga, atau wali. Dokumen hanya diterima apabila diterbitkan oleh institusi medis yang sah. Mohon kirimkan seluruh dokumen dalam format PDF ke support@loket.com paling lambat 24 Agustus 2026 dengan subjek email "WHEELCHAIR ACCESS REQUEST - YE JAKARTA 2026".
-For safety reasons, the Festival Standing area is not recommended for Ticket Holders with special medical conditions, pregnant women and, people with disabilities., Children and those under the age of 15 (fifteen) are not allowed in Festival Standing area16 years of age. A limited quota is available for areas accessible to wheelchair users. To obtain booking approval, you are required to attach a valid Doctor's Certificate from a legitimate hospital or clinic as proof of accessibility needs, as well as a stamped Statement Letter signed by a spouse, family member, or guardian. Documents will only be accepted if issued by a legitimate medical institution. Please send all documents in PDF format to support@loket.com no later than 24 Agustus 2026 with the subject "WHEELCHAIR ACCESS REQUEST - YE JAKARTA 2026".
+Demi alasan keselamatan, area Festival Standing tidak direkomendasikan bagi Pemegang Tiket dengan kondisi medis khusus, ibu hamil dan penyandang disabilitas. Anak yang berusia di bawah 15 (lima belas) tahun tidak diperbolehkan berada di area Festival Standing. Tersedia kuota terbatas untuk area yang dapat diakses oleh pengguna kursi roda. Untuk memperoleh persetujuan pemesanan, Anda wajib melampirkan Surat Keterangan Dokter dari rumah sakit atau klinik yang sah sebagai bukti kebutuhan aksesibilitas, serta Surat Pernyataan bermaterai yang ditandatangani oleh suami/istri, anggota keluarga, atau wali. Dokumen hanya diterima apabila diterbitkan oleh institusi medis yang sah. Mohon kirimkan seluruh dokumen dalam format PDF ke layanan pelanggan Wavy paling lambat 24 Agustus 2026 dengan subjek email "WHEELCHAIR ACCESS REQUEST - YE JAKARTA 2026".
+For safety reasons, the Festival Standing area is not recommended for Ticket Holders with special medical conditions, pregnant women and, people with disabilities., Children and those under the age of 15 (fifteen) are not allowed in Festival Standing area16 years of age. A limited quota is available for areas accessible to wheelchair users. To obtain booking approval, you are required to attach a valid Doctor's Certificate from a legitimate hospital or clinic as proof of accessibility needs, as well as a stamped Statement Letter signed by a spouse, family member, or guardian. Documents will only be accepted if issued by a legitimate medical institution. Please send all documents in PDF format to layanan pelanggan Wavy no later than 24 Agustus 2026 with the subject "WHEELCHAIR ACCESS REQUEST - YE JAKARTA 2026".
 
 F. BARANG LARANGAN / PROHIBITED ITEMS
 
@@ -211,17 +211,17 @@ Penyelenggara dan/atau hotel tidak bertanggung jawab atas kegagalan atau keterla
 Neither the Organizer nor the hotel shall be liable for any failure or delay in performing their obligations arising from events beyond their reasonable control, including but not limited to natural disasters, pandemics, epidemics, war, civil unrest, government actions, or other force majeure events. In the event of force majeure, the Organizer shall endeavor to notify the Guest within a reasonable time.
 Untuk informasi lebih lanjut:
 For further information:
-Ticket: LOKET Customer Service - support@loket.com / +62 21 3000 3160
+Ticket: Wavy Customer Service - layanan pelanggan Wavy / +62 21 3000 3160
 Hotel : Illa - +62 877-8111-6221
 
 FREQUENTLY ASKED QUESTIONS (FAQ)
 
 Di mana saya dapat membeli tiket resmi?
-Tiket resmi hanya dapat dibeli melalui yejakarta.com dan platform resmi yang ditunjuk oleh Penyelenggara (Loket.com). Pembelian melalui pihak lain atau calo sepenuhnya menjadi risiko pembeli. Pastikan Anda telah mendaftarkan di Loket.com untuk mempermudah transaksi pembelian.
-Pastikan Anda telah mendaftarkan di Loket.com untuk mempermudah transaksi pembelian.
+Tiket resmi hanya dapat dibeli melalui yejakarta.com dan platform resmi yang ditunjuk oleh Penyelenggara (Wavy). Pembelian melalui pihak lain atau calo sepenuhnya menjadi risiko pembeli. Pastikan Anda telah mendaftarkan di Wavy untuk mempermudah transaksi pembelian.
+Pastikan Anda telah mendaftarkan di Wavy untuk mempermudah transaksi pembelian.
 Where can I buy official tickets?
-Official tickets can only be purchased through yejakarta.com and the official ticketing partner appointed by the organizer, Loket.com. Purchases made through third parties or scalpers are entirely at the buyer's own risk.
-Make sure you have registered a Loket.com account to facilitate your purchase transaction.
+Official tickets can only be purchased through yejakarta.com and the official ticketing partner appointed by the organizer, Wavy. Purchases made through third parties or scalpers are entirely at the buyer's own risk.
+Make sure you have registered a Wavy account to facilitate your purchase transaction.
 
 Berapa banyak tiket yang bisa saya beli?
 Pembelian dibatasi maksimal 8 (delapan) tiket per transaksi dan bisa untuk kategori yang berbeda. 1 (satu) alamat email, 1 (satu) nomor identitas diri dan 1 (satu) nomor telepon dibatasi 1 (satu) transaksi.
@@ -229,24 +229,24 @@ What is the maximum number of tickets I can buy?
 Purchases are limited to a maximum of 8 (eight) tickets per transaction, and purchasing tickets across different categories is permitted. 1 (one) email address, 1 (one) ID number, and 1 (one) phone number are limited to 1 (one) transaction.
 
 Kapan saya akan menerima tiket?
-Setelah transaksi pembelian berhasil, Booking Confirmation akan dikirimkan ke alamat email yang digunakan saat melakukan pembelian. Selanjutnya, e-ticket akan tersedia di aplikasi LOKET X menggunakan akun atau alamat email yang sama setelah tiket diterbitkan oleh Loket. E-ticket hanya dapat diakses melalui aplikasi LOKET X.
+Setelah transaksi pembelian berhasil, Booking Confirmation akan dikirimkan ke alamat email yang digunakan saat melakukan pembelian. Selanjutnya, e-ticket akan tersedia di aplikasi Wavy menggunakan akun atau alamat email yang sama setelah tiket diterbitkan oleh Wavy. E-ticket hanya dapat diakses melalui aplikasi Wavy.
 When will I receive my ticket?
-After a successful purchase transaction, a Booking Confirmation will be sent to the email address used during purchase. Subsequently, the e-ticket will be available in the LOKET X app using the same account or email address once issued by the Loket. E-tickets can only be accessed through the LOKET X app.
+After a successful purchase transaction, a Booking Confirmation will be sent to the email address used during purchase. Subsequently, the e-ticket will be available in the Wavy app using the same account or email address once issued by the Wavy. E-tickets can only be accessed through the Wavy app.
 
 Kapan nomor kursi (seat number) saya tersedia?
-Bagi pemegang tiket kategori VIP, CAT 1, CAT 2, CAT 3 dan CAT 4, nomor kursi akan diumumkan mendekati hari konser melalui aplikasi LOKET X. Informasi ini tidak tersedia pada saat pembelian tiket.
+Bagi pemegang tiket kategori VIP, CAT 1, CAT 2, CAT 3 dan CAT 4, nomor kursi akan diumumkan mendekati hari konser melalui aplikasi Wavy. Informasi ini tidak tersedia pada saat pembelian tiket.
 When will my seat number be available?
-For ticket holders categories: VIP, CAT 1, CAT 2, CAT 3, and CAT 4, seat numbers will be informed a few days before the concert via the LOKET X app. This information is not available at the time of ticket purchase.
+For ticket holders categories: VIP, CAT 1, CAT 2, CAT 3, and CAT 4, seat numbers will be informed a few days before the concert via the Wavy app. This information is not available at the time of ticket purchase.
 
 Apakah saya boleh menggunakan screenshot e-tiket untuk masuk ke venue?
-Tidak. QR yang tersedia di LOKET X tidak bisa di-screenshot. Anda wajib menunjukkan QR e-ticket asli yang tersedia di aplikasi LOKET X saat proses validasi di venue.
+Tidak. QR yang tersedia di Wavy tidak bisa di-screenshot. Anda wajib menunjukkan QR e-ticket asli yang tersedia di aplikasi Wavy saat proses validasi di venue.
 Can I use a screenshot of the e-ticket to enter the venue?
-No. The QR code in LOKET X cannot be screenshotted. You must show the original QR e-ticket available in the LOKET X application during the validation process at the venue.
+No. The QR code in Wavy cannot be screenshotted. You must show the original QR e-ticket available in the Wavy application during the validation process at the venue.
 
 Apakah e-tiket dapat dipindahkan kepada orang lain?
-Ya. Setelah QR e-tiket tersedia di aplikasi LOKET X, Anda dapat menggunakan fitur Transfer Tiket untuk mengirimkan e-ticket kepada teman atau anggota keluarga melalui aplikasi LOKET X. Setiap e-ticket hanya dapat ditransfer 1 (satu) kali.
+Ya. Setelah QR e-tiket tersedia di aplikasi Wavy, Anda dapat menggunakan fitur Transfer Tiket untuk mengirimkan e-ticket kepada teman atau anggota keluarga melalui aplikasi Wavy. Setiap e-ticket hanya dapat ditransfer 1 (satu) kali.
 Can the e-ticket be transferred to someone else?
-Yes. Once the e-ticket is available in the LOKET X app, you can use the Ticket Transfer feature to send the e-ticket to a friend or family member via the LOKET X app. Each e-ticket can only be transferred 1 (one) time.
+Yes. Once the e-ticket is available in the Wavy app, you can use the Ticket Transfer feature to send the e-ticket to a friend or family member via the Wavy app. Each e-ticket can only be transferred 1 (one) time.
 
 Apakah saya dapat keluar dan masuk kembali ke venue?
 Tidak. Acara ini menerapkan kebijakan NO RE-ENTRY. Setelah keluar dari area venue, Anda tidak diperkenankan masuk kembali dengan alasan apa pun.
@@ -296,14 +296,14 @@ All ticket sales are final. Tickets purchased cannot be exchanged or refunded, u
 
 Apa yang harus saya lakukan sebelum datang ke venue?
 Pastikan Anda:
-- Sudah login ke akun LOKET X yang digunakan saat membeli tiket.
+- Sudah login ke akun Wavy yang digunakan saat membeli tiket.
 - Memastikan e-ticket telah tersedia di aplikasi.
 - Tidak membagikan QR e-tiket kepada siapa pun.
 - Membawa identitas diri yang masih berlaku apabila diperlukan untuk proses verifikasi.
 - Datang lebih awal agar proses validasi berjalan lancar.
 What should I do before arriving at the venue?
 Make sure you:
-- Are logged into the LOKET X account used to purchase the ticket.
+- Are logged into the Wavy account used to purchase the ticket.
 - Verify that your e-ticket is available in the app.
 - Do not share your QR e-ticket with anyone.
 - Bring a valid photo ID for verification if required.
@@ -316,4 +316,4 @@ To guarantee seats next to each other, tickets must be purchased in a single tra
 
 COPYRIGHT
 
-(c) 2026 RAW VISION COLLECTIVE & PT GLOBAL LOKET SEJAHTERA. ALL RIGHTS RESERVED.
+(c) 2026 RAW VISION COLLECTIVE & Wavy. ALL RIGHTS RESERVED.
