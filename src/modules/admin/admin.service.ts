@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { sql } from "../../db/client";
 import { ok, fail, type Result } from "../../types/result";
+import { expireByOrganizer } from "../../utils/order-expiry";
 
 type AdminRow = { id: number; name: string; email: string; password: string };
 
@@ -18,6 +19,14 @@ export const adminService = {
       access_token: sign({ admin_id: admin.id }),
       admin: { id: admin.id, name: admin.name, email: admin.email },
     });
+  },
+
+  async me(adminId: number): Promise<Result<{ id: number; name: string; email: string }>> {
+    const [admin] = await sql<{ id: number; name: string; email: string }[]>`
+      SELECT id, name, email FROM admins WHERE id = ${adminId}
+    `;
+    if (!admin) return fail(404, "admin not found");
+    return ok(admin);
   },
 
   async stats() {
@@ -44,6 +53,37 @@ export const adminService = {
         ORDER BY o.id DESC
       `
     );
+  },
+
+  // profil organizer + daftar event (tiket terjual, kuota, pendapatan) + ringkasan penjualan
+  async getOrganizer(id: number) {
+    const [organizer] = await sql`
+      SELECT id, name, email, status, created_at, whatsapp, event_types, social_link
+      FROM organizers WHERE id = ${id}
+    `;
+    if (!organizer) return fail(404, "organizer not found");
+    await expireByOrganizer(sql, id);
+    const events = await sql`
+      SELECT e.id, e.title, e.category, e.venue, e.date, e.status, e.poster_url,
+        COALESCE((SELECT SUM(tc.quota) FROM ticket_categories tc WHERE tc.event_id = e.id), 0)::int AS quota,
+        COALESCE((SELECT SUM(tc.sold) FROM ticket_categories tc WHERE tc.event_id = e.id), 0)::int AS sold,
+        COALESCE((SELECT SUM(o.total_price) FROM orders o WHERE o.event_id = e.id AND o.status = 'paid'), 0)::float8 AS revenue
+      FROM events e
+      WHERE e.organizer_id = ${id}
+      ORDER BY e.date DESC NULLS LAST, e.id DESC
+    `;
+    const [summary] = await sql`
+      SELECT
+        (SELECT COUNT(*) FROM events WHERE organizer_id = ${id})::int AS event_count,
+        (SELECT COUNT(*) FROM events WHERE organizer_id = ${id} AND status = 'published')::int AS published_count,
+        COUNT(*) FILTER (WHERE o.status = 'paid')::int AS paid_order_count,
+        COUNT(*) FILTER (WHERE o.status = 'pending_payment')::int AS pending_order_count,
+        COALESCE(SUM(o.quantity) FILTER (WHERE o.status = 'paid'), 0)::int AS ticket_sold,
+        COALESCE(SUM(o.total_price) FILTER (WHERE o.status = 'paid'), 0)::float8 AS revenue
+      FROM orders o JOIN events e ON e.id = o.event_id
+      WHERE e.organizer_id = ${id}
+    `;
+    return ok({ organizer, events, summary });
   },
 
   async setOrganizerStatus(id: number, status: string): Promise<Result<{ message: string }>> {

@@ -16,8 +16,10 @@ adminRoutes.post(
 
 adminRoutes.use("*", adminAuth);
 
+adminRoutes.get("/me", adminController.me);
 adminRoutes.get("/stats", adminController.stats);
 adminRoutes.get("/organizers", adminController.listOrganizers);
+adminRoutes.get("/organizers/:id", adminController.getOrganizer);
 adminRoutes.patch(
   "/organizers/:id",
   zValidator<typeof organizerStatusSchema, "json", AppEnv, string>("json", organizerStatusSchema),

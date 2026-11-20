@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 import type { z } from "zod";
 import type { AppEnv } from "../../middleware/auth.middleware";
-import { respond, validBody } from "../../types/result";
+import { fail, respond, validBody } from "../../types/result";
 import { adminService } from "./admin.service";
 import { adminLoginSchema, organizerStatusSchema } from "./admin.schema";
 
@@ -11,9 +11,17 @@ export const adminController = {
     return respond(c)(await adminService.login(body.email, body.password));
   },
 
+  me: async (c: Context<AppEnv>) => respond(c)(await adminService.me(c.get("adminId"))),
+
   stats: async (c: Context<AppEnv>) => respond(c)(await adminService.stats()),
 
   listOrganizers: async (c: Context<AppEnv>) => respond(c)(await adminService.listOrganizers()),
+
+  getOrganizer: async (c: Context<AppEnv>) => {
+    const id = Number(c.req.param("id"));
+    if (!Number.isInteger(id) || id <= 0) return respond(c)(fail(404, "organizer not found"));
+    return respond(c)(await adminService.getOrganizer(id));
+  },
 
   setOrganizerStatus: async (c: Context<AppEnv>) => {
     const { status } = validBody<z.output<typeof organizerStatusSchema>>(c);
