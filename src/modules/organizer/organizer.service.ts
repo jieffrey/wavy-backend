@@ -5,6 +5,7 @@ import type { z } from "zod";
 import type { eventSchema, ticketCategorySchema, artistSchema } from "./organizer.schema";
 import { signTicket, verifyTicket } from "../ticket/ticket.service";
 import { notificationService } from "../notification/notification.service";
+import { expireByOrganizer, expireOrder } from "../../utils/order-expiry";
 
 type EventRow = {
   id: number;
@@ -265,6 +266,7 @@ export const organizerService = {
   // ---------- Orders (organizer) ----------
 
   async listOrders(organizerId: number, status?: string) {
+    await expireByOrganizer(sql, organizerId);
     const rows = status
       ? await sql<OrderRow[]>`
           SELECT o.* FROM orders o JOIN events e ON e.id = o.event_id
@@ -280,30 +282,37 @@ export const organizerService = {
   },
 
   async verifyOrder(organizerId: number, id: number, approve: boolean): Promise<Result<{ message: string }>> {
-    const [order] = await sql<OrderRow[]>`
-      SELECT o.* FROM orders o JOIN events e ON e.id = o.event_id
-      WHERE o.id = ${id} AND e.organizer_id = ${organizerId}
-    `;
-    if (!order) return fail(404, "order not found");
-    if (order.status !== "pending_payment") return fail(400, "order is not pending payment");
+    // lock baris order supaya approve/reject tidak balapan dengan approve lain atau expiry
+    const result = await sql.begin(async (tx): Promise<Result<OrderRow>> => {
+      await expireOrder(tx, id);
+      const [order] = await tx<OrderRow[]>`
+        SELECT o.* FROM orders o JOIN events e ON e.id = o.event_id
+        WHERE o.id = ${id} AND e.organizer_id = ${organizerId}
+        FOR UPDATE OF o
+      `;
+      if (!order) return fail(404, "order not found");
+      if (order.status === "expired") return fail(409, "order has expired", "ORDER_EXPIRED");
+      if (order.status !== "pending_payment") return fail(400, "order is not pending payment");
 
-    if (approve) {
-      const [event] = await sql<{ date: Date }[]>`SELECT date FROM events WHERE id = ${order.event_id}`;
-      const exp = Math.floor(new Date(event.date).getTime() / 1000);
-      await sql.begin(async (tx) => {
+      if (approve) {
+        const [event] = await tx<{ date: Date }[]>`SELECT date FROM events WHERE id = ${order.event_id}`;
+        const exp = Math.floor(new Date(event.date).getTime() / 1000);
         await tx`UPDATE orders SET status = 'paid' WHERE id = ${id}`;
         await tx`UPDATE ticket_categories SET sold = sold + ${order.quantity} WHERE id = ${order.ticket_category_id}`;
         for (let i = 0; i < order.quantity; i++) {
           await tx`INSERT INTO tickets (order_id, qr_code, owner_id)
                    VALUES (${order.id}, ${signTicket({ uid: crypto.randomUUID(), event_id: order.event_id, exp })}, ${order.customer_id})`;
         }
-      });
-      return ok({ message: "order approved" });
-    }
+      } else {
+        await tx`UPDATE orders SET status = 'rejected' WHERE id = ${id}`;
+      }
+      return ok(order);
+    });
+    if (!result.ok) return result;
 
-    await sql`UPDATE orders SET status = 'rejected' WHERE id = ${id}`;
+    if (approve) return ok({ message: "order approved" });
     // auto-offer (phase 4 item 14): tiket dari order yang gagal ditawarkan ke waiting list teratas
-    await offerTickets(order.event_id, order.quantity);
+    await offerTickets(result.data.event_id, result.data.quantity);
     return ok({ message: "order rejected" });
   },
 

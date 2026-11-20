@@ -2,6 +2,7 @@ import { sql } from "../../db/client";
 import { ok, fail, type Result } from "../../types/result";
 import type { z } from "zod";
 import type { createOrderSchema } from "./customer.schema";
+import { expireByCategory, expireByCustomer, expireOrder } from "../../utils/order-expiry";
 
 type CategoryRow = { id: number; event_id: number; name: string; price: string; quota: number; sold: number };
 type OrderRow = {
@@ -47,6 +48,7 @@ export const customerService = {
       if (!cat) return fail(404, "ticket category not found");
       if (cat.event_id !== input.event_id) return fail(400, "ticket category does not belong to event");
 
+      await expireByCategory(tx, cat.id);
       // terpakai = sold (tiket paid; dipelihara approve/refund) + pending yang belum expired
       const [{ pending }] = await tx<{ pending: number }[]>`
         SELECT COALESCE(SUM(quantity), 0)::int AS pending FROM orders
@@ -72,12 +74,14 @@ export const customerService = {
   },
 
   async getOrder(customerId: number, id: number): Promise<Result<OrderRow>> {
+    await expireOrder(sql, id);
     const [order] = await sql<OrderRow[]>`SELECT * FROM orders WHERE id = ${id} AND customer_id = ${customerId}`;
     if (!order) return fail(404, "order not found");
     return ok(order);
   },
 
   async history(customerId: number) {
+    await expireByCustomer(sql, customerId);
     return ok(await sql<OrderRow[]>`SELECT * FROM orders WHERE customer_id = ${customerId} ORDER BY created_at DESC`);
   },
 
