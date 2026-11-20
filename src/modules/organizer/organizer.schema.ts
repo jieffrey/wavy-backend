@@ -1,14 +1,25 @@
 import { z } from "zod";
 
-export const eventSchema = z.object({
-  title: z.string(),
-  artist_id: z.number(),
-  category: z.string(),
-  venue: z.string(),
-  date: z.string(),
-  poster_url: z.string(),
-  description: z.string(),
-});
+// ISO 8601 dengan offset, mis. "2026-12-01T10:00:00+07:00" atau "...Z".
+// undefined = tidak diubah (saat update), null = tanpa batas.
+const salesDate = z.string().datetime({ offset: true }).nullable().optional();
+
+export const eventSchema = z
+  .object({
+    title: z.string(),
+    artist_id: z.number(),
+    category: z.string(),
+    venue: z.string(),
+    date: z.string(),
+    poster_url: z.string(),
+    description: z.string(),
+    sales_start_at: salesDate,
+    sales_end_at: salesDate,
+  })
+  .refine(
+    (e) => !e.sales_start_at || !e.sales_end_at || new Date(e.sales_end_at) > new Date(e.sales_start_at),
+    { message: "sales_end_at must be after sales_start_at", path: ["sales_end_at"] }
+  );
 
 export const ticketCategorySchema = z.object({
   name: z.string(),

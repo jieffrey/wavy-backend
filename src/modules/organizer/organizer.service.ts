@@ -17,6 +17,8 @@ type EventRow = {
   poster_url: string;
   description: string;
   status: string;
+  sales_start_at: Date | null;
+  sales_end_at: Date | null;
 };
 type CategoryRow = { id: number; event_id: number; name: string; price: string; quota: number; sold: number };
 type ArtistRow = { id: number; organizer_id: number; name: string; genre: string; photo_url: string; bio: string };
@@ -34,6 +36,8 @@ type OrderRow = {
 type EventInput = z.output<typeof eventSchema>;
 type CategoryInput = z.output<typeof ticketCategorySchema>;
 type ArtistInput = z.output<typeof artistSchema>;
+
+const toDate = (v: string | null | undefined) => (v ? new Date(v) : null);
 
 // tawarkan tiket yang kembali tersedia (reject/refund) ke waiting list teratas
 const offerTickets = async (eventId: number, quantity: number) => {
@@ -67,17 +71,27 @@ export const organizerService = {
 
   async createEvent(organizerId: number, input: EventInput) {
     const [event] = await sql<EventRow[]>`
-      INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description)
-      VALUES (${organizerId}, ${input.artist_id}, ${input.title}, ${input.category}, ${input.venue}, ${new Date(input.date)}, ${input.poster_url}, ${input.description})
+      INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, sales_start_at, sales_end_at)
+      VALUES (${organizerId}, ${input.artist_id}, ${input.title}, ${input.category}, ${input.venue}, ${new Date(input.date)}, ${input.poster_url}, ${input.description},
+              ${toDate(input.sales_start_at)}, ${toDate(input.sales_end_at)})
       RETURNING *
     `;
     return ok(event);
   },
 
   async updateEvent(organizerId: number, id: number, input: EventInput): Promise<Result<EventRow>> {
+    const [current] = await sql<EventRow[]>`SELECT * FROM events WHERE id = ${id} AND organizer_id = ${organizerId}`;
+    if (!current) return fail(404, "event not found");
+
+    // field tenggat yang tidak dikirim dipertahankan; null berarti dihapus
+    const salesStart = input.sales_start_at === undefined ? current.sales_start_at : toDate(input.sales_start_at);
+    const salesEnd = input.sales_end_at === undefined ? current.sales_end_at : toDate(input.sales_end_at);
+    if (salesStart && salesEnd && salesEnd <= salesStart) return fail(400, "sales_end_at must be after sales_start_at");
+
     const [event] = await sql<EventRow[]>`
       UPDATE events SET artist_id = ${input.artist_id}, title = ${input.title}, category = ${input.category},
-        venue = ${input.venue}, date = ${new Date(input.date)}, poster_url = ${input.poster_url}, description = ${input.description}
+        venue = ${input.venue}, date = ${new Date(input.date)}, poster_url = ${input.poster_url}, description = ${input.description},
+        sales_start_at = ${salesStart}, sales_end_at = ${salesEnd}
       WHERE id = ${id} AND organizer_id = ${organizerId}
       RETURNING *
     `;
