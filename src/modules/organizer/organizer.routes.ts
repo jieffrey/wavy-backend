@@ -41,11 +41,16 @@ organizerRoutes.post("/artists", zv(artistSchema), organizerController.createArt
 organizerRoutes.put("/artists/:id", zv(artistSchema), organizerController.updateArtist);
 organizerRoutes.delete("/artists/:id", organizerController.deleteArtist);
 
+// Profil
+organizerRoutes.get("/me", organizerController.me);
+
 // Dashboard
 organizerRoutes.get("/dashboard", organizerController.dashboard);
+organizerRoutes.get("/dashboard/sales", organizerController.salesSeries);
 
 // Orders
 organizerRoutes.get("/orders", organizerController.listOrders);
+organizerRoutes.get("/orders/:id", organizerController.getOrder);
 organizerRoutes.post("/orders/:id/verify", zv(verifySchema), organizerController.verifyOrder);
 organizerRoutes.post("/orders/:id/refund", organizerController.refundOrder);
 organizerRoutes.post("/scan/validate", zv(scanSchema), organizerController.scanValidate);

@@ -90,6 +90,42 @@ const withSalesStatus = ({ db_now, ...row }: EventRow & EventStats & { db_now: D
   sales_status: salesStatus(row, row.total_remaining, db_now),
 });
 
+type OrderListRow = OrderRow & {
+  paid_at: Date | null;
+  event_title: string;
+  category_name: string | null;
+  customer_name: string | null;
+  customer_email: string | null;
+};
+type OrderFilters = { status?: string; eventId?: number; id?: number };
+type PerCategoryRow = {
+  event_id: number;
+  event_title: string;
+  category_id: number;
+  name: string;
+  quota: number;
+  sold: number;
+  pending: number;
+  remaining: number;
+  revenue: number;
+};
+
+// Satu bentuk baris order untuk list, detail, dan recent_orders dashboard.
+const selectOrders = (organizerId: number, f: OrderFilters, limit?: number) => sql<OrderListRow[]>`
+  SELECT o.*, e.title AS event_title, tc.name AS category_name,
+    c.name AS customer_name, c.email AS customer_email
+  FROM orders o
+  JOIN events e ON e.id = o.event_id
+  LEFT JOIN ticket_categories tc ON tc.id = o.ticket_category_id
+  LEFT JOIN customers c ON c.id = o.customer_id
+  WHERE e.organizer_id = ${organizerId}
+    ${f.status ? sql`AND o.status = ${f.status}` : sql``}
+    ${f.eventId !== undefined ? sql`AND o.event_id = ${f.eventId}` : sql``}
+    ${f.id !== undefined ? sql`AND o.id = ${f.id}` : sql``}
+  ORDER BY o.created_at DESC NULLS LAST, o.id DESC
+  ${limit ? sql`LIMIT ${limit}` : sql``}
+`;
+
 // Validasi tanggal penjualan terhadap tanggal event (dipakai juga oleh updateEvent setelah merge).
 export const salesWindowError = (date: Date, start: Date | null, end: Date | null): string | null => {
   if (start && end && end <= start) return "sales_end_at must be after sales_start_at";
@@ -336,23 +372,38 @@ export const organizerService = {
     return ok({ message: "artist deleted" });
   },
 
+  // ---------- Profil ----------
+
+  async me(organizerId: number): Promise<Result<{ id: number; name: string; email: string; status: string }>> {
+    const [organizer] = await sql<{ id: number; name: string; email: string; status: string }[]>`
+      SELECT id, name, email, status FROM organizers WHERE id = ${organizerId}
+    `;
+    if (!organizer) return fail(404, "organizer not found");
+    return ok(organizer);
+  },
+
   // ---------- Dashboard ----------
 
   async dashboard(organizerId: number) {
+    await expireByOrganizer(sql, organizerId);
     const [revenue] = await sql<{ revenue: number }[]>`
       SELECT COALESCE(SUM(o.total_price), 0)::float8 AS revenue
       FROM orders o JOIN events e ON e.id = o.event_id
       WHERE e.organizer_id = ${organizerId} AND o.status = 'paid'
     `;
-    const [sold] = await sql<{ ticket_sold: number }[]>`
-      SELECT COALESCE(SUM(tc.sold), 0)::int AS ticket_sold
+    // tiket per kategori; sisa kuota memakai rumus PRD §4.3 (dikurangi pending aktif)
+    const per_category = await sql<PerCategoryRow[]>`
+      SELECT e.id AS event_id, e.title AS event_title, tc.id AS category_id, tc.name,
+        tc.quota::int AS quota, tc.sold::int AS sold,
+        ${activePendingSql(sql)} AS pending,
+        ${remainingQuotaSql(sql)} AS remaining,
+        COALESCE((
+          SELECT SUM(o.total_price) FROM orders o
+          WHERE o.ticket_category_id = tc.id AND o.status = 'paid'
+        ), 0)::float8 AS revenue
       FROM ticket_categories tc JOIN events e ON e.id = tc.event_id
       WHERE e.organizer_id = ${organizerId}
-    `;
-    const [remaining] = await sql<{ remaining_ticket: number }[]>`
-      SELECT COALESCE(SUM(tc.quota - tc.sold), 0)::int AS remaining_ticket
-      FROM ticket_categories tc JOIN events e ON e.id = tc.event_id
-      WHERE e.organizer_id = ${organizerId}
+      ORDER BY e.date DESC, e.id DESC, tc.id
     `;
     const [popular] = await sql<{ popular_category: string }[]>`
       SELECT e.category AS popular_category
@@ -370,32 +421,87 @@ export const organizerService = {
       ORDER BY COUNT(*) DESC
       LIMIT 1
     `;
+    // jendela bergulir 7 hari terakhir vs 7 hari sebelumnya, berdasarkan paid_at
+    const [trend] = await sql<{ revenue_7d: number; revenue_prev_7d: number; sold_7d: number; sold_prev_7d: number }[]>`
+      SELECT
+        COALESCE(SUM(o.total_price) FILTER (WHERE o.paid_at > now() - interval '7 days'), 0)::float8 AS revenue_7d,
+        COALESCE(SUM(o.total_price) FILTER (WHERE o.paid_at <= now() - interval '7 days'), 0)::float8 AS revenue_prev_7d,
+        COALESCE(SUM(o.quantity) FILTER (WHERE o.paid_at > now() - interval '7 days'), 0)::int AS sold_7d,
+        COALESCE(SUM(o.quantity) FILTER (WHERE o.paid_at <= now() - interval '7 days'), 0)::int AS sold_prev_7d
+      FROM orders o JOIN events e ON e.id = o.event_id
+      WHERE e.organizer_id = ${organizerId} AND o.status = 'paid'
+        AND o.paid_at > now() - interval '14 days'
+    `;
+    const [checked] = await sql<{ checked_in: number }[]>`
+      SELECT COUNT(*)::int AS checked_in
+      FROM tickets t JOIN orders o ON o.id = t.order_id JOIN events e ON e.id = o.event_id
+      WHERE e.organizer_id = ${organizerId} AND t.is_scanned = true
+    `;
+    const recent_orders = await selectOrders(organizerId, {}, 5);
 
+    const sum = (key: "sold" | "pending" | "remaining") => per_category.reduce((n, c) => n + c[key], 0);
     return ok({
       revenue: revenue.revenue,
-      ticket_sold: sold.ticket_sold,
-      remaining_ticket: remaining.remaining_ticket,
+      ticket_sold: sum("sold"),
+      remaining_ticket: sum("remaining"),
       popular_category: popular?.popular_category ?? "",
       peak_purchase_hour: peak?.peak_purchase_hour ?? 0,
+      kpi: {
+        revenue: revenue.revenue,
+        tickets_sold: sum("sold"),
+        pending_reserved: sum("pending"),
+        checked_in: checked.checked_in,
+        ...trend,
+      },
+      per_category,
+      recent_orders,
     });
+  },
+
+  // Penjualan harian (tanggal Asia/Jakarta) dari order paid berdasarkan paid_at; hari kosong = 0.
+  async salesSeries(organizerId: number, days: number) {
+    const rows = await sql<{ date: string; tickets: number; revenue: number }[]>`
+      WITH days AS (
+        SELECT generate_series(
+          (now() AT TIME ZONE 'Asia/Jakarta')::date - ${days - 1}::int,
+          (now() AT TIME ZONE 'Asia/Jakarta')::date,
+          interval '1 day'
+        )::date AS d
+      ),
+      paid AS (
+        SELECT (o.paid_at AT TIME ZONE 'Asia/Jakarta')::date AS d, o.quantity, o.total_price
+        FROM orders o JOIN events e ON e.id = o.event_id
+        WHERE e.organizer_id = ${organizerId} AND o.status = 'paid'
+          AND o.paid_at >= ((now() AT TIME ZONE 'Asia/Jakarta')::date - ${days - 1}::int) AT TIME ZONE 'Asia/Jakarta'
+      )
+      SELECT to_char(days.d, 'YYYY-MM-DD') AS date,
+        COALESCE(SUM(paid.quantity), 0)::int AS tickets,
+        COALESCE(SUM(paid.total_price), 0)::float8 AS revenue
+      FROM days LEFT JOIN paid ON paid.d = days.d
+      GROUP BY days.d
+      ORDER BY days.d
+    `;
+    return ok(rows);
   },
 
   // ---------- Orders (organizer) ----------
 
-  async listOrders(organizerId: number, status?: string) {
+  async listOrders(organizerId: number, filters: OrderFilters = {}) {
     await expireByOrganizer(sql, organizerId);
-    const rows = status
-      ? await sql<OrderRow[]>`
-          SELECT o.* FROM orders o JOIN events e ON e.id = o.event_id
-          WHERE e.organizer_id = ${organizerId} AND o.status = ${status}
-          ORDER BY o.created_at DESC
-        `
-      : await sql<OrderRow[]>`
-          SELECT o.* FROM orders o JOIN events e ON e.id = o.event_id
-          WHERE e.organizer_id = ${organizerId}
-          ORDER BY o.created_at DESC
-        `;
-    return ok(rows);
+    return ok(await selectOrders(organizerId, filters));
+  },
+
+  async getOrder(
+    organizerId: number,
+    id: number
+  ): Promise<Result<OrderListRow & { tickets: { id: number; is_scanned: boolean }[] }>> {
+    await expireOrder(sql, id);
+    const [order] = await selectOrders(organizerId, { id });
+    if (!order) return fail(404, "order not found");
+    const tickets = await sql<{ id: number; is_scanned: boolean }[]>`
+      SELECT id, is_scanned FROM tickets WHERE order_id = ${id} ORDER BY id
+    `;
+    return ok({ ...order, tickets });
   },
 
   async verifyOrder(organizerId: number, id: number, approve: boolean): Promise<Result<{ message: string }>> {
@@ -414,7 +520,7 @@ export const organizerService = {
       if (approve) {
         const [event] = await tx<{ date: Date }[]>`SELECT date FROM events WHERE id = ${order.event_id}`;
         const exp = Math.floor(new Date(event.date).getTime() / 1000);
-        await tx`UPDATE orders SET status = 'paid' WHERE id = ${id}`;
+        await tx`UPDATE orders SET status = 'paid', paid_at = now() WHERE id = ${id}`;
         await tx`UPDATE ticket_categories SET sold = sold + ${order.quantity} WHERE id = ${order.ticket_category_id}`;
         for (let i = 0; i < order.quantity; i++) {
           await tx`INSERT INTO tickets (order_id, qr_code, owner_id)

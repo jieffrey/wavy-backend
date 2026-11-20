@@ -8,6 +8,8 @@ Dokumen ini untuk testing manual seluruh endpoint. Base URL: `http://localhost:1
 bun install
 # isi .env (PORT, DATABASE_URL, JWT_SECRET, SMTP_*, ADMIN_EMAIL, ADMIN_PASSWORD)
 bun scripts/seed-admin.ts   # buat admin pertama (sekali saja)
+bun scripts/migrate-order-rules.ts   # migration aturan order (idempotent)
+bun scripts/migrate-paid-at.ts       # kolom orders.paid_at + backfill (idempotent)
 bun run dev                 # atau: bun src/index.ts
 bun run typecheck           # cek tipe
 ```
@@ -120,7 +122,10 @@ Base: `/api/v1/organizer`
 | 3.14 | PUT | `/artists/:id` | ✓ | Update artist |
 | 3.15 | DELETE | `/artists/:id` | ✓ | Hapus artist |
 | 3.16 | GET | `/dashboard` | ✓ | Statistik revenue, tiket, kategori populer, jam puncak |
-| 3.17 | GET | `/orders` | ✓ | List order; filter `?status=pending_payment/paid/rejected/refunded` |
+| 3.17 | GET | `/orders` | ✓ | List order; filter `?status=` & `?event_id=` |
+| 3.21 | GET | `/me` | ✓ | Profil organizer login |
+| 3.22 | GET | `/dashboard/sales` | ✓ | Penjualan harian (`?days=`) |
+| 3.23 | GET | `/orders/:id` | ✓ | Detail order + tiket |
 | 3.18 | POST | `/orders/:id/verify` | ✓ | Approve/reject pembayaran manual |
 | 3.19 | POST | `/orders/:id/refund` | ✓ | Refund order paid (sebelum event lewat) |
 | 3.20 | POST | `/scan/validate` | ✓ | Scan & validasi QR tiket |
@@ -140,6 +145,15 @@ Saat publish, follower organizer/artist + subscriber notify-me dapat notifikasi 
 **3.5 / 3.11** Event/kategori yang sudah punya order (status apa pun) → `409` `EVENT_HAS_ORDERS` / `CATEGORY_HAS_ORDERS`.
 
 **3.9 / 3.10** `{ "name", "price", "quota" }` — `name` tidak kosong, `price` ≥ 0 (`400` `VALIDATION_ERROR`). PUT → `400` `QUOTA_BELOW_RESERVED` jika `quota < sold + pending aktif`.
+
+**3.21** `GET /me` → `200` `{ id, name, email, status }`.
+
+**3.16** `GET /dashboard` → field lama (`revenue`, `ticket_sold`, `remaining_ticket` = quota − sold − pending aktif, `popular_category`, `peak_purchase_hour`) + `kpi: { revenue, tickets_sold, pending_reserved, checked_in, revenue_7d, revenue_prev_7d, sold_7d, sold_prev_7d }` (7d = jendela bergulir 7×24 jam berdasarkan `paid_at`), `per_category[]: { event_id, event_title, category_id, name, quota, sold, pending, remaining, revenue }`, `recent_orders[]` (5 terbaru, bentuk sama dengan 3.17).
+
+**3.22** `GET /dashboard/sales?days=30` (1–365, default 30; di luar itu `400` `VALIDATION_ERROR`) → `[{ date: "YYYY-MM-DD", tickets, revenue }]`, satu baris per hari (tanggal Asia/Jakarta, hari kosong = 0) dari order `paid` berdasarkan `paid_at`.
+
+**3.17** `GET /orders?status=&event_id=` → kolom `orders` (termasuk `paid_at` + data pemesan) + `event_title`, `category_name`, `customer_name`, `customer_email`. Order pending lewat waktu ditandai `expired` (lazy).
+**3.23** `GET /orders/:id` → baris yang sama + `tickets: [{ id, is_scanned }]`; `404` jika bukan order event milik organizer.
 
 **3.18** Body: `{ "approve": true }`
 - Approve → transaksi: order `paid`, `sold += quantity`, buat 1 tiket per quantity (QR JWT). → `200`.
