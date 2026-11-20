@@ -113,7 +113,7 @@ Base: `/api/v1/organizer`
 | 3.7 | POST | `/events/:id/close-sales` | ✓ | Tutup penjualan (status `closed`) |
 | 3.8 | GET | `/events/:id/ticket-categories` | ✓ | List kategori tiket |
 | 3.9 | POST | `/events/:id/ticket-categories` | ✓ | Buat kategori tiket |
-| 3.10 | PUT | `/ticket-categories/:id` | ✓ | Update kategori (quota ≥ sold) |
+| 3.10 | PUT | `/ticket-categories/:id` | ✓ | Update kategori (quota ≥ sold + pending aktif) |
 | 3.11 | DELETE | `/ticket-categories/:id` | ✓ | Hapus kategori |
 | 3.12 | GET | `/artists` | ✓ | List artist |
 | 3.13 | POST | `/artists` | ✓ | Buat artist |
@@ -133,7 +133,13 @@ Base: `/api/v1/organizer`
 Saat publish, follower organizer/artist + subscriber notify-me dapat notifikasi (cek tabel `notifications`).
 
 **3.9** Body: `{ "name", "price", "quota" }` → `201`.
-**3.10** `{ "name", "price", "quota" }` → `400` jika `quota < sold`.
+**3.1 / 3.3** Tiap event punya `sales_status`, `artist_name`, `total_quota`, `total_sold`, `total_pending` (qty order pending belum expired), `total_remaining`. Detail: tiap `ticket_categories[]` + `pending`, `remaining`, `sales_status`.
+
+**3.2 / 3.4** Validasi → `400` `VALIDATION_ERROR`: `title` kosong, `sales_end_at` > `date`, `sales_start_at` ≥ `date`, `sales_end_at` ≤ `sales_start_at`. PUT memeriksa ulang setelah digabung dengan nilai tersimpan.
+
+**3.5 / 3.11** Event/kategori yang sudah punya order (status apa pun) → `409` `EVENT_HAS_ORDERS` / `CATEGORY_HAS_ORDERS`.
+
+**3.9 / 3.10** `{ "name", "price", "quota" }` — `name` tidak kosong, `price` ≥ 0 (`400` `VALIDATION_ERROR`). PUT → `400` `QUOTA_BELOW_RESERVED` jika `quota < sold + pending aktif`.
 
 **3.18** Body: `{ "approve": true }`
 - Approve → transaksi: order `paid`, `sold += quantity`, buat 1 tiket per quantity (QR JWT). → `200`.
@@ -147,9 +153,11 @@ Saat publish, follower organizer/artist + subscriber notify-me dapat notifikasi 
 
 **3.20** Body: `{ "qr_code": "<token>" }`
 → `200` `{ message: "ticket valid", ticket: {...} }`
-→ `400` QR invalid/expired/event ended/`ticket already scanned`
-→ `403` `ticket does not belong to your event`
-→ `404` `ticket not found`
+→ `200` `ticket` = `{ id, order_id, event_id, title, date, venue, category_name }`
+→ `400` `INVALID_QR` / `QR_EXPIRED` / `EVENT_ENDED`
+→ `409` `ALREADY_SCANNED` (atomik: scan bersamaan hanya satu yang lolos)
+→ `403` `WRONG_ORGANIZER`
+→ `404` `TICKET_NOT_FOUND`
 
 ---
 

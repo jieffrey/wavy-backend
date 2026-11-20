@@ -5,7 +5,9 @@ import type { z } from "zod";
 import type { eventSchema, ticketCategorySchema, artistSchema } from "./organizer.schema";
 import { signTicket, verifyTicket } from "../ticket/ticket.service";
 import { notificationService } from "../notification/notification.service";
-import { expireByOrganizer, expireOrder } from "../../utils/order-expiry";
+import { expireByCategory, expireByOrganizer, expireOrder } from "../../utils/order-expiry";
+import { activePendingSql, remainingQuotaSql } from "../../utils/quota";
+import { salesStatus, categorySalesStatus, type SalesStatus } from "../../utils/sales-status";
 
 type EventRow = {
   id: number;
@@ -34,11 +36,67 @@ type OrderRow = {
   expires_at: Date;
   created_at: Date;
 };
+type ScannedTicket = {
+  id: number;
+  order_id: number;
+  event_id: number;
+  title: string;
+  date: Date;
+  venue: string;
+  category_name: string | null;
+};
 type EventInput = z.output<typeof eventSchema>;
 type CategoryInput = z.output<typeof ticketCategorySchema>;
 type ArtistInput = z.output<typeof artistSchema>;
 
 const toDate = (v: string | null | undefined) => (v ? new Date(v) : null);
+
+type EventStats = {
+  artist_name: string | null;
+  total_quota: number;
+  total_sold: number;
+  total_pending: number;
+  total_remaining: number;
+};
+type EventWithStats = EventRow & EventStats & { sales_status: SalesStatus };
+type CategoryWithStats = CategoryRow & { pending: number; remaining: number; sales_status: SalesStatus };
+
+// Event milik organizer + statistik kuota (rumus PRD §4.3 dari utils/quota.ts).
+// db_now = now() DB supaya sales_status satu jam dengan hitungan pending/expiry.
+const selectEventsWithStats = (organizerId: number, eventId?: number) => sql<
+  (EventRow & EventStats & { db_now: Date })[]
+>`
+  SELECT e.*, a.name AS artist_name, now() AS db_now,
+    COALESCE(s.total_quota, 0)::int AS total_quota,
+    COALESCE(s.total_sold, 0)::int AS total_sold,
+    COALESCE(s.total_pending, 0)::int AS total_pending,
+    COALESCE(s.total_remaining, 0)::int AS total_remaining
+  FROM events e
+  LEFT JOIN artists a ON a.id = e.artist_id
+  LEFT JOIN LATERAL (
+    SELECT SUM(x.quota) AS total_quota, SUM(x.sold) AS total_sold,
+           SUM(x.pending) AS total_pending, SUM(x.remaining) AS total_remaining
+    FROM (
+      SELECT tc.quota, tc.sold, ${activePendingSql(sql)} AS pending, ${remainingQuotaSql(sql)} AS remaining
+      FROM ticket_categories tc WHERE tc.event_id = e.id
+    ) x
+  ) s ON true
+  WHERE e.organizer_id = ${organizerId} ${eventId === undefined ? sql`` : sql`AND e.id = ${eventId}`}
+  ORDER BY e.id DESC
+`;
+
+const withSalesStatus = ({ db_now, ...row }: EventRow & EventStats & { db_now: Date }): EventWithStats => ({
+  ...row,
+  sales_status: salesStatus(row, row.total_remaining, db_now),
+});
+
+// Validasi tanggal penjualan terhadap tanggal event (dipakai juga oleh updateEvent setelah merge).
+export const salesWindowError = (date: Date, start: Date | null, end: Date | null): string | null => {
+  if (start && end && end <= start) return "sales_end_at must be after sales_start_at";
+  if (end && end > date) return "sales_end_at must not be after the event date";
+  if (start && start >= date) return "sales_start_at must be before the event date";
+  return null;
+};
 
 // tawarkan tiket yang kembali tersedia (reject/refund) ke waiting list teratas
 const offerTickets = async (eventId: number, quantity: number) => {
@@ -59,18 +117,32 @@ const offerTickets = async (eventId: number, quantity: number) => {
 export const organizerService = {
   // ---------- Events ----------
 
-  async listEvents(organizerId: number) {
-    return ok(await sql<EventRow[]>`SELECT * FROM events WHERE organizer_id = ${organizerId} ORDER BY id DESC`);
+  async listEvents(organizerId: number): Promise<Result<EventWithStats[]>> {
+    return ok((await selectEventsWithStats(organizerId)).map(withSalesStatus));
   },
 
-  async getEvent(organizerId: number, id: number): Promise<Result<EventRow & { ticket_categories: CategoryRow[] }>> {
-    const [event] = await sql<EventRow[]>`SELECT * FROM events WHERE id = ${id} AND organizer_id = ${organizerId}`;
-    if (!event) return fail(404, "event not found");
-    const ticket_categories = await sql<CategoryRow[]>`SELECT * FROM ticket_categories WHERE event_id = ${id}`;
+  async getEvent(
+    organizerId: number,
+    id: number
+  ): Promise<Result<EventWithStats & { ticket_categories: CategoryWithStats[] }>> {
+    const [row] = await selectEventsWithStats(organizerId, id);
+    if (!row) return fail(404, "event not found");
+    const event = withSalesStatus(row);
+    const categories = await sql<(CategoryRow & { pending: number; remaining: number })[]>`
+      SELECT tc.*, ${activePendingSql(sql)} AS pending, ${remainingQuotaSql(sql)} AS remaining
+      FROM ticket_categories tc WHERE tc.event_id = ${id}
+      ORDER BY tc.id
+    `;
+    const ticket_categories = categories.map((c) => ({
+      ...c,
+      sales_status: categorySalesStatus(event.sales_status, c.remaining),
+    }));
     return ok({ ...event, ticket_categories });
   },
 
-  async createEvent(organizerId: number, input: EventInput) {
+  async createEvent(organizerId: number, input: EventInput): Promise<Result<EventRow>> {
+    const windowError = salesWindowError(new Date(input.date), toDate(input.sales_start_at), toDate(input.sales_end_at));
+    if (windowError) return fail(400, windowError, "VALIDATION_ERROR");
     const [event] = await sql<EventRow[]>`
       INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, sales_start_at, sales_end_at)
       VALUES (${organizerId}, ${input.artist_id}, ${input.title}, ${input.category}, ${input.venue}, ${new Date(input.date)}, ${input.poster_url}, ${input.description},
@@ -87,7 +159,8 @@ export const organizerService = {
     // field tenggat yang tidak dikirim dipertahankan; null berarti dihapus
     const salesStart = input.sales_start_at === undefined ? current.sales_start_at : toDate(input.sales_start_at);
     const salesEnd = input.sales_end_at === undefined ? current.sales_end_at : toDate(input.sales_end_at);
-    if (salesStart && salesEnd && salesEnd <= salesStart) return fail(400, "sales_end_at must be after sales_start_at");
+    const windowError = salesWindowError(new Date(input.date), salesStart, salesEnd);
+    if (windowError) return fail(400, windowError, "VALIDATION_ERROR");
 
     const [event] = await sql<EventRow[]>`
       UPDATE events SET artist_id = ${input.artist_id}, title = ${input.title}, category = ${input.category},
@@ -101,9 +174,23 @@ export const organizerService = {
   },
 
   async deleteEvent(organizerId: number, id: number): Promise<Result<{ message: string }>> {
-    const [event] = await sql<{ id: number }[]>`DELETE FROM events WHERE id = ${id} AND organizer_id = ${organizerId} RETURNING id`;
-    if (!event) return fail(404, "event not found");
-    return ok({ message: "event deleted" });
+    return sql.begin(async (tx): Promise<Result<{ message: string }>> => {
+      const [event] = await tx<{ id: number }[]>`
+        SELECT id FROM events WHERE id = ${id} AND organizer_id = ${organizerId} FOR UPDATE
+      `;
+      if (!event) return fail(404, "event not found");
+      // order (status apa pun) adalah riwayat transaksi: event-nya tidak boleh hilang
+      const [hasOrders] = await tx`SELECT 1 FROM orders WHERE event_id = ${id} LIMIT 1`;
+      if (hasOrders) return fail(409, "event already has orders and cannot be deleted", "EVENT_HAS_ORDERS");
+      // baris turunan tanpa order dibersihkan dulu supaya FK tidak memicu 500
+      await tx`DELETE FROM notify_requests WHERE event_id = ${id}`;
+      await tx`DELETE FROM waiting_list WHERE event_id = ${id}`;
+      await tx`DELETE FROM waiting_room WHERE event_id = ${id}`;
+      await tx`DELETE FROM reviews WHERE event_id = ${id}`;
+      await tx`DELETE FROM ticket_categories WHERE event_id = ${id}`;
+      await tx`DELETE FROM events WHERE id = ${id}`;
+      return ok({ message: "event deleted" });
+    });
   },
 
   async closeSales(organizerId: number, id: number): Promise<Result<EventRow>> {
@@ -175,22 +262,47 @@ export const organizerService = {
   },
 
   async updateCategory(organizerId: number, id: number, input: CategoryInput): Promise<Result<CategoryRow>> {
-    const cat = await this.ownCategory(organizerId, id);
-    if (!cat) return fail(404, "ticket category not found");
-    if (input.quota < cat.sold) return fail(400, "quota cannot be lower than sold tickets");
-    const [updated] = await sql<CategoryRow[]>`
-      UPDATE ticket_categories SET name = ${input.name}, price = ${input.price}, quota = ${input.quota}
-      WHERE id = ${id}
-      RETURNING *
-    `;
-    return ok(updated);
+    if (input.price < 0) return fail(400, "price must not be negative", "VALIDATION_ERROR");
+    // lock kategori (sama dengan POST /orders) supaya reservasi baru tidak menyelip
+    // di antara hitung reserved dan update kuota
+    return sql.begin(async (tx): Promise<Result<CategoryRow>> => {
+      const [cat] = await tx<CategoryRow[]>`
+        SELECT tc.* FROM ticket_categories tc
+        JOIN events e ON e.id = tc.event_id
+        WHERE tc.id = ${id} AND e.organizer_id = ${organizerId}
+        FOR UPDATE OF tc
+      `;
+      if (!cat) return fail(404, "ticket category not found");
+      await expireByCategory(tx, id);
+      // reserved = tiket paid + order pending yang belum expired (PRD §4.3)
+      const [{ reserved }] = await tx<{ reserved: number }[]>`
+        SELECT (tc.sold + ${activePendingSql(tx)})::int AS reserved FROM ticket_categories tc WHERE tc.id = ${id}
+      `;
+      if (input.quota < reserved)
+        return fail(400, `quota cannot be lower than reserved tickets (${reserved})`, "QUOTA_BELOW_RESERVED");
+      const [updated] = await tx<CategoryRow[]>`
+        UPDATE ticket_categories SET name = ${input.name}, price = ${input.price}, quota = ${input.quota}
+        WHERE id = ${id}
+        RETURNING *
+      `;
+      return ok(updated);
+    });
   },
 
   async deleteCategory(organizerId: number, id: number): Promise<Result<{ message: string }>> {
-    const cat = await this.ownCategory(organizerId, id);
-    if (!cat) return fail(404, "ticket category not found");
-    await sql`DELETE FROM ticket_categories WHERE id = ${id}`;
-    return ok({ message: "ticket category deleted" });
+    return sql.begin(async (tx): Promise<Result<{ message: string }>> => {
+      const [cat] = await tx<{ id: number }[]>`
+        SELECT tc.id FROM ticket_categories tc
+        JOIN events e ON e.id = tc.event_id
+        WHERE tc.id = ${id} AND e.organizer_id = ${organizerId}
+        FOR UPDATE OF tc
+      `;
+      if (!cat) return fail(404, "ticket category not found");
+      const [hasOrders] = await tx`SELECT 1 FROM orders WHERE ticket_category_id = ${id} LIMIT 1`;
+      if (hasOrders) return fail(409, "ticket category already has orders and cannot be deleted", "CATEGORY_HAS_ORDERS");
+      await tx`DELETE FROM ticket_categories WHERE id = ${id}`;
+      return ok({ message: "ticket category deleted" });
+    });
   },
 
   // ---------- Artists ----------
@@ -343,31 +455,45 @@ export const organizerService = {
   async scanValidate(
     organizerId: number,
     qrCode: string
-  ): Promise<Result<{ message: string; ticket: { id: number; order_id: number; event_id: number; title: string; date: Date; venue: string } }>> {
+  ): Promise<Result<{ message: string; ticket: ScannedTicket }>> {
     try {
       verifyTicket(qrCode);
     } catch (err) {
-      return fail(400, err instanceof jwt.TokenExpiredError ? "QR code expired" : "invalid QR code");
+      return err instanceof jwt.TokenExpiredError
+        ? fail(400, "QR code expired", "QR_EXPIRED")
+        : fail(400, "invalid QR code", "INVALID_QR");
     }
 
-    const [ticket] = await sql<
-      { id: number; order_id: number; organizer_id: number; event_id: number; title: string; date: Date; venue: string; is_scanned: boolean }[]
-    >`
-      SELECT t.id, t.order_id, t.is_scanned, e.id AS event_id, e.title, e.date, e.venue, e.organizer_id
+    const [ticket] = await sql<(ScannedTicket & { organizer_id: number; is_scanned: boolean; ended: boolean })[]>`
+      SELECT t.id, t.order_id, t.is_scanned, e.id AS event_id, e.title, e.date, e.venue, e.organizer_id,
+             tc.name AS category_name, (e.date < now()) AS ended
       FROM tickets t
       JOIN orders o ON o.id = t.order_id
       JOIN events e ON e.id = o.event_id
+      LEFT JOIN ticket_categories tc ON tc.id = o.ticket_category_id
       WHERE t.qr_code = ${qrCode}
     `;
-    if (!ticket) return fail(404, "ticket not found");
-    if (ticket.organizer_id !== organizerId) return fail(403, "ticket does not belong to your event");
-    if (ticket.is_scanned) return fail(400, "ticket already scanned");
-    if (new Date() > new Date(ticket.date)) return fail(400, "event already ended");
+    if (!ticket) return fail(404, "ticket not found", "TICKET_NOT_FOUND");
+    if (ticket.organizer_id !== organizerId) return fail(403, "ticket does not belong to your event", "WRONG_ORGANIZER");
+    if (ticket.is_scanned) return fail(409, "ticket already scanned", "ALREADY_SCANNED");
+    if (ticket.ended) return fail(400, "event already ended", "EVENT_ENDED");
 
-    await sql`UPDATE tickets SET is_scanned = true WHERE id = ${ticket.id}`;
+    // atomik: dua scan bersamaan hanya satu yang lolos (yang lain dapat 0 baris)
+    const [scanned] = await sql<{ id: number }[]>`
+      UPDATE tickets SET is_scanned = true WHERE id = ${ticket.id} AND is_scanned = false RETURNING id
+    `;
+    if (!scanned) return fail(409, "ticket already scanned", "ALREADY_SCANNED");
     return ok({
       message: "ticket valid",
-      ticket: { id: ticket.id, order_id: ticket.order_id, event_id: ticket.event_id, title: ticket.title, date: ticket.date, venue: ticket.venue },
+      ticket: {
+        id: ticket.id,
+        order_id: ticket.order_id,
+        event_id: ticket.event_id,
+        title: ticket.title,
+        date: ticket.date,
+        venue: ticket.venue,
+        category_name: ticket.category_name,
+      },
     });
   },
 };
