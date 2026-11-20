@@ -4,7 +4,8 @@ const url = new URL(process.env.DATABASE_URL!);
 url.search = "";
 
 export const sql = postgres(url.toString(), {
-  ssl: "require",
+  // NeonDB wajib SSL; DATABASE_SSL=disable hanya untuk Postgres lokal (test)
+  ssl: process.env.DATABASE_SSL === "disable" ? false : "require",
   prepare: false,
   max: 10,
   // kolom dibuat bigint/numeric, postgres-js default pulang sebagai string;
