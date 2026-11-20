@@ -1,11 +1,12 @@
 import postgres from "postgres";
+import { resolveSsl } from "./ssl";
 
 const url = new URL(process.env.DATABASE_URL!);
 url.search = "";
 
 export const sql = postgres(url.toString(), {
-  // NeonDB wajib SSL; DATABASE_SSL=disable hanya untuk Postgres lokal (test)
-  ssl: process.env.DATABASE_SSL === "disable" ? false : "require",
+  // NeonDB wajib SSL; DATABASE_SSL=disable hanya diterima untuk host lokal (test)
+  ssl: resolveSsl(url.hostname, process.env.DATABASE_SSL),
   prepare: false,
   max: 10,
   // kolom dibuat bigint/numeric, postgres-js default pulang sebagai string;
