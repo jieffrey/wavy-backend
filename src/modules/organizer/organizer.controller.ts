@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 import type { z } from "zod";
 import type { AppEnv } from "../../middleware/auth.middleware";
-import { respond, validBody } from "../../types/result";
+import { errorBody, respond, validBody } from "../../types/result";
 import { organizerService } from "./organizer.service";
 import { eventSchema, ticketCategorySchema, artistSchema, verifySchema, scanSchema } from "./organizer.schema";
 
@@ -48,11 +48,32 @@ export const organizerController = {
   },
   deleteArtist: async (c: Context<AppEnv>) => respond(c)(await organizerService.deleteArtist(orgId(c), id(c))),
 
+  // Profil
+  me: async (c: Context<AppEnv>) => respond(c)(await organizerService.me(orgId(c))),
+
   // Dashboard
   dashboard: async (c: Context<AppEnv>) => respond(c)(await organizerService.dashboard(orgId(c))),
+  salesSeries: async (c: Context<AppEnv>) => {
+    const raw = c.req.query("days");
+    const days = raw === undefined || raw === "" ? 30 : Number(raw);
+    if (!Number.isInteger(days) || days < 1 || days > 365)
+      return c.json(errorBody("days must be an integer between 1 and 365", "VALIDATION_ERROR"), 400);
+    return respond(c)(await organizerService.salesSeries(orgId(c), days));
+  },
 
   // Orders
-  listOrders: async (c: Context<AppEnv>) => respond(c)(await organizerService.listOrders(orgId(c), c.req.query("status"))),
+  listOrders: async (c: Context<AppEnv>) => {
+    const rawEvent = c.req.query("event_id");
+    const eventId = rawEvent === undefined || rawEvent === "" ? undefined : Number(rawEvent);
+    if (eventId !== undefined && !Number.isInteger(eventId))
+      return c.json(errorBody("event_id must be an integer", "VALIDATION_ERROR"), 400);
+    const status = c.req.query("status") || undefined;
+    return respond(c)(await organizerService.listOrders(orgId(c), { status, eventId }));
+  },
+  getOrder: async (c: Context<AppEnv>) => {
+    if (!Number.isInteger(id(c))) return c.json({ error: "order not found" }, 404);
+    return respond(c)(await organizerService.getOrder(orgId(c), id(c)));
+  },
   verifyOrder: async (c: Context<AppEnv>) => {
     const { approve } = validBody<z.output<typeof verifySchema>>(c);
     return respond(c)(await organizerService.verifyOrder(orgId(c), id(c), approve));
