@@ -181,8 +181,8 @@ Saat publish, follower organizer/artist + subscriber notify-me dapat notifikasi 
 | # | Method | Path | Auth | Deskripsi |
 |---|--------|------|------|-----------|
 | 4.1 | POST | `/orders` | ✓ | Buat order (qty 1–4) |
-| 4.2 | GET | `/orders/history` | ✓ | Riwayat order |
-| 4.3 | GET | `/orders/:id` | ✓ | Detail order |
+| 4.2 | GET | `/orders/history` | ✓ | Riwayat order (+ `event_title`, `category_name`, `poster_url`, `event_date`, `venue`) |
+| 4.3 | GET | `/orders/:id` | ✓ | Detail order (kolom tambahan sama dengan 4.2) |
 | 4.4 | GET | `/me/level` | ✓ | Level gamifikasi dari jumlah konser berbay |
 
 **4.1** Body: `{ "event_id", "ticket_category_id", "quantity" }` → `201`
@@ -240,8 +240,10 @@ Base: `/api/v1/admin`
 | # | Method | Path | Auth | Deskripsi |
 |---|--------|------|------|-----------|
 | 7.1 | POST | `/admin/login` | — | Login admin |
+| 7.1a | GET | `/admin/me` | ✓ | Profil admin dari token: `{ id, name, email }` |
 | 7.2 | GET | `/admin/stats` | ✓ | Ringkasan jumlah organizer/customer/event/order/revenue/tiket |
 | 7.3 | GET | `/admin/organizers` | ✓ | List organizer + event_count + revenue |
+| 7.3a | GET | `/admin/organizers/:id` | ✓ | `{ organizer, events[{…, quota, sold, revenue}], summary{event_count, published_count, paid_order_count, pending_order_count, ticket_sold, revenue} }`; `404` jika tidak ada |
 | 7.4 | PATCH | `/admin/organizers/:id` | ✓ | Set status `active`/`suspended` |
 | 7.5 | GET | `/admin/events` | ✓ | List semua event |
 | 7.6 | GET | `/admin/customers` | ✓ | List customer + order_count + spend |
