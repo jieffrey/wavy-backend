@@ -1,12 +1,12 @@
 import { sql } from "../src/db/client";
 import { readFileSync, writeFileSync } from "fs";
 
-const tnc = require("./_tnc.json");
+const tnc: Record<string, { raw?: string }> = require("./_tnc.json");
 const ids = Object.keys(tnc).map(Number);
 const rows = await sql`SELECT id, title, venue FROM events WHERE id = ANY(${ids})`;
 const byId = new Map(rows.map((r) => [r.id, r]));
 
-const esc = (s) => (s ?? "").replace(/'/g, "''");
+const esc = (s: string | null | undefined) => (s ?? "").replace(/'/g, "''");
 
 const blocks = [];
 blocks.push("");
