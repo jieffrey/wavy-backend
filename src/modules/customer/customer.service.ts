@@ -4,6 +4,7 @@ import type { z } from "zod";
 import type { createOrderSchema } from "./customer.schema";
 import { expireByCategory, expireByCustomer, expireOrder } from "../../utils/order-expiry";
 import { remainingQuotaSql } from "../../utils/quota";
+import { categorySalesStatus, salesError, salesStatus, type SalesWindow } from "../../utils/sales-status";
 
 type CategoryRow = { id: number; event_id: number; name: string; price: string; quota: number; sold: number };
 type OrderRow = {
@@ -25,23 +26,26 @@ type OrderRow = {
   wa_consent?: string | null;
 };
 type OrderInput = z.output<typeof createOrderSchema>;
-type EventSalesRow = { status: string; sales_start_at: Date | null; sales_end_at: Date | null; now: Date };
+type EventSalesRow = SalesWindow & { now: Date; remaining: number };
 
 export const customerService = {
-  // PRD §4.1–4.4: cek status penjualan + reservasi kuota dalam satu transaksi.
+  // PRD §4.1–4.4: cek status penjualan (utils/sales-status.ts) + reservasi kuota dalam satu transaksi.
   // Baris kategori di-lock (FOR UPDATE) sehingga order bersamaan untuk kategori yang
   // sama antre; order berikutnya baru menghitung kuota setelah order sebelumnya commit.
   async createOrder(customerId: number, input: OrderInput): Promise<Result<OrderRow>> {
     return sql.begin(async (tx): Promise<Result<OrderRow>> => {
       const [event] = await tx<EventSalesRow[]>`
-        SELECT status, sales_start_at, sales_end_at, now() AS now FROM events WHERE id = ${input.event_id}
+        SELECT e.status, e.sales_start_at, e.sales_end_at, now() AS now,
+               (SELECT COALESCE(SUM(${remainingQuotaSql(tx)}), 0)::int
+                FROM ticket_categories tc WHERE tc.event_id = e.id) AS remaining
+        FROM events e WHERE e.id = ${input.event_id}
       `;
       if (!event) return fail(404, "event not found");
-      if (event.status !== "published") return fail(409, "ticket sales are closed for this event", "SALES_CLOSED");
-      if (event.sales_start_at && event.now < event.sales_start_at)
-        return fail(409, "ticket sales have not started yet", "SALES_NOT_STARTED");
-      if (event.sales_end_at && event.now >= event.sales_end_at)
-        return fail(409, "ticket sales have ended", "SALES_ENDED");
+      const status = salesStatus(event, event.remaining, event.now);
+      if (status !== "open") {
+        const { message, code } = salesError(event, status);
+        return fail(409, message, code);
+      }
 
       const [cat] = await tx<CategoryRow[]>`
         SELECT * FROM ticket_categories WHERE id = ${input.ticket_category_id} FOR UPDATE
@@ -53,6 +57,8 @@ export const customerService = {
       const [{ remaining }] = await tx<{ remaining: number }[]>`
         SELECT ${remainingQuotaSql(tx)} AS remaining FROM ticket_categories tc WHERE tc.id = ${cat.id}
       `;
+      if (categorySalesStatus(status, remaining) === "sold_out")
+        return fail(409, "tickets in this category are sold out", "QUOTA_EXCEEDED");
       if (input.quantity > remaining)
         return fail(409, `not enough tickets available (remaining ${remaining})`, "QUOTA_EXCEEDED");
 
