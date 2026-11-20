@@ -102,8 +102,9 @@ export const concertService = {
       FROM events e
       JOIN artists a ON a.id = e.artist_id
       JOIN organizers o ON o.id = e.organizer_id
-      WHERE e.id = ${id} AND e.status = 'published'
+      WHERE e.id = ${id} AND e.status IN ('published', 'closed')
     `;
+    // closed tetap tampil (sales_status = closed) supaya link lama tidak 404; draft tetap tersembunyi
     if (!event) return fail(404, "concert not found");
     let gallery: string[] = [];
     try {

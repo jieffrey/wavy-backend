@@ -93,7 +93,7 @@ Contoh: `curl -H "Authorization: Bearer eyJ..." ...`
 **2.3** → `200` `{ ...event, ticket_categories[], reviews[], avg_rating, review_count, countdown_seconds }`
 - `countdown_seconds` = detik tersisa ke tanggal konser (0 jika sudah lewat).
 - `avg_rating`/`review_count` dari tabel `reviews`.
-- `404` jika konser tidak ada / belum `published`.
+- `404` jika konser tidak ada atau masih `draft`. Event `closed` tetap `200` dengan `sales_status: "closed"`.
 
 ---
 
