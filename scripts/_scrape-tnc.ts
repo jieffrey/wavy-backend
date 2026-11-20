@@ -1,7 +1,7 @@
 import { sql } from "../src/db/client";
 const slugs = require("./_slugs-all.json");
 const headers = { "user-agent": "Mozilla/5.0", "accept": "application/json", "accept-language": "id-ID,id;q=0.9" };
-const out = {};
+const out: Record<string, unknown> = {};
 let done = 0;
 for (const row of slugs) {
   if (!row.slug) continue;
@@ -29,7 +29,7 @@ for (const row of slugs) {
     console.log(`${row.id} | ${row.sort} | ${isHtml ? "HTML" : "TXT"} | ${plain.length} | ${row.slug}`);
     done++;
   } catch (e) {
-    console.log(`${row.id} ${row.slug} ERR ${e.message}`);
+    console.log(`${row.id} ${row.slug} ERR ${(e as Error).message}`);
   }
   await new Promise((r) => setTimeout(r, 200));
 }
