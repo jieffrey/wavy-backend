@@ -92,6 +92,7 @@ Contoh: `curl -H "Authorization: Bearer eyJ..." ...`
 
 **2.3** → `200` `{ ...event, ticket_categories[], reviews[], avg_rating, review_count, countdown_seconds }`
 - `countdown_seconds` = detik tersisa ke tanggal konser (0 jika sudah lewat).
+- `sales_status`: `upcoming` | `open` | `closed` | `sold_out` (sumber: `src/utils/sales-status.ts`), plus `sales_start_at` / `sales_end_at` (null = tanpa batas). Tiap `ticket_categories[]` punya `sales_status` sendiri: `sold_out` jika `remaining` 0, selain itu ikut event. Daftar `/concerts` juga mengirim `sales_status` + tenggat.
 - `avg_rating`/`review_count` dari tabel `reviews`.
 - `404` jika konser tidak ada atau masih `draft`. Event `closed` tetap `200` dengan `sales_status: "closed"`.
 
