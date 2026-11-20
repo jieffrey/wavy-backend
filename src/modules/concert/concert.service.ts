@@ -73,7 +73,7 @@ export const concertService = {
         FROM events e
         JOIN artists a ON a.id = e.artist_id
         JOIN organizers o ON o.id = e.organizer_id
-        WHERE e.status = 'published'
+        WHERE e.status IN ('published', 'closed') -- draft tersembunyi; closed tampil dengan sales_status
           ${category ? sql`AND e.category = ${category}` : sql``}
           ${q ? sql`AND (e.title ILIKE ${`%${q}%`} OR a.name ILIKE ${`%${q}%`})` : sql``}
         ORDER BY e.date ASC

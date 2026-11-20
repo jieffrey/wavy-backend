@@ -146,7 +146,7 @@ describe("sales_status di daftar & detail konser", () => {
     expect(res.body.error.code).toBe("QUOTA_EXCEEDED");
   });
 
-  test("event di-close manual: detail tetap 200 dengan sales_status closed, tidak muncul di daftar", async () => {
+  test("event di-close manual: detail tetap 200 dengan sales_status closed, dan muncul di daftar sebagai closed", async () => {
     const { organizer, eventId } = await createEventWithCategory();
     const closed = await call("POST", `/organizer/events/${eventId}/close-sales`, organizer.token);
     expect(closed.status).toBe(200);
@@ -156,12 +156,20 @@ describe("sales_status di daftar & detail konser", () => {
     expect(detail.body.status).toBe("closed");
     expect(detail.body.sales_status).toBe("closed");
     expect(detail.body.ticket_categories[0].sales_status).toBe("closed");
-    expect(await fromList(eventId)).toBeUndefined();
+    expect((await fromList(eventId)).sales_status).toBe("closed");
   });
 
   test("event draft tetap 404 di detail", async () => {
     const { eventId } = await createEventWithCategory({ status: "draft" });
     const detail = await call("GET", `/concerts/${eventId}`);
     expect(detail.status).toBe(404);
+  });
+});
+
+describe("GET /concerts menyembunyikan draft", () => {
+  test("event draft tidak muncul di daftar", async () => {
+    const { eventId } = await createEventWithCategory({ status: "draft" });
+    const list = await call("GET", "/concerts");
+    expect(list.body.find((e: any) => e.id === eventId)).toBeUndefined();
   });
 });

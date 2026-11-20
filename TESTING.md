@@ -78,7 +78,7 @@ Contoh: `curl -H "Authorization: Bearer eyJ..." ...`
 | # | Method | Path | Auth | Deskripsi |
 |---|--------|------|------|-----------|
 | 2.1 | GET | `/homepage` | — | Homepage: featured events, popular artists, top organizers |
-| 2.2 | GET | `/concerts` | — | List konser published; filter `?category=` & `?q=` |
+| 2.2 | GET | `/concerts` | — | List konser published + closed (draft tersembunyi); filter `?category=` & `?q=` |
 | 2.3 | GET | `/concerts/:id` | — | Detail konser + kategori + rating/review + countdown |
 
 **2.1** → `200` `{ featured_events[], popular_artists[], organizers[] }`
