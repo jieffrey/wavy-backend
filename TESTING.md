@@ -82,7 +82,7 @@ Contoh: `curl -H "Authorization: Bearer eyJ..." ...`
 | 2.3 | GET | `/concerts/:id` | — | Detail konser + kategori + rating/review + countdown |
 
 **2.1** → `200` `{ featured_events[], popular_artists[], organizers[] }`
-- `featured_events`: konser `published` dengan `date >= now()`, urut tanggal, max 6, tiap item ada `remaining_ticket`.
+- `featured_events`: konser `published` dengan `date >= now()`, urut tanggal, max 6, tiap item ada `remaining_ticket` (rumus sama dengan `/concerts`: dikurangi order pending aktif) dan `sales_status`.
 - `popular_artists`: urut `follower_count` DESC.
 - `organizers`: urut `follower_count` DESC.
 

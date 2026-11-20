@@ -173,3 +173,34 @@ describe("GET /concerts menyembunyikan draft", () => {
     expect(list.body.find((e: any) => e.id === eventId)).toBeUndefined();
   });
 });
+
+describe("sales_status di GET /homepage", () => {
+  // featured_events = 6 event terdekat; majukan tanggal supaya event test pasti masuk
+  const featured = async (eventId: number) => {
+    await sql`UPDATE events SET date = now() + interval '1 hour' WHERE id = ${eventId}`;
+    const res = await call("GET", "/homepage");
+    expect(res.status).toBe(200);
+    return res.body.featured_events.find((e: any) => e.id === eventId);
+  };
+
+  test("upcoming, open, closed (lewat sales_end_at), sold_out — dari fungsi yang sama", async () => {
+    const upcoming = await createEventWithCategory({ salesStartAt: minutesFromNow(30) });
+    expect((await featured(upcoming.eventId)).sales_status).toBe("upcoming");
+
+    const open = await createEventWithCategory();
+    const item = await featured(open.eventId);
+    expect(item.sales_status).toBe("open");
+    expect(item).not.toHaveProperty("now");
+
+    const ended = await createEventWithCategory({ salesEndAt: minutesFromNow(-1) });
+    expect((await featured(ended.eventId)).sales_status).toBe("closed");
+
+    // pending aktif ikut dihitung, sama seperti /concerts
+    const soldOut = await createEventWithCategory({ quota: 2, sold: 1 });
+    const customer = await createCustomer();
+    await insertPendingOrder(customer.id, soldOut.eventId, soldOut.categoryId, 1, 10);
+    const so = await featured(soldOut.eventId);
+    expect(so.sales_status).toBe("sold_out");
+    expect(so.remaining_ticket).toBe(0);
+  });
+});
