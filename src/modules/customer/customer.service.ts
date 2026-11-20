@@ -25,8 +25,26 @@ type OrderRow = {
   gender?: string | null;
   wa_consent?: string | null;
 };
+// order + info tampilan (judul event, kategori, poster) untuk riwayat & detail customer
+type OrderViewRow = OrderRow & {
+  event_title: string | null;
+  category_name: string | null;
+  poster_url: string | null;
+  event_date: Date | null;
+  venue: string | null;
+};
 type OrderInput = z.output<typeof createOrderSchema>;
 type EventSalesRow = SalesWindow & { now: Date; remaining: number };
+
+// LEFT JOIN: order lama tetap tampil walau event/kategorinya sudah tidak ada
+const orderViewColumns = () => sql`
+  o.*, e.title AS event_title, tc.name AS category_name, e.poster_url, e.date AS event_date, e.venue
+`;
+const orderViewFrom = () => sql`
+  FROM orders o
+  LEFT JOIN events e ON e.id = o.event_id
+  LEFT JOIN ticket_categories tc ON tc.id = o.ticket_category_id
+`;
 
 export const customerService = {
   // PRD §4.1–4.4: cek status penjualan (utils/sales-status.ts) + reservasi kuota dalam satu transaksi.
@@ -77,16 +95,25 @@ export const customerService = {
     });
   },
 
-  async getOrder(customerId: number, id: number): Promise<Result<OrderRow>> {
+  async getOrder(customerId: number, id: number): Promise<Result<OrderViewRow>> {
     await expireOrder(sql, id);
-    const [order] = await sql<OrderRow[]>`SELECT * FROM orders WHERE id = ${id} AND customer_id = ${customerId}`;
+    const [order] = await sql<OrderViewRow[]>`
+      SELECT ${orderViewColumns()} ${orderViewFrom()}
+      WHERE o.id = ${id} AND o.customer_id = ${customerId}
+    `;
     if (!order) return fail(404, "order not found");
     return ok(order);
   },
 
   async history(customerId: number) {
     await expireByCustomer(sql, customerId);
-    return ok(await sql<OrderRow[]>`SELECT * FROM orders WHERE customer_id = ${customerId} ORDER BY created_at DESC`);
+    return ok(
+      await sql<OrderViewRow[]>`
+        SELECT ${orderViewColumns()} ${orderViewFrom()}
+        WHERE o.customer_id = ${customerId}
+        ORDER BY o.created_at DESC
+      `
+    );
   },
 
   async level(customerId: number) {
