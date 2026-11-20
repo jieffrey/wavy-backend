@@ -24,7 +24,7 @@ Harga tiket tidak termasuk pajak pemerintah 10%, biaya admin 5%, dan biaya layan
 Ticket prices exclude 10% government tax, 5% admin fee, and platform service fee.
 Setelah pembelian berhasil, e-ticket akan dikirimkan ke email Anda.
 Upon successful purchase, an e-ticket will be sent to your email.
-Mohon membawa identitas asli yang masih berlaku (KTP/KK/Paspor/SIM/Kartu Pelajar) yang sesuai dengan data pada e-ticket di aplikasi Loket-X saat penukaran wristband/tiket.
+Mohon membawa identitas asli yang masih berlaku (KTP/KK/Paspor/SIM/Kartu Pelajar) yang sesuai dengan data pada e-ticket di aplikasi Wavy saat penukaran wristband/tiket.
 Please bring a valid original ID card (KTP/KK/Passport/Driving License/Student Card) that matches the information reflected on your e-ticket in order to redeem your wristband/ticket.
 Dengan membeli tiket T.O.P PRE-STUDIO 2026 in Jakarta, Anda menyetujui pengumpulan, penyimpanan, dan penggunaan data pribadi secara terbatas untuk keperluan acara.
 By purchasing tickets to T.O.P PRE-STUDIO 2026 in Jakarta, you agree to the collection, storage, and limited use of your personal data for event purposes.
@@ -95,8 +95,8 @@ INFORMASI PENUKARAN WRISTBAND
 
 WRISTBAND REDEMPTION
 
-Waktu dan lokasi penukaran wristband akan diinformasikan melalui media sosial resmi Tonz Entertainment, Three Mountains Ave dan Loket.
-Further details regarding wristband redemption will be announced through Tonz Entertainment, Three Mountains Ave and Loket official social media accounts.
+Waktu dan lokasi penukaran wristband akan diinformasikan melalui media sosial resmi Tonz Entertainment, Three Mountains Ave dan Wavy.
+Further details regarding wristband redemption will be announced through Tonz Entertainment, Three Mountains Ave and Wavy official social media accounts.
 
 BATASAN UMUR
 
@@ -163,9 +163,9 @@ Contact Us
 
 For more information about ticket purchase:
 
-Loket.com
+Wavy
 Phone: 021-30003160
-Email: support@loket.com
+Email: layanan pelanggan Wavy
 
 For more information about wheelchair accessible seating, please contact:
 

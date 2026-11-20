@@ -14,7 +14,7 @@ Harga tiket tidak termasuk pajak pemerintah 10%, biaya admin 5%, dan biaya lainn
 Ticket prices exclude 10% government tax, 5% admin fee, and any other applicable charges.
 Setelah pembelian berhasil, booking confirmation akan dikirimkan ke email Anda.
 Upon successful purchase, a booking confirmation will be sent to your email.
-Mohon membawa identitas asli yang masih berlaku (KTP/KK/Paspor/SIM/Kartu Pelajar) yang sesuai dengan data pada e-ticket di aplikasi Loket-X saat penukaran wristband/tiket.
+Mohon membawa identitas asli yang masih berlaku (KTP/KK/Paspor/SIM/Kartu Pelajar) yang sesuai dengan data pada e-ticket di aplikasi Wavy saat penukaran wristband/tiket.
 Please bring a valid original ID card (KTP/KK/Passport/Driving License/Student Card) that matches the information reflected on your e-ticket in order to redeem your wristband/ticket.
 Dengan membeli tiket, Anda menyetujui pengumpulan, penyimpanan, dan penggunaan data pribadi secara terbatas untuk keperluan acara.
 By purchasing tickets to 2026 HWANG IN YOUP FANMEETING TOUR <To you> in JAKARTA, you agree to the collection, storage, and limited use of your personal data for event purposes.
@@ -39,8 +39,8 @@ INFORMASI PENUKARAN WRISTBAND
 
 WRISTBAND REDEMPTION
 
-Waktu dan lokasi penukaran wristband akan diinformasikan melalui media sosial resmi Three Mountains Ave dan Loket.
-Further details regarding wristband redemption will be announced through Three Mountains Ave and Loket official social media accounts.
+Waktu dan lokasi penukaran wristband akan diinformasikan melalui media sosial resmi Three Mountains Ave dan Wavy.
+Further details regarding wristband redemption will be announced through Three Mountains Ave and Wavy official social media accounts.
 
 BATASAN UMUR
 
@@ -117,9 +117,9 @@ Customer Service Info
 
 For more information about ticket purchase and wheelchair accessible seating, please contact:
 
-Loket.com
+Wavy
 Phone: 021-30003160
-Email: support@loket.com
+Email: layanan pelanggan Wavy
 
 For strategic partnership, marketing, and promotional collaboration, please contact:
 
@@ -129,4 +129,4 @@ Copyright
 
 (c) 2026 THREE MOUNTAINS AVE. ALL RIGHTS RESERVED.
 
-(c) 2026 LOKET (PT Global Loket Sejahtera). ALL RIGHTS RESERVED.
+(c) 2026 Wavy. ALL RIGHTS RESERVED.
