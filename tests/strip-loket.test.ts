@@ -1,5 +1,16 @@
 import { describe, expect, test } from "bun:test";
-import { countLoket, stripLoket, transformJson, transformSql } from "../scripts/strip-loket";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+import { sql } from "../src/db/client";
+import {
+  SQL_FN_END,
+  SQL_FN_START,
+  countLoket,
+  sqlFunction,
+  stripLoket,
+  transformJson,
+  transformSql,
+} from "../scripts/strip-loket";
 
 const POSTER = "https://assets.loket.com/neo/production/images/banner/20260101-abc.jpg";
 
@@ -22,8 +33,9 @@ describe("stripLoket", () => {
   });
 
   test("support@loket.com -> layanan pelanggan Wavy", () => {
-    expect(stripLoket("Email: support@loket.com")).toBe("Email: layanan pelanggan Wavy");
-    expect(stripLoket("Email : suppport@loket.com")).toBe("Email : layanan pelanggan Wavy");
+    // label "Email:" ikut dirapikan (aturan email-label) karena hasilnya bukan alamat email
+    expect(stripLoket("Email: support@loket.com")).toBe("Wavy Customer Service");
+    expect(stripLoket("Email : suppport@loket.com")).toBe("Wavy Customer Service");
     expect(stripLoket("hubungi layanan pelanggan support@loket.com untuk")).toBe(
       "hubungi layanan pelanggan Wavy untuk"
     );
@@ -83,5 +95,93 @@ describe("transform per format", () => {
   test("JSON: string yang tidak berubah ditulis apa adanya", () => {
     const src = `{"sort": "loket", "raw": "<a href=\\"http://loket.com/\\">loket.com</a>\\n"}`;
     expect(transformJson(src, stripLoket)).toBe(`{"sort": "loket", "raw": "<a>Wavy</a>\\n"}`);
+  });
+});
+
+describe("merapikan kalimat setelah penggantian", () => {
+  test("nomor telepon Loket dibuang beserta labelnya", () => {
+    expect(stripLoket("Wavy\nPhone: 021-30003160\nEmail: layanan pelanggan Wavy")).toBe("Wavy Customer Service");
+    expect(stripLoket("hubungi:\nWavy\nE-mail: layanan pelanggan Wavy\nPhone: 021-3000 3160")).toBe(
+      "hubungi:\nWavy Customer Service"
+    );
+    expect(stripLoket("<p>Email: layanan pelanggan Wavy</p><p>Telepon: 021 3000 3160</p><p>---</p>")).toBe(
+      "<p>Wavy Customer Service</p><p>---</p>"
+    );
+    expect(stripLoket('<p dir="ltr">PHONE: +62 218 0600 822</p>')).toBe("");
+    expect(stripLoket("TERSEBUT.<br>Wavy +6221-30003160</p>")).toBe("TERSEBUT.<br>Wavy</p>");
+    expect(stripLoket("please send the request to layanan pelanggan Wavy or +62 2130003160")).toBe(
+      "please send the request to Wavy Customer Service"
+    );
+  });
+
+  test("blok kontak HTML jadi satu baris Wavy Customer Service", () => {
+    expect(
+      stripLoket("Wavy Customer Service<br>\n\t\t\tEMAIL : layanan pelanggan Wavy<br>\n\t\t\tPHONE : +6221-30003160</font>")
+    ).toBe("Wavy Customer Service</font>");
+    expect(
+      stripLoket("silakan hubungi Wavy<br>\n\t\t\t\tTelephone : 021-30003160 ; Email : layanan pelanggan Wavy</em>")
+    ).toBe("silakan hubungi Wavy Customer Service</em>");
+    expect(stripLoket("menghubungi Customer Service Wavy\n\nTelepon: +62 21 3000 3160\nEmail: layanan pelanggan Wavy\n\nLain")).toBe(
+      "menghubungi Customer Service Wavy\n\nLain"
+    );
+    expect(stripLoket("Ticket: Wavy Customer Service - layanan pelanggan Wavy / +62 21 3000 3160")).toBe(
+      "Ticket: Wavy Customer Service"
+    );
+  });
+
+  test("kalimat Inggris tidak memakai 'layanan pelanggan' dan tanpa 'the Wavy.'", () => {
+    expect(stripLoket("please contact layanan pelanggan Wavy to process")).toBe("please contact Wavy Customer Service to process");
+    expect(stripLoket("by contacting the Wavy call center at <a>layanan pelanggan Wavy</a> or +62-21-8060-0822.")).toBe(
+      "by contacting Wavy Customer Service."
+    );
+    expect(stripLoket("once issued by the Wavy. E-tickets")).toBe("once issued by Wavy. E-tickets");
+    expect(stripLoket("available in the Wavy app")).toBe("available in the Wavy app");
+  });
+
+  test("bahasa Indonesia 'hubungi layanan pelanggan Wavy' dan nomor lain tetap", () => {
+    const text = "silakan hubungi layanan pelanggan Wavy untuk memproses. Telepon: +62 888-8988-880";
+    expect(stripLoket(text)).toBe(text);
+  });
+
+  test("idempoten: menjalankan ulang tidak mengubah hasil", () => {
+    const raw =
+      "Email: support@loket.com\nPhone: 021-30003160\nonce issued by the LOKET. contact support@loket.com or +62 2130003160";
+    const once = stripLoket(raw);
+    expect(stripLoket(once)).toBe(once);
+  });
+});
+
+describe("strip-loket-neon.sql", () => {
+  const sqlPath = join(import.meta.dir, "..", "scripts", "strip-loket-neon.sql");
+
+  test("fungsi strip_loket di file SQL = hasil generate dari RULES", () => {
+    const src = readFileSync(sqlPath, "utf8").replace(/\r\n/g, "\n");
+    const block = src.slice(src.indexOf(SQL_FN_START), src.indexOf(SQL_FN_END) + SQL_FN_END.length);
+    expect(block).toBe(sqlFunction());
+  });
+
+  test("Postgres menghasilkan teks yang sama dengan stripLoket() untuk semua teks seed", async () => {
+    const dir = join(import.meta.dir, "..", "scripts");
+    const tnc = JSON.parse(readFileSync(join(dir, "_tnc.json"), "utf8")) as Record<string, Record<string, unknown>>;
+    const inputs = [
+      ...Object.values(tnc).flatMap((v) => Object.values(v).filter((x): x is string => typeof x === "string")),
+      ...readdirSync(join(dir, "_manual-tnc"))
+        .filter((f) => f.endsWith(".txt"))
+        .map((f) => readFileSync(join(dir, "_manual-tnc", f), "utf8")),
+      "Email: suppport@loket.com\nPhone: 021-30003160\nonce issued by the LOKET. Beli di Loket.com",
+      "by contacting the LOKET call center at <a href=\"mailto:support@loket.com\">support@loket.com</a> or +62-21-8060-0822.",
+    ].filter((t) => /loket|wavy|3160|0822/i.test(t));
+    expect(inputs.length).toBeGreaterThan(10);
+
+    const db = await sql.reserve();
+    try {
+      await db.unsafe(sqlFunction());
+      for (const input of inputs) {
+        const [{ out }] = await db<{ out: string }[]>`SELECT pg_temp.strip_loket(${input}) AS out`;
+        expect(out).toBe(stripLoket(input));
+      }
+    } finally {
+      db.release();
+    }
   });
 });
