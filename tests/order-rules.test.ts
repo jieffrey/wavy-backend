@@ -144,6 +144,47 @@ describe("POST /orders sales status", () => {
   });
 });
 
+describe("POST /orders attendee data", () => {
+  test("data attendee tersimpan di order yang dibuat dalam transaksi", async () => {
+    const { eventId, categoryId } = await createEventWithCategory();
+    const customer = await createCustomer();
+    const res = await call("POST", "/orders", customer.token, {
+      ...orderBody(eventId, categoryId),
+      full_name: "Budi Santoso",
+      email: "budi@test.local",
+      phone: "081234567890",
+      id_number: "3201010101010001",
+      birth_date: "2000-05-17",
+      gender: "L",
+      wa_consent: "Ya",
+    });
+    expect(res.status).toBe(201);
+    const [row] = await sql<Record<string, unknown>[]>`
+      SELECT full_name, email, phone, id_number, to_char(birth_date, 'YYYY-MM-DD') AS birth_date, gender, wa_consent
+      FROM orders WHERE id = ${res.body.id}
+    `;
+    expect(row).toEqual({
+      full_name: "Budi Santoso",
+      email: "budi@test.local",
+      phone: "081234567890",
+      id_number: "3201010101010001",
+      birth_date: "2000-05-17",
+      gender: "L",
+      wa_consent: "Ya",
+    });
+  });
+
+  test("gender & wa_consent kosong tidak melanggar NOT NULL (disimpan string kosong)", async () => {
+    const { eventId, categoryId } = await createEventWithCategory();
+    const customer = await createCustomer();
+    const res = await call("POST", "/orders", customer.token, { ...orderBody(eventId, categoryId), gender: null });
+    expect(res.status).toBe(201);
+    expect(res.body.gender).toBe("");
+    expect(res.body.wa_consent).toBe("");
+    expect(res.body.birth_date).toBeNull();
+  });
+});
+
 describe("POST /orders quota", () => {
   test("order pending yang belum expired ikut memakan kuota -> 409 QUOTA_EXCEEDED", async () => {
     const { eventId, categoryId } = await createEventWithCategory({ quota: 3, sold: 1 });
