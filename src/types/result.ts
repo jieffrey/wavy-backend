@@ -13,7 +13,16 @@ export type ErrorCode =
   | "ORGANIZER_SUSPENDED"
   | "INVALID_QUANTITY"
   | "VALIDATION_ERROR"
-  | "NO_TICKET_CATEGORY";
+  | "NO_TICKET_CATEGORY"
+  | "QUOTA_BELOW_RESERVED"
+  | "CATEGORY_HAS_ORDERS"
+  | "EVENT_HAS_ORDERS"
+  | "INVALID_QR"
+  | "QR_EXPIRED"
+  | "TICKET_NOT_FOUND"
+  | "WRONG_ORGANIZER"
+  | "ALREADY_SCANNED"
+  | "EVENT_ENDED";
 
 export type Result<T> =
   | { ok: true; data: T }
