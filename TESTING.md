@@ -10,6 +10,7 @@ bun install
 bun scripts/seed-admin.ts   # buat admin pertama (sekali saja)
 bun scripts/migrate-order-rules.ts   # migration aturan order (idempotent)
 bun scripts/migrate-paid-at.ts       # kolom orders.paid_at + backfill (idempotent)
+bun scripts/migrate-payment.ts       # kolom orders.payment_ref & payment_type (idempotent)
 bun run dev                 # atau: bun src/index.ts
 bun run typecheck           # cek tipe
 ```
@@ -306,3 +307,18 @@ Base: `/api/v1/admin`
 - [ ] Endpoint ber-auth menolak tanpa `Authorization` → `401`
 - [ ] Rate-limit: login/OTP → `429` setelah melewati batas
 - [ ] Route yang harus diblokir: transfer ke diri sendiri, review ganda, scan ulang, refund bukan `paid`, admin PATCH status invalid → error sesuai
+
+## Pembayaran Midtrans (Snap sandbox)
+
+Env: `MIDTRANS_SERVER_KEY`, `MIDTRANS_CLIENT_KEY`, `MIDTRANS_IS_PRODUCTION=false`. Panduan lengkap: `wavy-next/docs/MIDTRANS.md`.
+
+| Method | Path | Auth | Keterangan |
+|--------|------|------|------------|
+| POST | `/orders/:id/pay` | customer | Buat transaksi Snap → `{ token, redirect_url }`. 409 `ORDER_EXPIRED` / `ORDER_NOT_PENDING`, 503 `PAYMENT_NOT_CONFIGURED`, 502 `PAYMENT_GATEWAY_ERROR`. |
+| GET | `/orders/:id/payment-status` | customer | Tanya status ke Midtrans lalu terapkan (untuk localhost tanpa webhook) → `{ status, outcome }`. |
+| POST | `/payments/midtrans/notification` | — (signature) | Webhook Midtrans. 403 `INVALID_SIGNATURE` bila `signature_key` salah. Idempoten. |
+
+- `order_id` Midtrans = `WAVY-<id order>-<acak>`, unik per percobaan; yang terakhir disimpan di `orders.payment_ref`.
+- `settlement` / `capture` (fraud accept) → lunas lewat `markOrderPaid` (sama dengan approve EO).
+- `expire` / `cancel` / `deny` dari percobaan terakhir → `expired`, kuota lepas.
+- Test: `tests/payment.test.ts` (Midtrans di-mock).

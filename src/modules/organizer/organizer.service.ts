@@ -3,9 +3,10 @@ import { sql } from "../../db/client";
 import { ok, fail, type Result } from "../../types/result";
 import type { z } from "zod";
 import type { eventSchema, ticketCategorySchema, artistSchema } from "./organizer.schema";
-import { signTicket, verifyTicket } from "../ticket/ticket.service";
+import { verifyTicket } from "../ticket/ticket.service";
 import { notificationService } from "../notification/notification.service";
 import { expireByCategory, expireByOrganizer, expireOrder } from "../../utils/order-expiry";
+import { markOrderPaid } from "../../utils/order-payment";
 import { activePendingSql, remainingQuotaSql } from "../../utils/quota";
 import { salesStatus, categorySalesStatus, type SalesStatus } from "../../utils/sales-status";
 
@@ -518,14 +519,7 @@ export const organizerService = {
       if (order.status !== "pending_payment") return fail(400, "order is not pending payment");
 
       if (approve) {
-        const [event] = await tx<{ date: Date }[]>`SELECT date FROM events WHERE id = ${order.event_id}`;
-        const exp = Math.floor(new Date(event.date).getTime() / 1000);
-        await tx`UPDATE orders SET status = 'paid', paid_at = now() WHERE id = ${id}`;
-        await tx`UPDATE ticket_categories SET sold = sold + ${order.quantity} WHERE id = ${order.ticket_category_id}`;
-        for (let i = 0; i < order.quantity; i++) {
-          await tx`INSERT INTO tickets (order_id, qr_code, owner_id)
-                   VALUES (${order.id}, ${signTicket({ uid: crypto.randomUUID(), event_id: order.event_id, exp })}, ${order.customer_id})`;
-        }
+        await markOrderPaid(tx, order);
       } else {
         await tx`UPDATE orders SET status = 'rejected' WHERE id = ${id}`;
       }
