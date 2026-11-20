@@ -22,7 +22,11 @@ export type ErrorCode =
   | "TICKET_NOT_FOUND"
   | "WRONG_ORGANIZER"
   | "ALREADY_SCANNED"
-  | "EVENT_ENDED";
+  | "EVENT_ENDED"
+  | "PAYMENT_NOT_CONFIGURED"
+  | "ORDER_NOT_PENDING"
+  | "PAYMENT_GATEWAY_ERROR"
+  | "INVALID_SIGNATURE";
 
 export type Result<T> =
   | { ok: true; data: T }

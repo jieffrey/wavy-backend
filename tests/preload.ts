@@ -32,11 +32,13 @@ process.env.JWT_SECRET ??= "wavy-test-secret";
 const { sql } = await import("../src/db/client");
 const { migrateOrderRules } = await import("../src/db/migrations/order-rules");
 const { migratePaidAt } = await import("../src/db/migrations/paid-at");
+const { migratePayment } = await import("../src/db/migrations/payment");
 
 await sql.unsafe("DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public;");
 await sql.file(join(import.meta.dir, "fixtures", "schema.sql"));
 await migrateOrderRules(sql);
 await migratePaidAt(sql);
+await migratePayment(sql);
 
 // Satu client dipakai bersama semua file test; ditutup sekali di akhir run,
 // bukan per file (kalau per file, file berikutnya kena CONNECTION_ENDED).
