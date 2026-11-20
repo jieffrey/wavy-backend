@@ -5,11 +5,20 @@ import type { AppEnv } from "../../middleware/auth.middleware";
 import { organizerAuth } from "../../middleware/auth.middleware";
 import { eventSchema, ticketCategorySchema, artistSchema, verifySchema, scanSchema } from "./organizer.schema";
 import { organizerController } from "./organizer.controller";
+import { errorBody } from "../../types/result";
 
 const organizerRoutes = new Hono<AppEnv>();
 organizerRoutes.use("*", organizerAuth);
 
-const zv = <T extends z.ZodTypeAny>(schema: T) => zValidator<T, "json", AppEnv, string>("json", schema);
+// 400 { error: { code: "VALIDATION_ERROR", message } } — bentuk sama dengan POST /orders
+// dan error aturan bisnis lain, bukan ZodError mentah.
+const zv = <T extends z.ZodTypeAny>(schema: T) =>
+  zValidator<T, "json", AppEnv, string>("json", schema, (result, c) => {
+    if (result.success) return;
+    const first = result.error.issues[0];
+    const field = first?.path.join(".");
+    return c.json(errorBody(field ? `${field}: ${first.message}` : "invalid request body", "VALIDATION_ERROR"), 400);
+  });
 
 // Events
 organizerRoutes.get("/events", organizerController.listEvents);
