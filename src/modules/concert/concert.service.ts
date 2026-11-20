@@ -1,5 +1,6 @@
 import { sql } from "../../db/client";
 import { ok, fail, type Result } from "../../types/result";
+import { remainingQuotaSql } from "../../utils/quota";
 
 type ConcertRow = {
   id: number;
@@ -62,7 +63,7 @@ export const concertService = {
         SELECT e.id, e.title, e.category, e.venue, e.date, e.poster_url, e.status,
                a.name AS artist_name, o.name AS organizer_name,
                (SELECT MIN(tc.price) FROM ticket_categories tc WHERE tc.event_id = e.id) AS min_price,
-               (SELECT COALESCE(SUM(tc.quota - tc.sold), 0) FROM ticket_categories tc WHERE tc.event_id = e.id) AS remaining
+               (SELECT COALESCE(SUM(${remainingQuotaSql(sql)}), 0)::int FROM ticket_categories tc WHERE tc.event_id = e.id) AS remaining
         FROM events e
         JOIN artists a ON a.id = e.artist_id
         JOIN organizers o ON o.id = e.organizer_id
@@ -115,7 +116,7 @@ export const concertService = {
       seatmap = null;
     }
     const ticket_categories = await sql<CategoryRow[]>`
-      SELECT tc.*, (tc.quota - tc.sold) AS remaining
+      SELECT tc.*, ${remainingQuotaSql(sql)} AS remaining
       FROM ticket_categories tc
       WHERE tc.event_id = ${id}
     `;

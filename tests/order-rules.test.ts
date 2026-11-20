@@ -241,6 +241,48 @@ describe("POST /orders quota", () => {
   });
 });
 
+describe("remaining di daftar & detail konser", () => {
+  test("remaining = quota - sold - pending aktif; pending expired tidak dihitung", async () => {
+    const { eventId, categoryId } = await createEventWithCategory({ quota: 10, sold: 3 });
+    const customer = await createCustomer();
+    await insertPendingOrder(customer.id, eventId, categoryId, 2, 10); // aktif
+    await insertPendingOrder(customer.id, eventId, categoryId, 4, -1); // expired, tidak dihitung
+
+    const detail = await call("GET", `/concerts/${eventId}`);
+    expect(detail.status).toBe(200);
+    expect(detail.body.ticket_categories.find((c: any) => c.id === categoryId).remaining).toBe(5);
+
+    const list = await call("GET", "/concerts");
+    expect(list.status).toBe(200);
+    expect(list.body.find((e: any) => e.id === eventId).remaining).toBe(5);
+  });
+
+  test("angka remaining sama dengan batas yang ditegakkan POST /orders", async () => {
+    const { eventId, categoryId } = await createEventWithCategory({ quota: 4, sold: 1 });
+    const other = await createCustomer();
+    await insertPendingOrder(other.id, eventId, categoryId, 1, 10);
+
+    const detail = await call("GET", `/concerts/${eventId}`);
+    const remaining = detail.body.ticket_categories[0].remaining;
+    expect(remaining).toBe(2);
+
+    const customer = await createCustomer();
+    const over = await call("POST", "/orders", customer.token, orderBody(eventId, categoryId, remaining + 1));
+    expect(over.status).toBe(409);
+    const exact = await call("POST", "/orders", customer.token, orderBody(eventId, categoryId, remaining));
+    expect(exact.status).toBe(201);
+
+    const after = await call("GET", `/concerts/${eventId}`);
+    expect(after.body.ticket_categories[0].remaining).toBe(0);
+  });
+
+  test("sold > quota (data seed) tidak menghasilkan remaining negatif", async () => {
+    const { eventId } = await createEventWithCategory({ quota: 2, sold: 5 });
+    const detail = await call("GET", `/concerts/${eventId}`);
+    expect(detail.body.ticket_categories[0].remaining).toBe(0);
+  });
+});
+
 // ---------------------------------------------------------------------------
 // 3. Lazy expiry
 // ---------------------------------------------------------------------------

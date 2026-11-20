@@ -3,6 +3,7 @@ import { ok, fail, type Result } from "../../types/result";
 import type { z } from "zod";
 import type { createOrderSchema } from "./customer.schema";
 import { expireByCategory, expireByCustomer, expireOrder } from "../../utils/order-expiry";
+import { remainingQuotaSql } from "../../utils/quota";
 
 type CategoryRow = { id: number; event_id: number; name: string; price: string; quota: number; sold: number };
 type OrderRow = {
@@ -49,14 +50,11 @@ export const customerService = {
       if (cat.event_id !== input.event_id) return fail(400, "ticket category does not belong to event");
 
       await expireByCategory(tx, cat.id);
-      // terpakai = sold (tiket paid; dipelihara approve/refund) + pending yang belum expired
-      const [{ pending }] = await tx<{ pending: number }[]>`
-        SELECT COALESCE(SUM(quantity), 0)::int AS pending FROM orders
-        WHERE ticket_category_id = ${cat.id} AND status = 'pending_payment' AND expires_at > now()
+      const [{ remaining }] = await tx<{ remaining: number }[]>`
+        SELECT ${remainingQuotaSql(tx)} AS remaining FROM ticket_categories tc WHERE tc.id = ${cat.id}
       `;
-      const remaining = cat.quota - cat.sold - pending;
       if (input.quantity > remaining)
-        return fail(409, `not enough tickets available (remaining ${Math.max(remaining, 0)})`, "QUOTA_EXCEEDED");
+        return fail(409, `not enough tickets available (remaining ${remaining})`, "QUOTA_EXCEEDED");
 
       const total_price = Number(cat.price) * input.quantity;
       // gender & wa_consent: kolom NOT NULL DEFAULT '' di DB, jadi kosong = "" (bukan null)
