@@ -2,8 +2,11 @@
 -- Neon DEV branch only, do not run on production.
 -- =====================================================================
 -- Membuang branding "Loket.com" dari events.description dan
--- events.terms_conditions. Aturannya sama dengan scripts/strip-loket.ts
--- (kalau salah satu diubah, ubah juga yang lain).
+-- events.terms_conditions, lalu merapikan kalimat yang kaku hasil penggantian
+-- (nomor telepon Loket, "Email: layanan pelanggan Wavy", "issued by the Wavy", dst.).
+-- Fungsi pg_temp.strip_loket DIBANGKITKAN dari RULES di scripts/strip-loket.ts
+-- (`bun scripts/strip-loket.ts --sql`), jadi hasilnya sama dengan file seed.
+-- Aman dijalankan ulang di data yang sudah pernah di-strip (aturan idempoten).
 --
 -- Tetap utuh:
 --   - URL gambar https://assets.loket.com/... (poster/banner/galeri/img src)
@@ -27,37 +30,38 @@ BEGIN;
 -- 0. Fungsi bantu (hanya hidup di sesi ini, tidak tersimpan di skema)
 -- ---------------------------------------------------------------------
 -- strip-loket:function:start
+-- Dibangkitkan oleh `bun scripts/strip-loket.ts --sql` dari RULES; jangan edit tangan.
 CREATE FUNCTION pg_temp.strip_loket(t text) RETURNS text
-LANGUAGE sql IMMUTABLE AS $fn$
-  SELECT
-    -- 9. rapikan "layanan pelanggan layanan pelanggan Wavy"
-    regexp_replace(
-    -- 8. rapikan "Wavy (Wavy)"
-    regexp_replace(
-    -- 7. merek "Loket"/"LOKET" berdiri sendiri (case-sensitive: "loket" kecil = counter, tidak disentuh)
-    regexp_replace(
-    -- 6. nama badan usaha
-    regexp_replace(
-    -- 5. handle "@LOKET"
-    regexp_replace(
-    -- 4. domain sebagai teks: Loket.com, LOKET.COM, loket com, Loketcom, www.loket.com, https://www.loket.com
-    regexp_replace(
-    -- 3. aplikasi LOKET X / Loket X / Loket-X
-    regexp_replace(
-    -- 2. support@loket.com (termasuk salah ketik "suppport")
-    regexp_replace(
-    -- 1. atribut href yang mengarah ke loket.com (teks anchor tetap)
-    regexp_replace(
-      t,
-      '\s+href\s*=\s*("[^"]*loket\.com[^"]*"|''[^'']*loket\.com[^'']*'')', '', 'gi'),
-      '(?<![\w.])sup+ort@loket\.com', 'layanan pelanggan Wavy', 'gi'),
-      '(?<![\w./@-])loket[ -]?x(?!\w)', 'Wavy', 'gi'),
-      '(?<![\w./@-])(https?://)?(www\.)?loket(\.|\s)?com(/(?=[^\w/.-]|$))?(?![\w/-]|\.\w)', 'Wavy', 'gi'),
-      '\s+@loket(?![\w.@-])', '', 'gi'),
-      'PT\.?\s+Global\s+Loket\s+Sejahtera', 'Wavy', 'gi'),
-      '(?<![\w./@-])(Loket|LOKET)(?![\w@/-]|\.\w)', 'Wavy', 'g'),
-      'Wavy\s*\(Wavy\)', 'Wavy', 'g'),
-      'layanan pelanggan\s+layanan pelanggan Wavy', 'layanan pelanggan Wavy', 'gi')
+LANGUAGE plpgsql IMMUTABLE AS $fn$
+DECLARE r record;
+BEGIN
+  IF t IS NULL THEN RETURN NULL; END IF;
+  FOR r IN SELECT * FROM (VALUES
+    (1, '\s+href\s*=\s*("[^"]*loket\.com[^"]*"|''[^'']*loket\.com[^'']*'')', '', 'gi'), -- href
+    (2, '(?<![\w.])sup+ort@loket\.com', 'layanan pelanggan Wavy', 'gi'), -- support-email
+    (3, '(?<![\w./@-])loket[ -]?x(?!\w)', 'Wavy', 'gi'), -- loket-x
+    (4, '(?<![\w./@-])(https?://)?(www\.)?loket(\.|\s)?com(/(?=[^\w/.-]|$))?(?![\w/-]|\.\w)', 'Wavy', 'gi'), -- loket-com
+    (5, '\s+@loket(?![\w.@-])', '', 'gi'), -- handle
+    (6, 'PT\.?\s+Global\s+Loket\s+Sejahtera', 'Wavy', 'gi'), -- company
+    (7, '(?<![\w./@-])(Loket|LOKET)(?![\w@/-]|\.\w)', 'Wavy', 'g'), -- brand
+    (8, 'Wavy\s*\(Wavy\)', 'Wavy', 'g'), -- dedupe
+    (9, 'layanan pelanggan\s+layanan pelanggan Wavy', 'layanan pelanggan Wavy', 'gi'), -- dedupe-support
+    (10, '<p[^>]*>[\s\u00a0]*(?:PHONE|Phone|Telepon|Telephone)[\s\u00a0]*:[\s\u00a0]*(?:\+62|0)[ -]?21[ -]?(?:3000[ -]?3160|8060[ -]?0822|8[ -]?0600[ -]?822)(?![\w-])[\s\u00a0]*</p>|<span[^>]*>[\s\u00a0]*(?:PHONE|Phone|Telepon|Telephone)[\s\u00a0]*:[\s\u00a0]*</span>[\s\u00a0]*<span[^>]*>[\s\u00a0]*(?:\+62|0)[ -]?21[ -]?(?:3000[ -]?3160|8060[ -]?0822|8[ -]?0600[ -]?822)(?![\w-])[\s\u00a0]*</span>(?:<span[^>]*>[\s\u00a0]*<br[\s\u00a0]*/?>[\s\u00a0]*</span>)?', '', 'g'), -- phone-block
+    (11, '(?:<br[\s\u00a0]*/?>)?[\s\u00a0]*(?:PHONE|Phone|Telepon|Telephone)[\s\u00a0]*:[\s\u00a0]*(?:\+62|0)[ -]?21[ -]?(?:3000[ -]?3160|8060[ -]?0822|8[ -]?0600[ -]?822)(?![\w-])(?:[\s\u00a0]*;)?', '', 'g'), -- phone-line
+    (12, '[\s\u00a0]+(?:or[\s\u00a0]+|atau[\s\u00a0]+)?(?:\+62|0)[ -]?21[ -]?(?:3000[ -]?3160|8060[ -]?0822|8[ -]?0600[ -]?822)(?![\w-])', '', 'g'), -- phone-inline
+    (13, 'the Wavy call center at[\s\u00a0]*(?:<a[^>]*>)?[\s\u00a0]*layanan pelanggan Wavy[\s\u00a0]*(?:</a>)?', 'Wavy Customer Service', 'g'), -- call-center
+    (14, '(?<![\w])(contact|to)([\s\u00a0]+)layanan pelanggan Wavy', '\1\2Wavy Customer Service', 'g'), -- english-cs
+    (15, '(?:E-?mail|EMAIL)[\s\u00a0]*:[\s\u00a0]*((?:<[^>]+>|[\s\u00a0])*)layanan pelanggan Wavy', '\1Wavy Customer Service', 'g'), -- email-label
+    (16, 'Customer Service Wavy(?:[\s\u00a0]|<br[\s\u00a0]*/?>)+Wavy Customer Service', 'Customer Service Wavy', 'g'), -- dedupe-cs-1
+    (17, 'Wavy Customer Service(?:[\s\u00a0]|<br[\s\u00a0]*/?>)+Wavy Customer Service', 'Wavy Customer Service', 'g'), -- dedupe-cs-2
+    (18, '(?<![\w])Wavy(?:[\s\u00a0]|<br[\s\u00a0]*/?>)+Wavy Customer Service', 'Wavy Customer Service', 'g'), -- dedupe-cs-3
+    (19, 'Wavy Customer Service[\s\u00a0]*-[\s\u00a0]*layanan pelanggan Wavy(?:[\s\u00a0]*/)?', 'Wavy Customer Service', 'g'), -- dedupe-cs-4
+    (20, '(?<![\w])the Wavy(?=[.,;:!?)])', 'Wavy', 'g') -- the-wavy
+  ) AS v(n, pattern, replacement, flags) ORDER BY n LOOP
+    t := regexp_replace(t, r.pattern, r.replacement, r.flags);
+  END LOOP;
+  RETURN t;
+END
 $fn$;
 -- strip-loket:function:end
 
@@ -79,7 +83,8 @@ $fn$;
 -- ---------------------------------------------------------------------
 -- 1. Backup (ikut ROLLBACK kalau dibatalkan)
 -- ---------------------------------------------------------------------
-CREATE TABLE events_backup_strip_loket AS
+-- IF NOT EXISTS: kalau skrip ini pernah di-COMMIT, backup lama (teks asli) dipertahankan.
+CREATE TABLE IF NOT EXISTS events_backup_strip_loket AS
 SELECT id, description, terms_conditions, now() AS backed_up_at
 FROM events;
 
