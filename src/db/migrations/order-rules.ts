@@ -17,4 +17,6 @@ export async function migrateOrderRules(sql: Sql<any>) {
       END IF;
     END $$;
   `);
+  // hitung kuota pending per kategori di POST /orders
+  await sql`CREATE INDEX IF NOT EXISTS idx_orders_category_status ON orders (ticket_category_id, status)`;
 }

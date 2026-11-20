@@ -23,24 +23,52 @@ type OrderRow = {
   wa_consent?: string | null;
 };
 type OrderInput = z.output<typeof createOrderSchema>;
+type EventSalesRow = { status: string; sales_start_at: Date | null; sales_end_at: Date | null; now: Date };
 
 export const customerService = {
+  // PRD §4.1–4.4: cek status penjualan + reservasi kuota dalam satu transaksi.
+  // Baris kategori di-lock (FOR UPDATE) sehingga order bersamaan untuk kategori yang
+  // sama antre; order berikutnya baru menghitung kuota setelah order sebelumnya commit.
   async createOrder(customerId: number, input: OrderInput): Promise<Result<OrderRow>> {
-    const [cat] = await sql<CategoryRow[]>`SELECT * FROM ticket_categories WHERE id = ${input.ticket_category_id}`;
-    if (!cat) return fail(404, "ticket category not found");
-    if (cat.event_id !== input.event_id) return fail(400, "ticket category does not belong to event");
-    if (cat.quota - cat.sold < input.quantity) return fail(400, "not enough tickets available");
+    return sql.begin(async (tx): Promise<Result<OrderRow>> => {
+      const [event] = await tx<EventSalesRow[]>`
+        SELECT status, sales_start_at, sales_end_at, now() AS now FROM events WHERE id = ${input.event_id}
+      `;
+      if (!event) return fail(404, "event not found");
+      if (event.status !== "published") return fail(409, "ticket sales are closed for this event", "SALES_CLOSED");
+      if (event.sales_start_at && event.now < event.sales_start_at)
+        return fail(409, "ticket sales have not started yet", "SALES_NOT_STARTED");
+      if (event.sales_end_at && event.now >= event.sales_end_at)
+        return fail(409, "ticket sales have ended", "SALES_ENDED");
 
-    const total_price = Number(cat.price) * input.quantity;
-    const [order] = await sql<OrderRow[]>`
-      INSERT INTO orders (customer_id, event_id, ticket_category_id, quantity, total_price, expires_at,
-                          full_name, email, phone, id_number, birth_date, gender, wa_consent)
-      VALUES (${customerId}, ${input.event_id}, ${input.ticket_category_id}, ${input.quantity}, ${total_price}, now() + interval '15 minutes',
-              ${input.full_name ?? ""}, ${input.email ?? ""}, ${input.phone ?? ""}, ${input.id_number ?? ""},
-              ${input.birth_date || null}, ${input.gender || null}, ${input.wa_consent || null})
-      RETURNING *
-    `;
-    return ok(order);
+      const [cat] = await tx<CategoryRow[]>`
+        SELECT * FROM ticket_categories WHERE id = ${input.ticket_category_id} FOR UPDATE
+      `;
+      if (!cat) return fail(404, "ticket category not found");
+      if (cat.event_id !== input.event_id) return fail(400, "ticket category does not belong to event");
+
+      // terpakai = sold (tiket paid; dipelihara approve/refund) + pending yang belum expired
+      const [{ pending }] = await tx<{ pending: number }[]>`
+        SELECT COALESCE(SUM(quantity), 0)::int AS pending FROM orders
+        WHERE ticket_category_id = ${cat.id} AND status = 'pending_payment' AND expires_at > now()
+      `;
+      const remaining = cat.quota - cat.sold - pending;
+      if (input.quantity > remaining)
+        return fail(409, `not enough tickets available (remaining ${Math.max(remaining, 0)})`, "QUOTA_EXCEEDED");
+
+      const total_price = Number(cat.price) * input.quantity;
+      // gender & wa_consent: kolom NOT NULL DEFAULT '' di DB, jadi kosong = "" (bukan null)
+      const [order] = await tx<OrderRow[]>`
+        INSERT INTO orders (customer_id, event_id, ticket_category_id, quantity, total_price, status, expires_at, created_at,
+                            full_name, email, phone, id_number, birth_date, gender, wa_consent)
+        VALUES (${customerId}, ${input.event_id}, ${cat.id}, ${input.quantity}, ${total_price}, 'pending_payment',
+                now() + interval '15 minutes', now(),
+                ${input.full_name ?? ""}, ${input.email ?? ""}, ${input.phone ?? ""}, ${input.id_number ?? ""},
+                ${input.birth_date || null}, ${input.gender ?? ""}, ${input.wa_consent ?? ""})
+        RETURNING *
+      `;
+      return ok(order);
+    });
   },
 
   async getOrder(customerId: number, id: number): Promise<Result<OrderRow>> {
