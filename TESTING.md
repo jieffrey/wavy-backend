@@ -12,6 +12,19 @@ bun run dev                 # atau: bun src/index.ts
 bun run typecheck           # cek tipe
 ```
 
+## Test otomatis (`bun test`)
+
+Test aturan order (`tests/order-rules.test.ts`) butuh **Postgres lokal** terpisah dan tidak pernah memakai `DATABASE_URL` dari `.env`.
+
+```bash
+createdb wavy_test   # sekali saja; nama wajib berakhiran _test
+TEST_DATABASE_URL=postgres://postgres:<password>@localhost:5432/wavy_test bun test
+```
+
+- Setiap run, skema `public` di database test di-DROP lalu dibangun ulang dari `tests/fixtures/schema.sql` + migration.
+- Preload menolak jalan kalau `TEST_DATABASE_URL` kosong, host-nya bukan lokal, atau nama database tidak berakhiran `_test`.
+- SSL otomatis dimatikan untuk test (`DATABASE_SSL=disable`).
+
 Kredensial default test yang dipakai di dokumen ini:
 
 | Role | Email | Password |

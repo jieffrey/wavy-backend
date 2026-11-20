@@ -5,6 +5,7 @@ import type { z } from "zod";
 import type { eventSchema, ticketCategorySchema, artistSchema } from "./organizer.schema";
 import { signTicket, verifyTicket } from "../ticket/ticket.service";
 import { notificationService } from "../notification/notification.service";
+import { expireByOrganizer, expireOrder } from "../../utils/order-expiry";
 
 type EventRow = {
   id: number;
@@ -17,6 +18,8 @@ type EventRow = {
   poster_url: string;
   description: string;
   status: string;
+  sales_start_at: Date | null;
+  sales_end_at: Date | null;
 };
 type CategoryRow = { id: number; event_id: number; name: string; price: string; quota: number; sold: number };
 type ArtistRow = { id: number; organizer_id: number; name: string; genre: string; photo_url: string; bio: string };
@@ -34,6 +37,8 @@ type OrderRow = {
 type EventInput = z.output<typeof eventSchema>;
 type CategoryInput = z.output<typeof ticketCategorySchema>;
 type ArtistInput = z.output<typeof artistSchema>;
+
+const toDate = (v: string | null | undefined) => (v ? new Date(v) : null);
 
 // tawarkan tiket yang kembali tersedia (reject/refund) ke waiting list teratas
 const offerTickets = async (eventId: number, quantity: number) => {
@@ -67,17 +72,27 @@ export const organizerService = {
 
   async createEvent(organizerId: number, input: EventInput) {
     const [event] = await sql<EventRow[]>`
-      INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description)
-      VALUES (${organizerId}, ${input.artist_id}, ${input.title}, ${input.category}, ${input.venue}, ${new Date(input.date)}, ${input.poster_url}, ${input.description})
+      INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, sales_start_at, sales_end_at)
+      VALUES (${organizerId}, ${input.artist_id}, ${input.title}, ${input.category}, ${input.venue}, ${new Date(input.date)}, ${input.poster_url}, ${input.description},
+              ${toDate(input.sales_start_at)}, ${toDate(input.sales_end_at)})
       RETURNING *
     `;
     return ok(event);
   },
 
   async updateEvent(organizerId: number, id: number, input: EventInput): Promise<Result<EventRow>> {
+    const [current] = await sql<EventRow[]>`SELECT * FROM events WHERE id = ${id} AND organizer_id = ${organizerId}`;
+    if (!current) return fail(404, "event not found");
+
+    // field tenggat yang tidak dikirim dipertahankan; null berarti dihapus
+    const salesStart = input.sales_start_at === undefined ? current.sales_start_at : toDate(input.sales_start_at);
+    const salesEnd = input.sales_end_at === undefined ? current.sales_end_at : toDate(input.sales_end_at);
+    if (salesStart && salesEnd && salesEnd <= salesStart) return fail(400, "sales_end_at must be after sales_start_at");
+
     const [event] = await sql<EventRow[]>`
       UPDATE events SET artist_id = ${input.artist_id}, title = ${input.title}, category = ${input.category},
-        venue = ${input.venue}, date = ${new Date(input.date)}, poster_url = ${input.poster_url}, description = ${input.description}
+        venue = ${input.venue}, date = ${new Date(input.date)}, poster_url = ${input.poster_url}, description = ${input.description},
+        sales_start_at = ${salesStart}, sales_end_at = ${salesEnd}
       WHERE id = ${id} AND organizer_id = ${organizerId}
       RETURNING *
     `;
@@ -251,6 +266,7 @@ export const organizerService = {
   // ---------- Orders (organizer) ----------
 
   async listOrders(organizerId: number, status?: string) {
+    await expireByOrganizer(sql, organizerId);
     const rows = status
       ? await sql<OrderRow[]>`
           SELECT o.* FROM orders o JOIN events e ON e.id = o.event_id
@@ -266,30 +282,37 @@ export const organizerService = {
   },
 
   async verifyOrder(organizerId: number, id: number, approve: boolean): Promise<Result<{ message: string }>> {
-    const [order] = await sql<OrderRow[]>`
-      SELECT o.* FROM orders o JOIN events e ON e.id = o.event_id
-      WHERE o.id = ${id} AND e.organizer_id = ${organizerId}
-    `;
-    if (!order) return fail(404, "order not found");
-    if (order.status !== "pending_payment") return fail(400, "order is not pending payment");
+    // lock baris order supaya approve/reject tidak balapan dengan approve lain atau expiry
+    const result = await sql.begin(async (tx): Promise<Result<OrderRow>> => {
+      await expireOrder(tx, id);
+      const [order] = await tx<OrderRow[]>`
+        SELECT o.* FROM orders o JOIN events e ON e.id = o.event_id
+        WHERE o.id = ${id} AND e.organizer_id = ${organizerId}
+        FOR UPDATE OF o
+      `;
+      if (!order) return fail(404, "order not found");
+      if (order.status === "expired") return fail(409, "order has expired", "ORDER_EXPIRED");
+      if (order.status !== "pending_payment") return fail(400, "order is not pending payment");
 
-    if (approve) {
-      const [event] = await sql<{ date: Date }[]>`SELECT date FROM events WHERE id = ${order.event_id}`;
-      const exp = Math.floor(new Date(event.date).getTime() / 1000);
-      await sql.begin(async (tx) => {
+      if (approve) {
+        const [event] = await tx<{ date: Date }[]>`SELECT date FROM events WHERE id = ${order.event_id}`;
+        const exp = Math.floor(new Date(event.date).getTime() / 1000);
         await tx`UPDATE orders SET status = 'paid' WHERE id = ${id}`;
         await tx`UPDATE ticket_categories SET sold = sold + ${order.quantity} WHERE id = ${order.ticket_category_id}`;
         for (let i = 0; i < order.quantity; i++) {
           await tx`INSERT INTO tickets (order_id, qr_code, owner_id)
                    VALUES (${order.id}, ${signTicket({ uid: crypto.randomUUID(), event_id: order.event_id, exp })}, ${order.customer_id})`;
         }
-      });
-      return ok({ message: "order approved" });
-    }
+      } else {
+        await tx`UPDATE orders SET status = 'rejected' WHERE id = ${id}`;
+      }
+      return ok(order);
+    });
+    if (!result.ok) return result;
 
-    await sql`UPDATE orders SET status = 'rejected' WHERE id = ${id}`;
+    if (approve) return ok({ message: "order approved" });
     // auto-offer (phase 4 item 14): tiket dari order yang gagal ditawarkan ke waiting list teratas
-    await offerTickets(order.event_id, order.quantity);
+    await offerTickets(result.data.event_id, result.data.quantity);
     return ok({ message: "order rejected" });
   },
 

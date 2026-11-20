@@ -2,16 +2,36 @@ import type { Context } from "hono";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import type { AppEnv } from "../middleware/auth.middleware";
 
-export type Result<T> = { ok: true; data: T } | { ok: false; status: ContentfulStatusCode; error: string };
+// Kode error aturan bisnis (PRD §4) yang dibaca frontend.
+// Respons: { error: { code, message } }. Error lain tetap { error: "pesan" }.
+export type ErrorCode =
+  | "SALES_CLOSED"
+  | "SALES_NOT_STARTED"
+  | "SALES_ENDED"
+  | "QUOTA_EXCEEDED"
+  | "ORDER_EXPIRED"
+  | "ORGANIZER_SUSPENDED";
+
+export type Result<T> =
+  | { ok: true; data: T }
+  | { ok: false; status: ContentfulStatusCode; error: string; code?: ErrorCode };
 
 export const ok = <T>(data: T): Result<T> => ({ ok: true, data });
 
-export const fail = (status: ContentfulStatusCode, error: string): Result<never> => ({ ok: false, status, error });
+export const fail = (status: ContentfulStatusCode, error: string, code?: ErrorCode): Result<never> => ({
+  ok: false,
+  status,
+  error,
+  code,
+});
+
+export const errorBody = (message: string, code?: ErrorCode) =>
+  code ? { error: { code, message } } : { error: message };
 
 export const respond =
   (c: Context<AppEnv>) =>
   (r: Result<unknown>, status: ContentfulStatusCode = 200) =>
-    r.ok ? c.json(r.data, status) : c.json({ error: r.error }, r.status);
+    r.ok ? c.json(r.data, status) : c.json(errorBody(r.error, r.code), r.status);
 
 // body sudah divalidasi zValidator di route; tipe dipulihkan di sini karena
 // Context controller tidak membawa tipe input middleware
