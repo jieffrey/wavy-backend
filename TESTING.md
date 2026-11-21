@@ -15,6 +15,21 @@ bun run dev                 # atau: bun src/index.ts
 bun run typecheck           # cek tipe
 ```
 
+### Membuat / mengganti akun admin
+
+Akun admin tidak bisa daftar sendiri. Buat lewat script (menulis ke database di `DATABASE_URL`, yaitu Neon kalau pakai `.env`):
+
+```bash
+bun scripts/create-admin.ts --email admin@contoh.id --name "Nama Admin" --password "password-minimal-8"
+```
+
+- Email belum ada → admin baru dibuat. Email sudah ada → nama & password diganti (tidak ada baris dobel).
+- Password di-hash dengan bcryptjs cost 10, sama dengan yang dicek `POST /admin/login`.
+- Password tidak pernah dicetak ke log. Karena dikirim lewat argumen, hapus dari riwayat shell setelahnya
+  (mis. jalankan dengan spasi di depan perintah bila `HISTCONTROL=ignorespace`).
+- Email disimpan apa adanya (hanya di-trim) dan login mencocokkan email persis, jadi pakai huruf yang sama saat login.
+- Coba ke database lokal dulu: `DATABASE_URL=postgres://postgres:postgres@localhost:5432/wavy_test DATABASE_SSL=disable bun scripts/create-admin.ts ...`
+
 ## Test otomatis (`bun test`)
 
 Test aturan order (`tests/order-rules.test.ts`) butuh **Postgres lokal** terpisah dan tidak pernah memakai `DATABASE_URL` dari `.env`.
