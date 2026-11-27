@@ -81,7 +81,7 @@ describe("POST /orders/:id/pay", () => {
 
   test("tolak order yang bukan pending", async () => {
     const o = await pendingOrder(1);
-    await sql`UPDATE orders SET status = 'paid' WHERE id = ${o.id}`;
+    await sql`UPDATE orders SET status = 'paid', paid_at = now() WHERE id = ${o.id}`;
     const res = await call("POST", `/orders/${o.id}/pay`, o.cust.token);
     expect(res.status).toBe(409);
     expect(res.body.error.code).toBe("ORDER_NOT_PENDING");

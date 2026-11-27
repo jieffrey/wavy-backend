@@ -35,8 +35,8 @@ const eventBody = (extra: Record<string, unknown> = {}) => ({
 async function insertTicket(eventId: number, categoryId: number, expSeconds = 3600) {
   const customer = await createCustomer();
   const [order] = await sql<{ id: number }[]>`
-    INSERT INTO orders (customer_id, event_id, ticket_category_id, quantity, total_price, status, expires_at, created_at)
-    VALUES (${customer.id}, ${eventId}, ${categoryId}, 1, 100000, 'paid', now(), now())
+    INSERT INTO orders (customer_id, event_id, ticket_category_id, quantity, total_price, status, expires_at, created_at, paid_at)
+    VALUES (${customer.id}, ${eventId}, ${categoryId}, 1, 100000, 'paid', now(), now(), now())
     RETURNING id
   `;
   const qr = signTicket({

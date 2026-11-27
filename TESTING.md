@@ -6,15 +6,20 @@ Dokumen ini untuk testing manual seluruh endpoint. Base URL: `http://localhost:1
 
 ```bash
 bun install
-# isi .env (PORT, DATABASE_URL, JWT_SECRET, SMTP_*, ADMIN_EMAIL, ADMIN_PASSWORD)
-bun scripts/seed-admin.ts   # buat admin pertama (sekali saja)
-bun scripts/migrate-order-rules.ts   # migration aturan order (idempotent)
-bun scripts/migrate-paid-at.ts       # kolom orders.paid_at + backfill (idempotent)
-bun scripts/migrate-payment.ts       # kolom orders.payment_ref & payment_type (idempotent)
-bun scripts/migrate-organizer-verification.ts  # kolom verifikasi organizer (idempotent)
+# isi .env (PORT, DATABASE_URL, JWT_SECRET, SMTP_*, MIDTRANS_*)
+bun scripts/migrate.ts                  # terapkan db/migrations/*.sql yang belum jalan (idempotent)
+bun scripts/migrate.ts --status         # lihat migration yang tertunda
+bun scripts/create-admin.ts --email ... --name ... --password ...   # admin pertama (lihat di bawah)
 bun run dev                 # atau: bun src/index.ts
 bun run typecheck           # cek tipe
 ```
+
+### Skema database
+
+- Satu sumber skema: `db/migrations/NNN_nama.sql` (FK, CHECK, NOT NULL). Diagram & penjelasan: `wavy-next/docs/DATABASE.md`.
+- Setiap file yang dijalankan dicatat di tabel `schema_migrations`. File yang sudah di-merge **tidak diedit**; perubahan = file baru.
+- `bun scripts/db-reset.ts` = reset total (kosongkan semua data kecuali admin). Tanpa argumen hanya dry-run;
+  jalan sungguhan butuh `--confirm=<nama-database>`. Langkah lengkap untuk Neon ada di laporan v2 / `wavy-next/docs/PLAN-v2.md` §5.
 
 ### Membuat / mengganti akun admin
 
@@ -33,14 +38,14 @@ bun scripts/create-admin.ts --email admin@contoh.id --name "Nama Admin" --passwo
 
 ## Test otomatis (`bun test`)
 
-Test aturan order (`tests/order-rules.test.ts`) butuh **Postgres lokal** terpisah dan tidak pernah memakai `DATABASE_URL` dari `.env`.
+Semua test butuh **Postgres lokal** terpisah dan tidak pernah memakai `DATABASE_URL` dari `.env`.
 
 ```bash
 createdb wavy_test   # sekali saja; nama wajib berakhiran _test
 TEST_DATABASE_URL=postgres://postgres:<password>@localhost:5432/wavy_test bun test
 ```
 
-- Setiap run, skema `public` di database test di-DROP lalu dibangun ulang dari `tests/fixtures/schema.sql` + migration.
+- Setiap run, skema `public` di database test di-DROP lalu dibangun ulang dari `db/migrations/*.sql` (sama dengan produksi).
 - Preload menolak jalan kalau `TEST_DATABASE_URL` kosong, host-nya bukan lokal, atau nama database tidak berakhiran `_test`.
 - SSL otomatis dimatikan untuk test (`DATABASE_SSL=disable`).
 
@@ -48,7 +53,7 @@ Kredensial default test yang dipakai di dokumen ini:
 
 | Role | Email | Password |
 |------|-------|----------|
-| Admin | dari `.env` `ADMIN_EMAIL` | dari `.env` `ADMIN_PASSWORD` |
+| Admin | dibuat dengan `scripts/create-admin.ts` | sesuai `--password` |
 | Customer | `customer@test.com` (login via OTP) | — |
 
 ## Header Auth
@@ -253,7 +258,7 @@ Base: `/api/v1/admin`
 | 7.5 | — | `/admin/events`, `/admin/artists`, `/admin/orders`, … | ✓ | Lihat §3 |
 | 7.6 | GET | `/admin/customers` | ✓ | List customer + order_count + spend |
 
-**7.1** Body: `{ "email": "ADMIN_EMAIL", "password": "ADMIN_PASSWORD" }` → `200` token.
+**7.1** Body: `{ "email": "<email admin>", "password": "<password admin>" }` → `200` `{ access_token, admin }`.
 
 ---
 

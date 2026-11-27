@@ -163,13 +163,13 @@ export const backofficeService = {
     return ok({ ...event, ticket_categories });
   },
 
-  async createEvent(input: EventInput): Promise<Result<EventRow>> {
+  async createEvent(adminId: number, input: EventInput): Promise<Result<EventRow>> {
     const windowError = salesWindowError(new Date(input.date), toDate(input.sales_start_at), toDate(input.sales_end_at));
     if (windowError) return fail(400, windowError, "VALIDATION_ERROR");
     if (!(await this.artistExists(input.artist_id))) return fail(400, "artist_id: artist not found", "VALIDATION_ERROR");
     const [event] = await sql<EventRow[]>`
-      INSERT INTO events (artist_id, title, category, venue, date, poster_url, description, sales_start_at, sales_end_at)
-      VALUES (${input.artist_id}, ${input.title}, ${input.category}, ${input.venue}, ${new Date(input.date)}, ${input.poster_url}, ${input.description},
+      INSERT INTO events (created_by, artist_id, title, category, venue, date, poster_url, description, sales_start_at, sales_end_at)
+      VALUES (${adminId}, ${input.artist_id}, ${input.title}, ${input.category}, ${input.venue}, ${new Date(input.date)}, ${input.poster_url}, ${input.description},
               ${toDate(input.sales_start_at)}, ${toDate(input.sales_end_at)})
       RETURNING *
     `;
@@ -190,7 +190,7 @@ export const backofficeService = {
     const [event] = await sql<EventRow[]>`
       UPDATE events SET artist_id = ${input.artist_id}, title = ${input.title}, category = ${input.category},
         venue = ${input.venue}, date = ${new Date(input.date)}, poster_url = ${input.poster_url}, description = ${input.description},
-        sales_start_at = ${salesStart}, sales_end_at = ${salesEnd}
+        sales_start_at = ${salesStart}, sales_end_at = ${salesEnd}, updated_at = now()
       WHERE id = ${id}
       RETURNING *
     `;
@@ -215,7 +215,7 @@ export const backofficeService = {
   },
 
   async closeSales(id: number): Promise<Result<EventRow>> {
-    const [event] = await sql<EventRow[]>`UPDATE events SET status = 'closed' WHERE id = ${id} RETURNING *`;
+    const [event] = await sql<EventRow[]>`UPDATE events SET status = 'closed', updated_at = now() WHERE id = ${id} RETURNING *`;
     if (!event) return fail(404, "event not found");
     return ok(event);
   },
@@ -224,7 +224,7 @@ export const backofficeService = {
   // dari tenggat & kuota (PRD §4.1), jadi event yang lewat sales_end_at tetap tertutup bagi customer.
   async reopenSales(id: number): Promise<Result<EventRow>> {
     const [event] = await sql<EventRow[]>`
-      UPDATE events SET status = 'published'
+      UPDATE events SET status = 'published', updated_at = now()
       WHERE id = ${id} AND status = 'closed'
         AND EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = events.id)
       RETURNING *
@@ -239,7 +239,7 @@ export const backofficeService = {
   async publishEvent(id: number): Promise<Result<EventRow>> {
     // event tanpa kategori tiket tidak bisa dijual, jadi tidak boleh di-publish (syarat dicek di SQL yang sama)
     const [event] = await sql<EventRow[]>`
-      UPDATE events SET status = 'published'
+      UPDATE events SET status = 'published', updated_at = now()
       WHERE id = ${id}
         AND EXISTS (SELECT 1 FROM ticket_categories tc WHERE tc.event_id = events.id)
       RETURNING *
@@ -483,7 +483,7 @@ export const backofficeService = {
   },
 
   // Verifikasi manual (cadangan Midtrans, PRD §4.6).
-  async verifyOrder(id: number, approve: boolean): Promise<Result<{ message: string }>> {
+  async verifyOrder(adminId: number, id: number, approve: boolean): Promise<Result<{ message: string }>> {
     // lock baris order supaya approve/reject tidak balapan dengan approve lain, webhook, atau expiry
     const result = await sql.begin(async (tx): Promise<Result<OrderRow>> => {
       await expireOrder(tx, id);
@@ -494,6 +494,7 @@ export const backofficeService = {
 
       if (approve) await markOrderPaid(tx, order);
       else await tx`UPDATE orders SET status = 'rejected' WHERE id = ${id}`;
+      await tx`UPDATE orders SET verified_by = ${adminId} WHERE id = ${id}`;
       return ok(order);
     });
     if (!result.ok) return result;
@@ -514,7 +515,7 @@ export const backofficeService = {
     });
   },
 
-  async scanValidate(qrCode: string): Promise<Result<{ message: string; ticket: ScannedTicket }>> {
+  async scanValidate(adminId: number, qrCode: string): Promise<Result<{ message: string; ticket: ScannedTicket }>> {
     try {
       verifyTicket(qrCode);
     } catch (err) {
@@ -538,7 +539,8 @@ export const backofficeService = {
 
     // atomik: dua scan bersamaan hanya satu yang lolos (yang lain dapat 0 baris)
     const [scanned] = await sql<{ id: number }[]>`
-      UPDATE tickets SET is_scanned = true WHERE id = ${ticket.id} AND is_scanned = false RETURNING id
+      UPDATE tickets SET is_scanned = true, scanned_at = now(), scanned_by = ${adminId}
+      WHERE id = ${ticket.id} AND is_scanned = false RETURNING id
     `;
     if (!scanned) return fail(409, "ticket already scanned", "ALREADY_SCANNED");
     return ok({

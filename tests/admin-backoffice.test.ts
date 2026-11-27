@@ -127,7 +127,7 @@ describe("GET /admin/dashboard", () => {
     await insertPaidOrder(customer.id, eventId, categoryId, 3, 10); // 7 hari sebelumnya
     await insertPaidOrder(customer.id, eventId, categoryId, 1, 20); // di luar 14 hari
     await insertPendingOrder(customer.id, eventId, categoryId, 4, 10);
-    await insertPendingOrder(customer.id, eventId, categoryId, 5, -1); // expired
+    await insertPendingOrder(customer.id, eventId, categoryId, 4, -1); // expired
     const [order] = await sql<{ id: number }[]>`SELECT id FROM orders WHERE event_id = ${eventId} AND status = 'paid' LIMIT 1`;
     await sql`INSERT INTO tickets (order_id, qr_code, owner_id, is_scanned) VALUES (${order.id}, ${`qr-dash-${order.id}`}, ${customer.id}, true)`;
 

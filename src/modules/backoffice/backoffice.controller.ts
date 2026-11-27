@@ -6,6 +6,7 @@ import { backofficeService } from "./backoffice.service";
 import { eventSchema, ticketCategorySchema, artistSchema, verifySchema, scanSchema } from "./backoffice.schema";
 
 const id = (c: Context<AppEnv>) => Number(c.req.param("id"));
+const adminId = (c: Context<AppEnv>) => c.get("adminId");
 
 // query angka opsional: kosong -> undefined, bukan bilangan bulat -> null
 const optionalInt = (raw: string | undefined) => {
@@ -20,7 +21,7 @@ export const backofficeController = {
   getEvent: async (c: Context<AppEnv>) => respond(c)(await backofficeService.getEvent(id(c))),
   createEvent: async (c: Context<AppEnv>) => {
     const body = validBody<z.output<typeof eventSchema>>(c);
-    return respond(c)(await backofficeService.createEvent(body), 201);
+    return respond(c)(await backofficeService.createEvent(adminId(c), body), 201);
   },
   updateEvent: async (c: Context<AppEnv>) => {
     const body = validBody<z.output<typeof eventSchema>>(c);
@@ -84,12 +85,12 @@ export const backofficeController = {
   },
   verifyOrder: async (c: Context<AppEnv>) => {
     const { approve } = validBody<z.output<typeof verifySchema>>(c);
-    return respond(c)(await backofficeService.verifyOrder(id(c), approve));
+    return respond(c)(await backofficeService.verifyOrder(adminId(c), id(c), approve));
   },
   refundOrder: async (c: Context<AppEnv>) => respond(c)(await backofficeService.refundOrder(id(c))),
 
   scanValidate: async (c: Context<AppEnv>) => {
     const { qr_code } = validBody<z.output<typeof scanSchema>>(c);
-    return respond(c)(await backofficeService.scanValidate(qr_code));
+    return respond(c)(await backofficeService.scanValidate(adminId(c), qr_code));
   },
 };
