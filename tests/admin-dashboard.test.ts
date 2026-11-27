@@ -44,6 +44,8 @@ describe("GET /admin/stats", () => {
     expect(res.body.orders_by_status.expired).toBe(n);
     const [row] = await sql`SELECT status FROM orders WHERE id = ${stale}`;
     expect(row.status).toBe("expired");
+    const [{ q }] = await sql<{ q: number }[]>`SELECT COALESCE(SUM(quantity), 0)::int AS q FROM orders WHERE status = 'paid'`;
+    expect(res.body.ticket_sold).toBe(q);
     const total = Object.values(res.body.orders_by_status as Record<string, number>).reduce((a, b) => a + b, 0);
     expect(total).toBe(res.body.order_count);
   });

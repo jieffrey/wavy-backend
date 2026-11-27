@@ -70,8 +70,8 @@ export const adminService = {
         (SELECT COUNT(*) FROM orders)::int AS order_count,
         (SELECT COUNT(*) FROM orders WHERE status = 'paid')::int AS paid_order_count,
         (SELECT COALESCE(SUM(total_price), 0) FROM orders WHERE status = 'paid')::float8 AS revenue,
-        -- tiket terjual = tiket order paid (sama dengan ticket_categories.sold yang dipelihara approve/refund)
-        (SELECT COALESCE(SUM(sold), 0) FROM ticket_categories)::int AS ticket_sold
+        -- tiket terjual = jumlah tiket di order paid (sumber sama dengan grafik harian & event terlaris)
+        (SELECT COALESCE(SUM(quantity), 0) FROM orders WHERE status = 'paid')::int AS ticket_sold
     `;
     const byStatus = await sql<{ status: string; count: number }[]>`
       SELECT status, COUNT(*)::int AS count FROM orders GROUP BY status
