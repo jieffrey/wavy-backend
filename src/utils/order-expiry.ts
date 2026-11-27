@@ -27,3 +27,9 @@ export const expireByOrganizer = (db: Db, organizerId: number) => db`
   WHERE e.id = o.event_id AND e.organizer_id = ${organizerId}
     AND o.status = 'pending_payment' AND o.expires_at <= now()
 `;
+
+// dashboard admin: hitungan per status harus melihat order kedaluwarsa sebagai expired
+export const expireAll = (db: Db) => db`
+  UPDATE orders SET status = 'expired'
+  WHERE status = 'pending_payment' AND expires_at <= now()
+`;
