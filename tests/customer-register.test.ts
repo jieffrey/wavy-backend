@@ -6,7 +6,6 @@ mock.module("../src/utils/email", () => ({
   sendOtpEmail: async (to: string) => {
     sentTo.push(to);
   },
-  sendOrganizerVerificationEmail: async () => {},
 }));
 
 const { call, sql } = await import("./helpers");

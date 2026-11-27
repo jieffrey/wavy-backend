@@ -12,7 +12,6 @@ type ConcertRow = {
   poster_url: string;
   status: string;
   artist_name: string;
-  organizer_name: string;
   min_price: string | null;
   remaining: number;
   sales_start_at: Date | null;
@@ -20,7 +19,6 @@ type ConcertRow = {
 };
 type ConcertDetailRow = {
   id: number;
-  organizer_id: number;
   artist_id: number;
   title: string;
   category: string;
@@ -37,7 +35,6 @@ type ConcertDetailRow = {
   genre: string;
   photo_url: string;
   bio: string;
-  organizer_name: string;
   countdown_seconds: number;
   sales_start_at: Date | null;
   sales_end_at: Date | null;
@@ -67,12 +64,11 @@ export const concertService = {
     const rows = await sql<(ConcertRow & { now: Date })[]>`
         SELECT e.id, e.title, e.category, e.venue, e.date, e.poster_url, e.status,
                e.sales_start_at, e.sales_end_at, now() AS now,
-               a.name AS artist_name, o.name AS organizer_name,
+               a.name AS artist_name,
                (SELECT MIN(tc.price) FROM ticket_categories tc WHERE tc.event_id = e.id) AS min_price,
                (SELECT COALESCE(SUM(${remainingQuotaSql(sql)}), 0)::int FROM ticket_categories tc WHERE tc.event_id = e.id) AS remaining
         FROM events e
         JOIN artists a ON a.id = e.artist_id
-        JOIN organizers o ON o.id = e.organizer_id
         WHERE e.status IN ('published', 'closed') -- draft tersembunyi; closed tampil dengan sales_status
           ${category ? sql`AND e.category = ${category}` : sql``}
           ${q ? sql`AND (e.title ILIKE ${`%${q}%`} OR a.name ILIKE ${`%${q}%`})` : sql``}
@@ -97,11 +93,10 @@ export const concertService = {
     >
   > {
     const [event] = await sql<ConcertDetailRow[]>`
-      SELECT e.*, a.name AS artist_name, a.genre, a.photo_url, a.bio, o.name AS organizer_name,
+      SELECT e.*, a.name AS artist_name, a.genre, a.photo_url, a.bio,
         GREATEST(EXTRACT(EPOCH FROM (e.date - now()))::int, 0) AS countdown_seconds, now() AS now
       FROM events e
       JOIN artists a ON a.id = e.artist_id
-      JOIN organizers o ON o.id = e.organizer_id
       WHERE e.id = ${id} AND e.status IN ('published', 'closed')
     `;
     // closed tetap tampil (sales_status = closed) supaya link lama tidak 404; draft tetap tersembunyi

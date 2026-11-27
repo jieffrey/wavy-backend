@@ -147,8 +147,8 @@ describe("sales_status di daftar & detail konser", () => {
   });
 
   test("event di-close manual: detail tetap 200 dengan sales_status closed, dan muncul di daftar sebagai closed", async () => {
-    const { organizer, eventId } = await createEventWithCategory();
-    const closed = await call("POST", `/organizer/events/${eventId}/close-sales`, organizer.token);
+    const { admin, eventId } = await createEventWithCategory();
+    const closed = await call("POST", `/admin/events/${eventId}/close-sales`, admin.token);
     expect(closed.status).toBe(200);
 
     const detail = await call("GET", `/concerts/${eventId}`);

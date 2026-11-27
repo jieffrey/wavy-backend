@@ -21,11 +21,9 @@ export const expireByCustomer = (db: Db, customerId: number) => db`
   WHERE customer_id = ${customerId} AND status = 'pending_payment' AND expires_at <= now()
 `;
 
-export const expireByOrganizer = (db: Db, organizerId: number) => db`
-  UPDATE orders o SET status = 'expired'
-  FROM events e
-  WHERE e.id = o.event_id AND e.organizer_id = ${organizerId}
-    AND o.status = 'pending_payment' AND o.expires_at <= now()
+export const expireByEvent = (db: Db, eventId: number) => db`
+  UPDATE orders SET status = 'expired'
+  WHERE event_id = ${eventId} AND status = 'pending_payment' AND expires_at <= now()
 `;
 
 // dashboard admin: hitungan per status harus melihat order kedaluwarsa sebagai expired

@@ -12,7 +12,7 @@ const notAfter = (a: string | null | undefined, b: string) => !a || new Date(a) 
 export const eventSchema = z
   .object({
     title: nonEmpty,
-    artist_id: z.number(),
+    artist_id: z.number().int().positive(),
     category: z.string(),
     venue: z.string(),
     date: z.string(),
@@ -41,7 +41,7 @@ export const ticketCategorySchema = z.object({
 });
 
 export const artistSchema = z.object({
-  name: z.string(),
+  name: nonEmpty,
   genre: z.string(),
   photo_url: z.string(),
   bio: z.string(),

@@ -23,16 +23,15 @@ async function order(eventId: number, categoryId: number, status: string, qty: n
 }
 
 describe("GET /admin/stats", () => {
-  test("KPI per status organizer + order per status; pending kedaluwarsa dihitung expired", async () => {
+  test("KPI platform + order per status; pending kedaluwarsa dihitung expired", async () => {
     const admin = await adminToken();
     const ev = await createEventWithCategory({ quota: 50 });
     const stale = await order(ev.eventId, ev.categoryId, "pending_payment", 1, 100000, { expired: true });
     const res = await call("GET", "/admin/stats", admin);
     expect(res.status).toBe(200);
+    expect(res.body).not.toHaveProperty("organizer_count");
     for (const key of [
-      "active_organizer_count",
-      "pending_organizer_count",
-      "suspended_organizer_count",
+      "event_count",
       "customer_count",
       "published_event_count",
       "order_count",
@@ -100,7 +99,7 @@ describe("GET /admin/stats/top-events & /admin/orders/recent", () => {
     const res = await call("GET", "/admin/stats/top-events?limit=2", admin);
     expect(res.status).toBe(200);
     expect(res.body.map((e: { id: number }) => e.id)).toEqual([b.eventId, a.eventId]);
-    expect(res.body[1]).toMatchObject({ tickets_sold: 90, revenue: 9_000_000, organizer_name: "EO Test" });
+    expect(res.body[1]).toMatchObject({ tickets_sold: 90, revenue: 9_000_000, artist_name: "Artist" });
   });
 
   test("order terbaru paling baru di atas, dengan nama event & pembeli", async () => {

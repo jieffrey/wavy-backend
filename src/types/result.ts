@@ -4,18 +4,16 @@ import type { AppEnv } from "../middleware/auth.middleware";
 
 // Kode error aturan bisnis (PRD §4) yang dibaca frontend.
 // Respons: { error: { code, message, ...details } }. Error lain tetap { error: "pesan" }.
-// details = data tambahan untuk kode tertentu (mis. ORGANIZER_REJECTED membawa reason).
+// details = data tambahan untuk kode tertentu (mis. field pada VALIDATION_ERROR).
 export type ErrorCode =
   | "SALES_CLOSED"
   | "SALES_NOT_STARTED"
   | "SALES_ENDED"
   | "QUOTA_EXCEEDED"
   | "ORDER_EXPIRED"
-  | "ORGANIZER_SUSPENDED"
   | "EMAIL_REGISTERED"
-  | "ORGANIZER_PENDING"
-  | "ORGANIZER_REJECTED"
-  | "INVALID_STATUS_TRANSITION"
+  | "EVENT_NOT_CLOSED"
+  | "ARTIST_HAS_EVENTS"
   | "INVALID_QUANTITY"
   | "VALIDATION_ERROR"
   | "NO_TICKET_CATEGORY"
@@ -25,7 +23,6 @@ export type ErrorCode =
   | "INVALID_QR"
   | "QR_EXPIRED"
   | "TICKET_NOT_FOUND"
-  | "WRONG_ORGANIZER"
   | "ALREADY_SCANNED"
   | "EVENT_ENDED"
   | "PAYMENT_NOT_CONFIGURED"
