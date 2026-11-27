@@ -2,7 +2,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { sql } from "../../db/client";
 import { ok, fail, type Result } from "../../types/result";
-import { expireByOrganizer } from "../../utils/order-expiry";
+import { expireAll, expireByOrganizer } from "../../utils/order-expiry";
+
+export type OrderStatus = "pending_payment" | "paid" | "expired" | "rejected" | "refunded";
 import { sendOrganizerApprovedEmail, sendOrganizerRejectedEmail } from "../../utils/email";
 
 export type OrganizerStatus = "active" | "suspended" | "pending_verification" | "rejected";
@@ -51,18 +53,100 @@ export const adminService = {
     return ok(admin);
   },
 
+  // KPI platform (dashboard admin). Order kedaluwarsa di-expire dulu (lazy expiry, PRD §4.4)
+  // supaya hitungan per status tidak memasukkan pending yang sudah lewat batas bayar.
   async stats() {
+    await expireAll(sql);
     const [counts] = await sql`
       SELECT
         (SELECT COUNT(*) FROM organizers)::int AS organizer_count,
+        (SELECT COUNT(*) FROM organizers WHERE status = 'active')::int AS active_organizer_count,
         (SELECT COUNT(*) FROM organizers WHERE status = 'pending_verification')::int AS pending_organizer_count,
+        (SELECT COUNT(*) FROM organizers WHERE status = 'suspended')::int AS suspended_organizer_count,
+        (SELECT COUNT(*) FROM organizers WHERE status = 'rejected')::int AS rejected_organizer_count,
         (SELECT COUNT(*) FROM customers)::int AS customer_count,
         (SELECT COUNT(*) FROM events)::int AS event_count,
+        (SELECT COUNT(*) FROM events WHERE status = 'published')::int AS published_event_count,
         (SELECT COUNT(*) FROM orders)::int AS order_count,
+        (SELECT COUNT(*) FROM orders WHERE status = 'paid')::int AS paid_order_count,
         (SELECT COALESCE(SUM(total_price), 0) FROM orders WHERE status = 'paid')::float8 AS revenue,
+        -- tiket terjual = tiket order paid (sama dengan ticket_categories.sold yang dipelihara approve/refund)
         (SELECT COALESCE(SUM(sold), 0) FROM ticket_categories)::int AS ticket_sold
     `;
-    return ok(counts);
+    const byStatus = await sql<{ status: string; count: number }[]>`
+      SELECT status, COUNT(*)::int AS count FROM orders GROUP BY status
+    `;
+    const orders_by_status: Record<OrderStatus, number> = {
+      pending_payment: 0,
+      paid: 0,
+      expired: 0,
+      rejected: 0,
+      refunded: 0,
+    };
+    for (const r of byStatus) if (r.status in orders_by_status) orders_by_status[r.status as OrderStatus] = r.count;
+    return ok({ ...counts, orders_by_status });
+  },
+
+  // pendapatan & tiket per hari (WIB) dari order paid, berdasarkan paid_at; hari tanpa penjualan = 0
+  async dailyStats(days: number) {
+    const rows = await sql<{ date: string; orders: number; tickets: number; revenue: number }[]>`
+      WITH days AS (
+        SELECT generate_series(
+          (now() AT TIME ZONE 'Asia/Jakarta')::date - ${days - 1}::int,
+          (now() AT TIME ZONE 'Asia/Jakarta')::date,
+          interval '1 day'
+        )::date AS d
+      ),
+      paid AS (
+        SELECT (paid_at AT TIME ZONE 'Asia/Jakarta')::date AS d, quantity, total_price
+        FROM orders
+        WHERE status = 'paid'
+          AND paid_at >= ((now() AT TIME ZONE 'Asia/Jakarta')::date - ${days - 1}::int) AT TIME ZONE 'Asia/Jakarta'
+      )
+      SELECT to_char(days.d, 'YYYY-MM-DD') AS date,
+        COUNT(paid.d)::int AS orders,
+        COALESCE(SUM(paid.quantity), 0)::int AS tickets,
+        COALESCE(SUM(paid.total_price), 0)::float8 AS revenue
+      FROM days LEFT JOIN paid ON paid.d = days.d
+      GROUP BY days.d
+      ORDER BY days.d
+    `;
+    return ok(rows);
+  },
+
+  // event terlaris: tiket terjual (order paid) terbanyak, seri = pendapatan lalu id
+  async topEvents(limit: number) {
+    return ok(
+      await sql`
+        SELECT e.id, e.title, e.status, o.name AS organizer_name,
+          COALESCE(SUM(ord.quantity), 0)::int AS tickets_sold,
+          COALESCE(SUM(ord.total_price), 0)::float8 AS revenue
+        FROM events e
+        JOIN organizers o ON o.id = e.organizer_id
+        JOIN orders ord ON ord.event_id = e.id AND ord.status = 'paid'
+        GROUP BY e.id, o.name
+        ORDER BY tickets_sold DESC, revenue DESC, e.id DESC
+        LIMIT ${limit}
+      `
+    );
+  },
+
+  // order terbaru di seluruh platform
+  async recentOrders(limit: number) {
+    await expireAll(sql);
+    return ok(
+      await sql`
+        SELECT ord.id, ord.status, ord.quantity, ord.total_price::float8 AS total_price, ord.created_at, ord.paid_at,
+          e.id AS event_id, e.title AS event_title, o.name AS organizer_name,
+          COALESCE(NULLIF(c.name, ''), c.email) AS customer_name
+        FROM orders ord
+        JOIN events e ON e.id = ord.event_id
+        JOIN organizers o ON o.id = e.organizer_id
+        JOIN customers c ON c.id = ord.customer_id
+        ORDER BY ord.created_at DESC NULLS LAST, ord.id DESC
+        LIMIT ${limit}
+      `
+    );
   },
 
   async listOrganizers(status?: OrganizerStatus) {

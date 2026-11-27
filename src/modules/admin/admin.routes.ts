@@ -19,6 +19,9 @@ adminRoutes.use("*", adminAuth);
 
 adminRoutes.get("/me", adminController.me);
 adminRoutes.get("/stats", adminController.stats);
+adminRoutes.get("/stats/daily", adminController.dailyStats);
+adminRoutes.get("/stats/top-events", adminController.topEvents);
+adminRoutes.get("/orders/recent", adminController.recentOrders);
 adminRoutes.get("/organizers", adminController.listOrganizers);
 adminRoutes.get("/organizers/:id", adminController.getOrganizer);
 adminRoutes.patch(
