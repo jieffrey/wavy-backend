@@ -2,7 +2,31 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { sql } from "../../db/client";
 import { ok, fail, type Result } from "../../types/result";
-import { expireByOrganizer } from "../../utils/order-expiry";
+import { expireAll, expireByOrganizer } from "../../utils/order-expiry";
+
+export type OrderStatus = "pending_payment" | "paid" | "expired" | "rejected" | "refunded";
+import { sendOrganizerApprovedEmail, sendOrganizerRejectedEmail } from "../../utils/email";
+
+export type OrganizerStatus = "active" | "suspended" | "pending_verification" | "rejected";
+
+// Transisi status organizer yang boleh dilakukan admin.
+//   pending_verification -> active (setujui) | rejected (tolak + alasan)
+//   active <-> suspended
+// rejected tidak bisa diaktifkan langsung: organizer mengajukan ulang lewat /auth/organizer/register.
+const TRANSITIONS: Record<OrganizerStatus, readonly OrganizerStatus[]> = {
+  pending_verification: ["active", "rejected"],
+  active: ["suspended"],
+  suspended: ["active"],
+  rejected: [],
+};
+
+export type SetOrganizerStatusData = {
+  message: string;
+  status: OrganizerStatus;
+  previous_status: OrganizerStatus;
+  // email persetujuan/penolakan; false = gagal kirim (status tetap tersimpan), null = tidak ada email
+  email_sent: boolean | null;
+};
 
 type AdminRow = { id: number; name: string; email: string; password: string };
 
@@ -29,28 +53,114 @@ export const adminService = {
     return ok(admin);
   },
 
+  // KPI platform (dashboard admin). Order kedaluwarsa di-expire dulu (lazy expiry, PRD §4.4)
+  // supaya hitungan per status tidak memasukkan pending yang sudah lewat batas bayar.
   async stats() {
+    await expireAll(sql);
     const [counts] = await sql`
       SELECT
         (SELECT COUNT(*) FROM organizers)::int AS organizer_count,
+        (SELECT COUNT(*) FROM organizers WHERE status = 'active')::int AS active_organizer_count,
+        (SELECT COUNT(*) FROM organizers WHERE status = 'pending_verification')::int AS pending_organizer_count,
+        (SELECT COUNT(*) FROM organizers WHERE status = 'suspended')::int AS suspended_organizer_count,
+        (SELECT COUNT(*) FROM organizers WHERE status = 'rejected')::int AS rejected_organizer_count,
         (SELECT COUNT(*) FROM customers)::int AS customer_count,
         (SELECT COUNT(*) FROM events)::int AS event_count,
+        (SELECT COUNT(*) FROM events WHERE status = 'published')::int AS published_event_count,
         (SELECT COUNT(*) FROM orders)::int AS order_count,
+        (SELECT COUNT(*) FROM orders WHERE status = 'paid')::int AS paid_order_count,
         (SELECT COALESCE(SUM(total_price), 0) FROM orders WHERE status = 'paid')::float8 AS revenue,
-        (SELECT COALESCE(SUM(sold), 0) FROM ticket_categories)::int AS ticket_sold
+        -- tiket terjual = jumlah tiket di order paid (sumber sama dengan grafik harian & event terlaris)
+        (SELECT COALESCE(SUM(quantity), 0) FROM orders WHERE status = 'paid')::int AS ticket_sold
     `;
-    return ok(counts);
+    const byStatus = await sql<{ status: string; count: number }[]>`
+      SELECT status, COUNT(*)::int AS count FROM orders GROUP BY status
+    `;
+    const orders_by_status: Record<OrderStatus, number> = {
+      pending_payment: 0,
+      paid: 0,
+      expired: 0,
+      rejected: 0,
+      refunded: 0,
+    };
+    for (const r of byStatus) if (r.status in orders_by_status) orders_by_status[r.status as OrderStatus] = r.count;
+    return ok({ ...counts, orders_by_status });
   },
 
-  async listOrganizers() {
+  // pendapatan & tiket per hari (WIB) dari order paid, berdasarkan paid_at; hari tanpa penjualan = 0
+  async dailyStats(days: number) {
+    const rows = await sql<{ date: string; orders: number; tickets: number; revenue: number }[]>`
+      WITH days AS (
+        SELECT generate_series(
+          (now() AT TIME ZONE 'Asia/Jakarta')::date - ${days - 1}::int,
+          (now() AT TIME ZONE 'Asia/Jakarta')::date,
+          interval '1 day'
+        )::date AS d
+      ),
+      paid AS (
+        SELECT (paid_at AT TIME ZONE 'Asia/Jakarta')::date AS d, quantity, total_price
+        FROM orders
+        WHERE status = 'paid'
+          AND paid_at >= ((now() AT TIME ZONE 'Asia/Jakarta')::date - ${days - 1}::int) AT TIME ZONE 'Asia/Jakarta'
+      )
+      SELECT to_char(days.d, 'YYYY-MM-DD') AS date,
+        COUNT(paid.d)::int AS orders,
+        COALESCE(SUM(paid.quantity), 0)::int AS tickets,
+        COALESCE(SUM(paid.total_price), 0)::float8 AS revenue
+      FROM days LEFT JOIN paid ON paid.d = days.d
+      GROUP BY days.d
+      ORDER BY days.d
+    `;
+    return ok(rows);
+  },
+
+  // event terlaris: tiket terjual (order paid) terbanyak, seri = pendapatan lalu id
+  async topEvents(limit: number) {
+    return ok(
+      await sql`
+        SELECT e.id, e.title, e.status, o.name AS organizer_name,
+          COALESCE(SUM(ord.quantity), 0)::int AS tickets_sold,
+          COALESCE(SUM(ord.total_price), 0)::float8 AS revenue
+        FROM events e
+        JOIN organizers o ON o.id = e.organizer_id
+        JOIN orders ord ON ord.event_id = e.id AND ord.status = 'paid'
+        GROUP BY e.id, o.name
+        ORDER BY tickets_sold DESC, revenue DESC, e.id DESC
+        LIMIT ${limit}
+      `
+    );
+  },
+
+  // order terbaru di seluruh platform
+  async recentOrders(limit: number) {
+    await expireAll(sql);
+    return ok(
+      await sql`
+        SELECT ord.id, ord.status, ord.quantity, ord.total_price::float8 AS total_price, ord.created_at, ord.paid_at,
+          e.id AS event_id, e.title AS event_title, o.name AS organizer_name,
+          COALESCE(NULLIF(c.name, ''), c.email) AS customer_name
+        FROM orders ord
+        JOIN events e ON e.id = ord.event_id
+        JOIN organizers o ON o.id = e.organizer_id
+        JOIN customers c ON c.id = ord.customer_id
+        ORDER BY ord.created_at DESC NULLS LAST, ord.id DESC
+        LIMIT ${limit}
+      `
+    );
+  },
+
+  async listOrganizers(status?: OrganizerStatus) {
     return ok(
       await sql`
         SELECT o.id, o.name, o.email, o.status, o.created_at, o.whatsapp, o.event_types, o.social_link,
+          o.email_verified_at, o.reviewed_at, o.rejection_reason,
           (SELECT COUNT(*) FROM events e WHERE e.organizer_id = o.id)::int AS event_count,
           (SELECT COALESCE(SUM(o2.total_price), 0) FROM orders o2 JOIN events e2 ON e2.id = o2.event_id
             WHERE e2.organizer_id = o.id AND o2.status = 'paid')::float8 AS revenue
         FROM organizers o
-        ORDER BY o.id DESC
+        ${status ? sql`WHERE o.status = ${status}` : sql``}
+        -- antrean verifikasi: yang paling lama menunggu di atas
+        ORDER BY ${status === "pending_verification" ? sql`o.created_at ASC NULLS FIRST, o.id ASC` : sql`o.id DESC`}
       `
     );
   },
@@ -58,7 +168,8 @@ export const adminService = {
   // profil organizer + daftar event (tiket terjual, kuota, pendapatan) + ringkasan penjualan
   async getOrganizer(id: number) {
     const [organizer] = await sql`
-      SELECT id, name, email, status, created_at, whatsapp, event_types, social_link
+      SELECT id, name, email, status, created_at, whatsapp, event_types, social_link,
+        email_verified_at, reviewed_at, rejection_reason
       FROM organizers WHERE id = ${id}
     `;
     if (!organizer) return fail(404, "organizer not found");
@@ -86,11 +197,54 @@ export const adminService = {
     return ok({ organizer, events, summary });
   },
 
-  async setOrganizerStatus(id: number, status: string): Promise<Result<{ message: string }>> {
-    if (!["active", "suspended"].includes(status)) return fail(400, "invalid status");
-    const [org] = await sql<{ id: number }[]>`UPDATE organizers SET status = ${status} WHERE id = ${id} RETURNING id`;
-    if (!org) return fail(404, "organizer not found");
-    return ok({ message: `organizer ${status}` });
+  async setOrganizerStatus(
+    id: number,
+    next: Exclude<OrganizerStatus, "pending_verification">,
+    reason?: string
+  ): Promise<Result<SetOrganizerStatusData>> {
+    if (!["active", "suspended", "rejected"].includes(next)) return fail(400, "invalid status");
+    const trimmed = reason?.trim() ?? "";
+    if (next === "rejected" && trimmed.length < 10)
+      return fail(400, "reason wajib diisi minimal 10 karakter saat menolak organizer", "VALIDATION_ERROR");
+
+    // row lock: dua admin yang menekan Setujui/Tolak bersamaan tidak boleh sama-sama lolos
+    const res = await sql.begin(async (tx) => {
+      const [org] = await tx<{ id: number; name: string; email: string; status: OrganizerStatus }[]>`
+        SELECT id, name, email, status FROM organizers WHERE id = ${id} FOR UPDATE
+      `;
+      if (!org) return fail(404, "organizer not found");
+      if (!(TRANSITIONS[org.status] ?? []).includes(next)) {
+        return fail(409, `status organizer tidak bisa diubah dari ${org.status} ke ${next}`, "INVALID_STATUS_TRANSITION", {
+          from: org.status,
+          to: next,
+        });
+      }
+      const review = org.status === "pending_verification";
+      await tx`
+        UPDATE organizers SET
+          status = ${next},
+          rejection_reason = ${next === "rejected" ? trimmed : null},
+          reviewed_at = ${review ? tx`now()` : tx`reviewed_at`}
+        WHERE id = ${id}
+      `;
+      return ok({ org, review });
+    });
+    if (!res.ok) return res;
+    const { org, review } = res.data;
+
+    // email dikirim setelah commit; kegagalan SMTP tidak membatalkan keputusan admin
+    let email_sent: boolean | null = null;
+    if (review) {
+      try {
+        if (next === "active") await sendOrganizerApprovedEmail(org.email, org.name);
+        else await sendOrganizerRejectedEmail(org.email, org.name, trimmed);
+        email_sent = true;
+      } catch (e) {
+        console.error(`gagal kirim email status organizer #${id}:`, e);
+        email_sent = false;
+      }
+    }
+    return ok({ message: `organizer ${next}`, status: next, previous_status: org.status, email_sent });
   },
 
   async listEvents() {

@@ -11,6 +11,7 @@ type OrganizerRow = {
   email: string;
   password: string;
   status: string;
+  rejection_reason: string | null;
 };
 type CustomerRow = { id: number; name: string | null; email: string };
 type OtpRow = { id: number; expires_at: Date };
@@ -39,12 +40,27 @@ export const authService = {
       if (!rateLimit(`login:${email}`, 5, 15 * 60 * 1000)) return fail(429, "too many login attempts, try again later");
       return fail(401, "invalid email or password");
     }
+    // frontend menampilkan penjelasan per status dari code (bukan dari teks message)
     if (organizer.status === "pending_verification") {
-      return fail(403, "akun Anda masih dalam proses verifikasi kerja sama. Tim kami akan menghubungi Anda via WhatsApp/Email.");
+      return fail(
+        403,
+        "akun Anda masih dalam proses verifikasi kerja sama. Tim kami akan menghubungi Anda via WhatsApp/Email.",
+        "ORGANIZER_PENDING"
+      );
+    }
+    if (organizer.status === "rejected") {
+      return fail(403, "pengajuan kerja sama Anda belum disetujui.", "ORGANIZER_REJECTED", {
+        reason: organizer.rejection_reason ?? "",
+      });
     }
     if (organizer.status === "suspended") {
-      return fail(403, "akun organizer Anda sedang ditangguhkan. Hubungi admin untuk informasi lebih lanjut.");
+      return fail(
+        403,
+        "akun organizer Anda sedang ditangguhkan. Hubungi admin untuk informasi lebih lanjut.",
+        "ORGANIZER_SUSPENDED"
+      );
     }
+    if (organizer.status !== "active") return fail(403, "akun organizer tidak aktif");
     return ok({
       access_token: sign({ organizer_id: organizer.id }),
       organizer: { id: organizer.id, name: organizer.name, email: organizer.email },
@@ -59,13 +75,30 @@ export const authService = {
     event_types: string;
     social_link?: string;
   }): Promise<Result<OrganizerRegisterData>> {
-    const [existing] = await sql<{ id: number }[]>`SELECT id FROM organizers WHERE email = ${input.email}`;
-    if (existing) return fail(409, "email sudah terdaftar sebagai organizer");
-
-    await sql`
-      INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link)
-      VALUES (${input.organizer_name}, ${input.email}, ${bcrypt.hashSync(input.password, 10)}, 'pending_verification', ${input.whatsapp}, ${input.event_types}, ${input.social_link ?? ""})
-    `;
+    const password = bcrypt.hashSync(input.password, 10);
+    const saved = await sql.begin(async (tx) => {
+      const [existing] = await tx<{ id: number; status: string }[]>`
+        SELECT id, status FROM organizers WHERE email = ${input.email} FOR UPDATE
+      `;
+      if (existing && existing.status !== "rejected") return false;
+      if (existing) {
+        // pengajuan yang ditolak boleh diajukan ulang dengan email yang sama -> kembali ke antrean admin
+        await tx`
+          UPDATE organizers SET
+            name = ${input.organizer_name}, password = ${password}, status = 'pending_verification',
+            whatsapp = ${input.whatsapp}, event_types = ${input.event_types}, social_link = ${input.social_link ?? ""},
+            created_at = now(), email_verified_at = NULL, reviewed_at = NULL, rejection_reason = NULL
+          WHERE id = ${existing.id}
+        `;
+      } else {
+        await tx`
+          INSERT INTO organizers (name, email, password, status, whatsapp, event_types, social_link, created_at)
+          VALUES (${input.organizer_name}, ${input.email}, ${password}, 'pending_verification', ${input.whatsapp}, ${input.event_types}, ${input.social_link ?? ""}, now())
+        `;
+      }
+      return true;
+    });
+    if (!saved) return fail(409, "email sudah terdaftar sebagai organizer");
 
     // Send verification OTP to organizer email
     const code = Math.floor(100000 + Math.random() * 900000).toString();
@@ -161,14 +194,16 @@ export const authService = {
 
     await sql`UPDATE otp_codes SET used = true WHERE id = ${otp.id}`;
 
-    // Activate the organizer account
+    // OTP hanya membuktikan email milik pendaftar; akun tetap pending_verification
+    // sampai admin menyetujui (PATCH /admin/organizers/:id).
     const result = await sql`
-      UPDATE organizers SET status = 'active' WHERE email = ${email} AND status = 'pending_verification'
+      UPDATE organizers SET email_verified_at = COALESCE(email_verified_at, now())
+      WHERE email = ${email} AND status = 'pending_verification'
     `;
     if (result.count === 0) {
-      return fail(404, "organizer tidak ditemukan atau sudah terverifikasi");
+      return fail(404, "organizer tidak ditemukan atau sudah diproses");
     }
 
-    return ok({ message: "Verifikasi berhasil! Akun Anda telah aktif. Silakan login." });
+    return ok({ message: "Email terverifikasi. Akun Anda menunggu persetujuan admin; kami kirim email setelah ditinjau." });
   },
 };
