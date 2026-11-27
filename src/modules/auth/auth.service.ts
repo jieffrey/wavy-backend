@@ -10,35 +10,15 @@ type OtpRow = { id: number; expires_at: Date };
 export type OtpData = {
   access_token: string;
   customer: { id: number; name: string | null; email: string };
+  /** true = akun baru / nama belum diisi; klien menampilkan langkah "isi nama" lalu PATCH /me */
+  needs_name: boolean;
 };
 
 const sign = (payload: object) => jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "24h" });
 
 export const authService = {
-  // Daftar customer (web & mobile): simpan nama, lalu kirim OTP seperti login.
-  // Email yang sudah punya nama = sudah terdaftar -> 409 EMAIL_REGISTERED (arahkan ke Masuk).
-  // Email yang dulu dibuat lewat login OTP tanpa nama boleh "mendaftar" untuk mengisi namanya.
-  async registerCustomer(name: string, email: string): Promise<Result<{ message: string }>> {
-    const [existing] = await sql<{ id: number; name: string | null }[]>`
-      SELECT id, name FROM customers WHERE email = ${email}
-    `;
-    if (existing?.name?.trim()) return fail(409, "email sudah terdaftar, silakan masuk", "EMAIL_REGISTERED");
-    const [recent] = await sql<{ c: number }[]>`
-      SELECT COUNT(*)::int AS c FROM otp_codes
-      WHERE email = ${email} AND created_at > LOCALTIMESTAMP - interval '5 minutes'
-    `;
-    if (recent.c >= 3) return fail(429, "too many OTP requests, try again later");
-    if (existing) await sql`UPDATE customers SET name = ${name} WHERE id = ${existing.id}`;
-    else await sql`INSERT INTO customers (name, email) VALUES (${name}, ${email})`;
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    await sql`
-      INSERT INTO otp_codes (email, code, expires_at)
-      VALUES (${email}, ${code}, LOCALTIMESTAMP + interval '5 minutes')
-    `;
-    await sendOtpEmail(email, code);
-    return ok({ message: "OTP sent to email" });
-  },
-
+  // Satu alur masuk/daftar (web & mobile): email -> OTP. Email baru = akun dibuat tanpa nama;
+  // verify-otp mengembalikan needs_name: true sampai nama diisi lewat PATCH /me.
   async sendOtp(email: string): Promise<Result<{ message: string }>> {
     const [recent] = await sql<{ c: number }[]>`
       SELECT COUNT(*)::int AS c FROM otp_codes
@@ -74,6 +54,7 @@ export const authService = {
     return ok({
       access_token: sign({ customer_id: customer.id }),
       customer: { id: customer.id, name: customer.name, email: customer.email },
+      needs_name: !customer.name?.trim(),
     });
   },
 

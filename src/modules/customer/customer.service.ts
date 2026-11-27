@@ -1,7 +1,7 @@
 import { sql } from "../../db/client";
 import { ok, fail, type Result } from "../../types/result";
 import type { z } from "zod";
-import type { createOrderSchema } from "./customer.schema";
+import type { createOrderSchema, profileSchema } from "./customer.schema";
 import { expireByCategory, expireByCustomer, expireOrder } from "../../utils/order-expiry";
 import { remainingQuotaSql } from "../../utils/quota";
 import { categorySalesStatus, salesError, salesStatus, type SalesWindow } from "../../utils/sales-status";
@@ -34,6 +34,13 @@ type OrderViewRow = OrderRow & {
   venue: string | null;
 };
 type OrderInput = z.output<typeof createOrderSchema>;
+type ProfileInput = z.output<typeof profileSchema>;
+type Profile = { id: number; email: string; name: string | null; phone: string; needs_name: boolean };
+
+const profileOf = (c: { id: number; email: string; name: string | null; phone: string }): Profile => ({
+  ...c,
+  needs_name: !c.name?.trim(),
+});
 type EventSalesRow = SalesWindow & { now: Date; remaining: number };
 
 // LEFT JOIN: order lama tetap tampil walau event/kategorinya sudah tidak ada
@@ -114,6 +121,24 @@ export const customerService = {
         ORDER BY o.created_at DESC
       `
     );
+  },
+
+  async profile(customerId: number): Promise<Result<Profile>> {
+    const [c] = await sql<{ id: number; email: string; name: string | null; phone: string }[]>`
+      SELECT id, email, name, phone FROM customers WHERE id = ${customerId}
+    `;
+    if (!c) return fail(404, "customer not found");
+    return ok(profileOf(c));
+  },
+
+  async updateProfile(customerId: number, input: ProfileInput): Promise<Result<Profile>> {
+    const [c] = await sql<{ id: number; email: string; name: string | null; phone: string }[]>`
+      UPDATE customers SET name = ${input.name}, phone = ${input.phone ?? sql`phone`}
+      WHERE id = ${customerId}
+      RETURNING id, email, name, phone
+    `;
+    if (!c) return fail(404, "customer not found");
+    return ok(profileOf(c));
   },
 
   async level(customerId: number) {

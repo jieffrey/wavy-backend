@@ -74,8 +74,7 @@ Contoh: `curl -H "Authorization: Bearer eyJ..." ...`
 | # | Method | Path | Auth | Deskripsi |
 |---|--------|------|------|-----------|
 | 1.1 | GET | `/health` | — | Cek server hidup, respon `{ "status": "ok" }` |
-| 1.2a | POST | `/auth/register` | — | Daftar customer `{ name, email }` → simpan nama + kirim OTP (lanjut `/auth/verify-otp`). Email yang sudah punya nama → `409 EMAIL_REGISTERED` |
-| 1.3 | POST | `/auth/send-otp` | — | Kirim OTP ke email customer |
+| 1.3 | POST | `/auth/send-otp` | — | Kirim OTP ke email customer (email baru = akun dibuat tanpa nama). Satu alur untuk masuk & daftar |
 | 1.4 | POST | `/auth/verify-otp` | — | Verifikasi OTP → token customer |
 
 **1.3** Kirim OTP — `{ "email": "customer@test.com" }`
@@ -83,7 +82,8 @@ Contoh: `curl -H "Authorization: Bearer eyJ..." ...`
 → `429` setelah 3× dalam 5 menit (cek DB `otp_codes`).
 
 **1.4** Verifikasi OTP — `{ "email": "customer@test.com", "code": "123456" }`
-→ `200` `{ "access_token": "...", "customer": { id, name, email } }`
+→ `200` `{ "access_token": "...", "customer": { id, name, email }, "needs_name": true|false }` — `needs_name: true` = akun baru/nama kosong; klien minta nama lalu `PATCH /me`.
+- Email di-trim + huruf kecil (satu orang = satu akun).
 → `401` kode salah/kedaluwarsa; `429` setelah 5× percobaan gagal.
 
 > Catatan: OTP dikirim lewat email sungguhan (SMTP Gmail). Ambil kode dari inbox test.
@@ -195,7 +195,9 @@ Saat publish, follower artist + subscriber notify-me dapat notifikasi (cek tabel
 | 4.1 | POST | `/orders` | ✓ | Buat order (qty 1–4) |
 | 4.2 | GET | `/orders/history` | ✓ | Riwayat order (+ `event_title`, `category_name`, `poster_url`, `event_date`, `venue`) |
 | 4.3 | GET | `/orders/:id` | ✓ | Detail order (kolom tambahan sama dengan 4.2) |
-| 4.4 | GET | `/me/level` | ✓ | Level gamifikasi dari jumlah konser berbay |
+| 4.4 | GET | `/me/level` | ✓ | Level gamifikasi dari jumlah konser berbayar |
+| 4.5 | GET | `/me` | ✓ | Profil `{ id, email, name, phone, needs_name }` |
+| 4.6 | PATCH | `/me` | ✓ | Body `{ name, phone? }` — `name` 2–80 karakter, `phone` angka/+/-/spasi ≤ 30. `400 VALIDATION_ERROR` + `field` |
 
 **4.1** Body: `{ "event_id", "ticket_category_id", "quantity" }` → `201`
 - `400` jika kategori bukan milik event / stok kurang.
