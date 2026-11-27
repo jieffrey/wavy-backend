@@ -20,6 +20,9 @@ bun run typecheck           # cek tipe
 - Setiap file yang dijalankan dicatat di tabel `schema_migrations`. File yang sudah di-merge **tidak diedit**; perubahan = file baru.
 - `bun scripts/db-reset.ts` = reset total (kosongkan semua data kecuali admin). Tanpa argumen hanya dry-run;
   jalan sungguhan butuh `--confirm=<nama-database>`. Langkah lengkap untuk Neon ada di laporan v2 / `wavy-next/docs/PLAN-v2.md` §5.
+- `bun scripts/seed-demo-v2.ts` = data demo **fiktif** (5 artis rekaan, 5 konser: open, upcoming, sold out, closed, draft;
+  2 customer `demo.pembeli*@example.com`). Tanpa argumen dry-run; tulis butuh `--confirm=<nama-database>`.
+  Tidak pernah dijalankan otomatis dan menolak jalan bila data demo sudah ada.
 
 ### Membuat / mengganti akun admin
 
