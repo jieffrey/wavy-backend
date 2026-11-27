@@ -3,7 +3,7 @@ import type { z } from "zod";
 import type { AppEnv } from "../../middleware/auth.middleware";
 import { fail, respond, validBody } from "../../types/result";
 import { adminService } from "./admin.service";
-import { adminLoginSchema, organizerStatusSchema } from "./admin.schema";
+import { adminLoginSchema, organizerListQuerySchema, organizerStatusSchema } from "./admin.schema";
 
 export const adminController = {
   login: async (c: Context<AppEnv>) => {
@@ -15,7 +15,11 @@ export const adminController = {
 
   stats: async (c: Context<AppEnv>) => respond(c)(await adminService.stats()),
 
-  listOrganizers: async (c: Context<AppEnv>) => respond(c)(await adminService.listOrganizers()),
+  listOrganizers: async (c: Context<AppEnv>) => {
+    const query = organizerListQuerySchema.safeParse({ status: c.req.query("status") || undefined });
+    if (!query.success) return respond(c)(fail(400, "invalid status filter", "VALIDATION_ERROR"));
+    return respond(c)(await adminService.listOrganizers(query.data.status));
+  },
 
   getOrganizer: async (c: Context<AppEnv>) => {
     const id = Number(c.req.param("id"));
@@ -24,8 +28,10 @@ export const adminController = {
   },
 
   setOrganizerStatus: async (c: Context<AppEnv>) => {
-    const { status } = validBody<z.output<typeof organizerStatusSchema>>(c);
-    return respond(c)(await adminService.setOrganizerStatus(Number(c.req.param("id")), status));
+    const id = Number(c.req.param("id"));
+    if (!Number.isInteger(id) || id <= 0) return respond(c)(fail(404, "organizer not found"));
+    const { status, reason } = validBody<z.output<typeof organizerStatusSchema>>(c);
+    return respond(c)(await adminService.setOrganizerStatus(id, status, reason));
   },
 
   listEvents: async (c: Context<AppEnv>) => respond(c)(await adminService.listEvents()),
