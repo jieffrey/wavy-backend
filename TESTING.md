@@ -11,6 +11,7 @@ bun scripts/seed-admin.ts   # buat admin pertama (sekali saja)
 bun scripts/migrate-order-rules.ts   # migration aturan order (idempotent)
 bun scripts/migrate-paid-at.ts       # kolom orders.paid_at + backfill (idempotent)
 bun scripts/migrate-payment.ts       # kolom orders.payment_ref & payment_type (idempotent)
+bun scripts/migrate-organizer-verification.ts  # kolom verifikasi organizer (idempotent)
 bun run dev                 # atau: bun src/index.ts
 bun run typecheck           # cek tipe
 ```
@@ -257,9 +258,9 @@ Base: `/api/v1/admin`
 | 7.1 | POST | `/admin/login` | — | Login admin |
 | 7.1a | GET | `/admin/me` | ✓ | Profil admin dari token: `{ id, name, email }` |
 | 7.2 | GET | `/admin/stats` | ✓ | Ringkasan jumlah organizer/customer/event/order/revenue/tiket |
-| 7.3 | GET | `/admin/organizers` | ✓ | List organizer + event_count + revenue |
+| 7.3 | GET | `/admin/organizers?status=` | ✓ | List organizer + event_count + revenue + `email_verified_at`, `reviewed_at`, `rejection_reason`. `status` opsional (`pending_verification` = antrean verifikasi, urut terlama) |
 | 7.3a | GET | `/admin/organizers/:id` | ✓ | `{ organizer, events[{…, quota, sold, revenue}], summary{event_count, published_count, paid_order_count, pending_order_count, ticket_sold, revenue} }`; `404` jika tidak ada |
-| 7.4 | PATCH | `/admin/organizers/:id` | ✓ | Set status `active`/`suspended` |
+| 7.4 | PATCH | `/admin/organizers/:id` | ✓ | Body `{ status, reason? }`. Transisi: `pending_verification`→`active` (setujui) / `rejected` (tolak, `reason` ≥ 10 karakter); `active`↔`suspended`. Lainnya `409 INVALID_STATUS_TRANSITION`. Setujui/tolak mengirim email ke EO (`email_sent`: true/false; null bila tidak ada email) |
 | 7.5 | GET | `/admin/events` | ✓ | List semua event |
 | 7.6 | GET | `/admin/customers` | ✓ | List customer + order_count + spend |
 
