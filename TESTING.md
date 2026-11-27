@@ -71,6 +71,7 @@ Contoh: `curl -H "Authorization: Bearer eyJ..." ...`
 |---|--------|------|------|-----------|
 | 1.1 | GET | `/health` | — | Cek server hidup, respon `{ "status": "ok" }` |
 | 1.2 | POST | `/auth/organizer/login` | — | Login organizer |
+| 1.2a | POST | `/auth/register` | — | Daftar customer `{ name, email }` → simpan nama + kirim OTP (lanjut `/auth/verify-otp`). Email yang sudah punya nama → `409 EMAIL_REGISTERED` |
 | 1.3 | POST | `/auth/send-otp` | — | Kirim OTP ke email customer |
 | 1.4 | POST | `/auth/verify-otp` | — | Verifikasi OTP → token customer |
 

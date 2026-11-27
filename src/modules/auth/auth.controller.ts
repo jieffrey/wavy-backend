@@ -3,7 +3,7 @@ import type { z } from "zod";
 import type { AppEnv } from "../../middleware/auth.middleware";
 import { respond, validBody } from "../../types/result";
 import { authService } from "./auth.service";
-import { loginSchema, organizerRegisterSchema, sendOtpSchema, verifyOtpSchema, verifyOrganizerEmailSchema } from "./auth.schema";
+import { loginSchema, organizerRegisterSchema, sendOtpSchema, verifyOtpSchema, verifyOrganizerEmailSchema, customerRegisterSchema } from "./auth.schema";
 
 export const authController = {
   organizerLogin: async (c: Context<AppEnv>) => {
@@ -14,6 +14,11 @@ export const authController = {
   organizerRegister: async (c: Context<AppEnv>) => {
     const body = validBody<z.output<typeof organizerRegisterSchema>>(c);
     return respond(c)(await authService.organizerRegister(body));
+  },
+
+  registerCustomer: async (c: Context<AppEnv>) => {
+    const { name, email } = validBody<z.output<typeof customerRegisterSchema>>(c);
+    return respond(c)(await authService.registerCustomer(name, email));
   },
 
   sendOtp: async (c: Context<AppEnv>) => {
