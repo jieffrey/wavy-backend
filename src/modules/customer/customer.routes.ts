@@ -28,6 +28,7 @@ customerRoutes.post(
 // didaftarkan sebelum /orders/:id supaya "history" tidak tertelan route param
 customerRoutes.get("/orders/history", customerAuth, customerController.history);
 customerRoutes.get("/orders/:id", customerAuth, customerController.getOrder);
+customerRoutes.post("/orders/:id/cancel", customerAuth, customerController.cancelOrder);
 
 customerRoutes.get("/me", customerAuth, customerController.profile);
 customerRoutes.patch(
