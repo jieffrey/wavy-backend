@@ -27,6 +27,7 @@ describe("GET /admin/stats", () => {
     const admin = await adminToken();
     const ev = await createEventWithCategory({ quota: 50 });
     const stale = await order(ev.eventId, ev.categoryId, "pending_payment", 1, 100000, { expired: true });
+    await order(ev.eventId, ev.categoryId, "cancelled", 1, 100000);
     const res = await call("GET", "/admin/stats", admin);
     expect(res.status).toBe(200);
     expect(res.body).not.toHaveProperty("organizer_count");
@@ -41,6 +42,9 @@ describe("GET /admin/stats", () => {
       expect(typeof res.body[key]).toBe("number");
     const [{ n }] = await sql<{ n: number }[]>`SELECT COUNT(*)::int AS n FROM orders WHERE status = 'expired'`;
     expect(res.body.orders_by_status.expired).toBe(n);
+    const [{ c }] = await sql<{ c: number }[]>`SELECT COUNT(*)::int AS c FROM orders WHERE status = 'cancelled'`;
+    expect(c).toBeGreaterThan(0);
+    expect(res.body.orders_by_status.cancelled).toBe(c);
     const [row] = await sql`SELECT status FROM orders WHERE id = ${stale}`;
     expect(row.status).toBe("expired");
     const [{ q }] = await sql<{ q: number }[]>`SELECT COALESCE(SUM(quantity), 0)::int AS q FROM orders WHERE status = 'paid'`;

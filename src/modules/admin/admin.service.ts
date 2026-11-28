@@ -4,7 +4,7 @@ import { sql } from "../../db/client";
 import { ok, fail, type Result } from "../../types/result";
 import { expireAll } from "../../utils/order-expiry";
 
-export type OrderStatus = "pending_payment" | "paid" | "expired" | "rejected" | "refunded";
+export type OrderStatus = "pending_payment" | "paid" | "expired" | "rejected" | "refunded" | "cancelled";
 
 type AdminRow = { id: number; name: string; email: string; password: string };
 
@@ -55,6 +55,7 @@ export const adminService = {
       expired: 0,
       rejected: 0,
       refunded: 0,
+      cancelled: 0,
     };
     for (const r of byStatus) if (r.status in orders_by_status) orders_by_status[r.status as OrderStatus] = r.count;
     return ok({ ...counts, orders_by_status });
