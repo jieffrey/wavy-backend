@@ -69,43 +69,11 @@ describe("GET /admin/me", () => {
   });
 });
 
-describe("GET /admin/organizers/:id", () => {
-  test("profil, daftar event, dan ringkasan penjualan", async () => {
+describe("endpoint organizer admin sudah dihapus", () => {
+  test("GET/PATCH /admin/organizers* -> 404", async () => {
     const admin = await createAdmin();
-    const ev = await createEventWithCategory({ quota: 10 });
-    const cust = await createCustomer();
-    await paidOrder(cust.id, ev.eventId, ev.categoryId, 3);
-    await insertPendingOrder(cust.id, ev.eventId, ev.categoryId, 1, 15);
-    await insertPendingOrder(cust.id, ev.eventId, ev.categoryId, 1, -5); // sudah lewat → expired
-
-    const res = await call("GET", `/admin/organizers/${ev.organizer.id}`, admin.token);
-    expect(res.status).toBe(200);
-    expect(res.body.organizer).toMatchObject({ id: ev.organizer.id, name: "EO Test", status: "active" });
-    expect(res.body.organizer.password).toBeUndefined();
-    expect(res.body.events).toHaveLength(1);
-    expect(res.body.events[0]).toMatchObject({ id: ev.eventId, title: "Konser Test", quota: 10, sold: 3, revenue: 300000 });
-    expect(res.body.summary).toMatchObject({
-      event_count: 1,
-      published_count: 1,
-      paid_order_count: 1,
-      pending_order_count: 1,
-      ticket_sold: 3,
-      revenue: 300000,
-    });
-  });
-
-  test("organizer tanpa order → ringkasan nol", async () => {
-    const admin = await createAdmin();
-    const ev = await createEventWithCategory();
-    const res = await call("GET", `/admin/organizers/${ev.organizer.id}`, admin.token);
-    expect(res.status).toBe(200);
-    expect(res.body.summary).toMatchObject({ paid_order_count: 0, ticket_sold: 0, revenue: 0 });
-  });
-
-  test("id tidak ada / tidak valid → 404, tanpa token → 401", async () => {
-    const admin = await createAdmin();
-    expect((await call("GET", "/admin/organizers/999999", admin.token)).status).toBe(404);
-    expect((await call("GET", "/admin/organizers/abc", admin.token)).status).toBe(404);
-    expect((await call("GET", "/admin/organizers/1")).status).toBe(401);
+    expect((await call("GET", "/admin/organizers", admin.token)).status).toBe(404);
+    expect((await call("GET", "/admin/organizers/1", admin.token)).status).toBe(404);
+    expect((await call("PATCH", "/admin/organizers/1", admin.token, { status: "active" })).status).toBe(404);
   });
 });

@@ -3,7 +3,7 @@ import {
   call,
   createCustomer,
   createEventWithCategory,
-  createOrganizer,
+  createAdmin,
   insertPendingOrder,
   orderStatus,
   sql,
@@ -31,36 +31,40 @@ const jakartaDate = async (daysAgo: number) =>
     `
   )[0].d;
 
-describe("GET /organizer/me", () => {
-  test("mengembalikan profil organizer login", async () => {
-    const organizer = await createOrganizer();
-    const res = await call("GET", "/organizer/me", organizer.token);
-    expect(res.status).toBe(200);
-    expect(res.body).toEqual({ id: organizer.id, name: "EO Test", email: expect.any(String), status: "active" });
+describe("akses /admin/* (dulu /organizer/*)", () => {
+  test("tanpa token / token customer -> 401; endpoint organizer lama sudah tidak ada", async () => {
+    const customer = await createCustomer();
+    for (const path of ["/admin/events", "/admin/artists", "/admin/orders", "/admin/dashboard"]) {
+      expect((await call("GET", path)).status).toBe(401);
+      expect((await call("GET", path, customer.token)).status).toBe(401);
+    }
+    const admin = await createAdmin();
+    expect((await call("GET", "/organizer/events", admin.token)).status).toBe(404);
+    expect((await call("POST", "/auth/organizer/login", undefined, { email: "a@b.c", password: "x" })).status).toBe(404);
   });
 });
 
 describe("paid_at", () => {
   test("approve order mengisi paid_at", async () => {
-    const { organizer, eventId, categoryId } = await createEventWithCategory();
+    const { admin, eventId, categoryId } = await createEventWithCategory();
     const customer = await createCustomer();
     const id = await insertPendingOrder(customer.id, eventId, categoryId, 1, 10);
-    const res = await call("POST", `/organizer/orders/${id}/verify`, organizer.token, { approve: true });
+    const res = await call("POST", `/admin/orders/${id}/verify`, admin.token, { approve: true });
     expect(res.status).toBe(200);
     const [row] = await sql<{ paid_at: Date | null }[]>`SELECT paid_at FROM orders WHERE id = ${id}`;
     expect(row.paid_at).toBeInstanceOf(Date);
   });
 });
 
-describe("GET /organizer/orders (+ /:id)", () => {
+describe("GET /admin/orders (+ /:id)", () => {
   test("baris berisi event_title, category_name, customer_*; filter status & event_id", async () => {
-    const { organizer, eventId, categoryId } = await createEventWithCategory();
+    const { admin, eventId, categoryId } = await createEventWithCategory();
     const customer = await createCustomer();
     const paid = await insertPaidOrder(customer.id, eventId, categoryId, 2);
     const pending = await insertPendingOrder(customer.id, eventId, categoryId, 1, 10);
     const [otherEvent] = await sql<{ id: number }[]>`
-      INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status)
-      SELECT organizer_id, artist_id, 'Event Lain', category, venue, date, '', '', 'published' FROM events WHERE id = ${eventId}
+      INSERT INTO events (artist_id, title, category, venue, date, poster_url, description, status)
+      SELECT artist_id, 'Event Lain', category, venue, date, '', '', 'published' FROM events WHERE id = ${eventId}
       RETURNING id
     `;
     const [otherCat] = await sql<{ id: number }[]>`
@@ -68,9 +72,11 @@ describe("GET /organizer/orders (+ /:id)", () => {
     `;
     const otherOrder = await insertPendingOrder(customer.id, otherEvent.id, otherCat.id, 1, 10);
 
-    const all = await call("GET", "/organizer/orders", organizer.token);
+    const all = await call("GET", "/admin/orders", admin.token);
     expect(all.status).toBe(200);
-    expect(all.body.map((o: any) => o.id).sort()).toEqual([paid, pending, otherOrder].sort());
+    // order semua event platform; ambil yang dibuat test ini
+    const mine = all.body.filter((o: any) => [eventId, otherEvent.id].includes(o.event_id));
+    expect(mine.map((o: any) => o.id).sort()).toEqual([paid, pending, otherOrder].sort());
     const row = all.body.find((o: any) => o.id === paid);
     expect(row).toMatchObject({
       status: "paid",
@@ -83,49 +89,49 @@ describe("GET /organizer/orders (+ /:id)", () => {
     });
     expect(row).toHaveProperty("customer_name");
 
-    const byStatus = await call("GET", "/organizer/orders?status=paid", organizer.token);
+    const byStatus = await call("GET", `/admin/orders?status=paid&event_id=${eventId}`, admin.token);
     expect(byStatus.body.map((o: any) => o.id)).toEqual([paid]);
-    const byEvent = await call("GET", `/organizer/orders?event_id=${otherEvent.id}`, organizer.token);
+    const byEvent = await call("GET", `/admin/orders?event_id=${otherEvent.id}`, admin.token);
     expect(byEvent.body.map((o: any) => o.id)).toEqual([otherOrder]);
-    const bad = await call("GET", "/organizer/orders?event_id=abc", organizer.token);
+    const bad = await call("GET", "/admin/orders?event_id=abc", admin.token);
     expect(bad.status).toBe(400);
   });
 
-  test("detail order berisi tiket; order organizer lain -> 404; lazy expiry", async () => {
-    const { organizer, eventId, categoryId } = await createEventWithCategory();
+  test("detail order berisi tiket; id tidak ada -> 404; lazy expiry", async () => {
+    const { admin, eventId, categoryId } = await createEventWithCategory();
     const customer = await createCustomer();
     const id = await insertPaidOrder(customer.id, eventId, categoryId, 2);
     await sql`INSERT INTO tickets (order_id, qr_code, owner_id) VALUES (${id}, ${`qr-${id}-1`}, ${customer.id}), (${id}, ${`qr-${id}-2`}, ${customer.id})`;
     await sql`UPDATE tickets SET is_scanned = true WHERE qr_code = ${`qr-${id}-1`}`;
 
-    const res = await call("GET", `/organizer/orders/${id}`, organizer.token);
+    const res = await call("GET", `/admin/orders/${id}`, admin.token);
     expect(res.status).toBe(200);
     expect(res.body).toMatchObject({ id, event_title: "Konser Test", category_name: "Reguler" });
     expect(res.body.tickets.map((t: any) => t.is_scanned)).toEqual([true, false]);
 
-    const stranger = await createOrganizer();
-    expect((await call("GET", `/organizer/orders/${id}`, stranger.token)).status).toBe(404);
+    expect((await call("GET", "/admin/orders/999999999", admin.token)).status).toBe(404);
+    expect((await call("GET", `/admin/orders/${id}`, customer.token)).status).toBe(401);
 
     const stale = await insertPendingOrder(customer.id, eventId, categoryId, 1, -1);
-    const staleRes = await call("GET", `/organizer/orders/${stale}`, organizer.token);
+    const staleRes = await call("GET", `/admin/orders/${stale}`, admin.token);
     expect(staleRes.body.status).toBe("expired");
     expect(await orderStatus(stale)).toBe("expired");
   });
 });
 
-describe("GET /organizer/dashboard", () => {
-  test("kpi, per_category, recent_orders; remaining_ticket dikurangi pending aktif", async () => {
-    const { organizer, eventId, categoryId } = await createEventWithCategory({ quota: 20 });
+describe("GET /admin/dashboard", () => {
+  test("?event_id: kpi, per_category, recent_orders; remaining_ticket dikurangi pending aktif", async () => {
+    const { admin, eventId, categoryId } = await createEventWithCategory({ quota: 20 });
     const customer = await createCustomer();
     await insertPaidOrder(customer.id, eventId, categoryId, 2, 1); // 7 hari terakhir
     await insertPaidOrder(customer.id, eventId, categoryId, 3, 10); // 7 hari sebelumnya
     await insertPaidOrder(customer.id, eventId, categoryId, 1, 20); // di luar 14 hari
     await insertPendingOrder(customer.id, eventId, categoryId, 4, 10);
-    await insertPendingOrder(customer.id, eventId, categoryId, 5, -1); // expired
+    await insertPendingOrder(customer.id, eventId, categoryId, 4, -1); // expired
     const [order] = await sql<{ id: number }[]>`SELECT id FROM orders WHERE event_id = ${eventId} AND status = 'paid' LIMIT 1`;
     await sql`INSERT INTO tickets (order_id, qr_code, owner_id, is_scanned) VALUES (${order.id}, ${`qr-dash-${order.id}`}, ${customer.id}, true)`;
 
-    const res = await call("GET", "/organizer/dashboard", organizer.token);
+    const res = await call("GET", `/admin/dashboard?event_id=${eventId}`, admin.token);
     expect(res.status).toBe(200);
     const b = res.body;
     expect(b.revenue).toBe(600000);
@@ -159,19 +165,26 @@ describe("GET /organizer/dashboard", () => {
     expect(b.recent_orders.length).toBe(5);
     expect(b.recent_orders[0]).toHaveProperty("event_title", "Konser Test");
     expect(b.recent_orders.some((o: any) => o.status === "expired")).toBe(true);
+
+    // tanpa event_id = seluruh platform (mencakup event ini)
+    const all = await call("GET", "/admin/dashboard", admin.token);
+    expect(all.status).toBe(200);
+    expect(all.body.per_category.some((c: any) => c.category_id === categoryId)).toBe(true);
+    expect(all.body.ticket_sold).toBeGreaterThanOrEqual(6);
+    expect((await call("GET", "/admin/dashboard?event_id=x", admin.token)).status).toBe(400);
   });
 });
 
-describe("GET /organizer/dashboard/sales", () => {
+describe("GET /admin/dashboard/sales", () => {
   test("satu baris per hari (zero-filled), tanggal Asia/Jakarta", async () => {
-    const { organizer, eventId, categoryId } = await createEventWithCategory({ quota: 50 });
+    const { admin, eventId, categoryId } = await createEventWithCategory({ quota: 50 });
     const customer = await createCustomer();
     await insertPaidOrder(customer.id, eventId, categoryId, 2, 0);
     await insertPaidOrder(customer.id, eventId, categoryId, 1, 0);
     await insertPaidOrder(customer.id, eventId, categoryId, 3, 2);
     await insertPaidOrder(customer.id, eventId, categoryId, 4, 40); // di luar jendela
 
-    const res = await call("GET", "/organizer/dashboard/sales?days=7", organizer.token);
+    const res = await call("GET", `/admin/dashboard/sales?days=7&event_id=${eventId}`, admin.token);
     expect(res.status).toBe(200);
     expect(res.body.length).toBe(7);
     expect(res.body[6]).toEqual({ date: await jakartaDate(0), tickets: 3, revenue: 300000 });
@@ -179,17 +192,17 @@ describe("GET /organizer/dashboard/sales", () => {
     expect(res.body[5]).toEqual({ date: await jakartaDate(1), tickets: 0, revenue: 0 });
     expect(res.body.reduce((n: number, r: any) => n + r.tickets, 0)).toBe(6);
 
-    const def = await call("GET", "/organizer/dashboard/sales", organizer.token);
+    const def = await call("GET", `/admin/dashboard/sales?event_id=${eventId}`, admin.token);
     expect(def.body.length).toBe(30);
   });
 
   test("days di luar 1..365 -> 400 VALIDATION_ERROR", async () => {
-    const organizer = await createOrganizer();
+    const admin = await createAdmin();
     for (const days of ["0", "366", "abc", "1.5"]) {
-      const res = await call("GET", `/organizer/dashboard/sales?days=${days}`, organizer.token);
+      const res = await call("GET", `/admin/dashboard/sales?days=${days}`, admin.token);
       expect(res.status).toBe(400);
       expect(res.body).toEqual(errorOf("VALIDATION_ERROR"));
     }
-    expect((await call("GET", "/organizer/dashboard/sales?days=365", organizer.token)).body.length).toBe(365);
+    expect((await call("GET", "/admin/dashboard/sales?days=365", admin.token)).body.length).toBe(365);
   });
 });

@@ -21,3 +21,14 @@ export const createOrderSchema = z.object({
   gender: z.enum(["L", "P"]).optional().nullable(),
   wa_consent: z.enum(["Ya", "Tidak"]).optional().nullable(),
 });
+
+// PATCH /me: nama wajib (langkah "isi nama" setelah OTP untuk akun baru), telepon opsional.
+export const profileSchema = z.object({
+  name: z.string().trim().min(2, "name must be at least 2 characters").max(80, "name must be at most 80 characters"),
+  phone: z
+    .string()
+    .trim()
+    .max(30, "phone must be at most 30 characters")
+    .regex(/^[0-9+\-\s]*$/, "phone may only contain digits, +, - and spaces")
+    .optional(),
+});

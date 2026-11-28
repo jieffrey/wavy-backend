@@ -1,10 +1,8 @@
 import { createMiddleware } from "hono/factory";
 import type { Context } from "hono";
 import jwt from "jsonwebtoken";
-import { sql } from "../db/client";
-import { errorBody } from "../types/result";
 
-export type AppEnv = { Variables: { organizerId: number; customerId: number; adminId: number } };
+export type AppEnv = { Variables: { customerId: number; adminId: number } };
 
 const readToken = (c: Context<AppEnv>) => {
   const auth = c.req.header("Authorization");
@@ -21,24 +19,6 @@ const verify = (c: Context<AppEnv>, claim: string) => {
     return null;
   }
 };
-
-// PRD §4.5: status organizer dicek ke DB tiap request, jadi suspend berlaku
-// seketika walaupun JWT-nya masih valid.
-export const organizerAuth = createMiddleware<AppEnv>(async (c, next) => {
-  const id = verify(c, "organizer_id");
-  if (!id) return c.json({ error: "unauthorized" }, 401);
-  const [organizer] = await sql<{ status: string }[]>`SELECT status FROM organizers WHERE id = ${id}`;
-  if (!organizer) return c.json({ error: "unauthorized" }, 401);
-  if (organizer.status === "suspended")
-    return c.json(errorBody("organizer account is suspended", "ORGANIZER_SUSPENDED"), 403);
-  // hanya akun active yang boleh memakai Creator Studio (token lama dari akun yang belum/tidak disetujui ditolak)
-  if (organizer.status === "pending_verification")
-    return c.json(errorBody("organizer account is pending verification", "ORGANIZER_PENDING"), 403);
-  if (organizer.status !== "active")
-    return c.json(errorBody("organizer account is not active", "ORGANIZER_REJECTED"), 403);
-  c.set("organizerId", id);
-  await next();
-});
 
 export const customerAuth = createMiddleware<AppEnv>(async (c, next) => {
   const id = verify(c, "customer_id");

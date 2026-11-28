@@ -11,7 +11,6 @@ type FeaturedRow = SalesWindow & {
   date: Date;
   poster_url: string;
   artist_name: string;
-  organizer_name: string;
   remaining_ticket: number;
   now: Date;
 };
@@ -23,11 +22,10 @@ export const homepageService = {
     const featured = await sql<FeaturedRow[]>`
       SELECT e.id, e.title, e.category, e.venue, e.date, e.poster_url,
         e.status, e.sales_start_at, e.sales_end_at, now() AS now,
-        a.name AS artist_name, o.name AS organizer_name,
+        a.name AS artist_name,
         (SELECT COALESCE(SUM(${remainingQuotaSql(sql)}), 0)::int FROM ticket_categories tc WHERE tc.event_id = e.id) AS remaining_ticket
       FROM events e
       JOIN artists a ON a.id = e.artist_id
-      JOIN organizers o ON o.id = e.organizer_id
       WHERE e.status = 'published' AND e.date >= now()
       ORDER BY e.date ASC
       LIMIT 6
@@ -44,14 +42,6 @@ export const homepageService = {
       ORDER BY follower_count DESC, a.id ASC
       LIMIT 8
     `;
-    const organizers = await sql`
-      SELECT o.id, o.name, COUNT(fo.id)::int AS follower_count
-      FROM organizers o
-      LEFT JOIN favorite_organizers fo ON fo.organizer_id = o.id
-      GROUP BY o.id
-      ORDER BY follower_count DESC, o.id ASC
-      LIMIT 4
-    `;
-    return ok({ featured_events, popular_artists, organizers });
+    return ok({ featured_events, popular_artists });
   },
 };

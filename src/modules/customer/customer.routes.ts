@@ -3,7 +3,7 @@ import { zValidator } from "@hono/zod-validator";
 import type { AppEnv } from "../../middleware/auth.middleware";
 import { customerAuth } from "../../middleware/auth.middleware";
 import { errorBody } from "../../types/result";
-import { createOrderSchema } from "./customer.schema";
+import { createOrderSchema, profileSchema } from "./customer.schema";
 import { customerController } from "./customer.controller";
 
 const customerRoutes = new Hono<AppEnv>();
@@ -29,6 +29,22 @@ customerRoutes.post(
 customerRoutes.get("/orders/history", customerAuth, customerController.history);
 customerRoutes.get("/orders/:id", customerAuth, customerController.getOrder);
 
+customerRoutes.get("/me", customerAuth, customerController.profile);
+customerRoutes.patch(
+  "/me",
+  customerAuth,
+  // 400 { error: { code: "VALIDATION_ERROR", message, field } } supaya pesan per field terbaca di klien
+  zValidator<typeof profileSchema, "json", AppEnv, string>("json", profileSchema, (result, c) => {
+    if (result.success) return;
+    const first = result.error.issues[0];
+    const field = first?.path.join(".");
+    return c.json(
+      errorBody(field ? `${field}: ${first.message}` : "invalid request body", "VALIDATION_ERROR", field ? { field } : undefined),
+      400
+    );
+  }),
+  customerController.updateProfile
+);
 customerRoutes.get("/me/level", customerAuth, customerController.level);
 
 export default customerRoutes;

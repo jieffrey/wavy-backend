@@ -4,7 +4,7 @@ import server from "../src/index";
 
 const uniq = () => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
-export const tokenFor = (claim: "organizer_id" | "customer_id" | "admin_id", id: number) =>
+export const tokenFor = (claim: "customer_id" | "admin_id", id: number) =>
   jwt.sign({ [claim]: id }, process.env.JWT_SECRET!, { expiresIn: "1h" });
 
 export async function call(method: string, path: string, token?: string, body?: unknown) {
@@ -22,13 +22,13 @@ export async function call(method: string, path: string, token?: string, body?: 
   return { status: res.status, body: json };
 }
 
-export async function createOrganizer(status = "active") {
-  const [org] = await sql<{ id: number }[]>`
-    INSERT INTO organizers (name, email, password, status, created_at)
-    VALUES ('EO Test', ${`eo-${uniq()}@test.local`}, 'x', ${status}, now())
+// admin pengelola event (event & artis milik platform, tidak ada lagi organizer)
+export async function createAdmin() {
+  const [admin] = await sql<{ id: number }[]>`
+    INSERT INTO admins (name, email, password) VALUES ('Admin Test', ${`admin-${uniq()}@test.local`}, 'x')
     RETURNING id
   `;
-  return { id: org.id, token: tokenFor("organizer_id", org.id) };
+  return { id: admin.id, token: tokenFor("admin_id", admin.id) };
 }
 
 export async function createCustomer() {
@@ -46,16 +46,16 @@ type EventOpts = {
   salesEndAt?: Date | null;
 };
 
-// organizer + artist + event + satu kategori tiket
+// admin + artist + event + satu kategori tiket
 export async function createEventWithCategory(opts: EventOpts = {}) {
-  const organizer = await createOrganizer();
+  const admin = await createAdmin();
   const [artist] = await sql<{ id: number }[]>`
-    INSERT INTO artists (organizer_id, name, genre, photo_url, bio)
-    VALUES (${organizer.id}, 'Artist', 'pop', '', '') RETURNING id
+    INSERT INTO artists (name, genre, photo_url, bio)
+    VALUES ('Artist', 'pop', '', '') RETURNING id
   `;
   const [event] = await sql<{ id: number }[]>`
-    INSERT INTO events (organizer_id, artist_id, title, category, venue, date, poster_url, description, status, sales_start_at, sales_end_at)
-    VALUES (${organizer.id}, ${artist.id}, 'Konser Test', 'pop', 'Venue', now() + interval '30 days', '', '',
+    INSERT INTO events (artist_id, title, category, venue, date, poster_url, description, status, sales_start_at, sales_end_at)
+    VALUES (${artist.id}, 'Konser Test', 'pop', 'Venue', now() + interval '30 days', '', '',
             ${opts.status ?? "published"}, ${opts.salesStartAt ?? null}, ${opts.salesEndAt ?? null})
     RETURNING id
   `;
@@ -64,7 +64,7 @@ export async function createEventWithCategory(opts: EventOpts = {}) {
     VALUES (${event.id}, 'Reguler', 100000, ${opts.quota ?? 10}, ${opts.sold ?? 0})
     RETURNING id
   `;
-  return { organizer, artistId: artist.id, eventId: event.id, categoryId: category.id };
+  return { admin, artistId: artist.id, eventId: event.id, categoryId: category.id };
 }
 
 // order pending yang dibuat langsung di DB; expiresInMinutes negatif = sudah lewat

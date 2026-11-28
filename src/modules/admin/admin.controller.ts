@@ -3,7 +3,7 @@ import type { z } from "zod";
 import type { AppEnv } from "../../middleware/auth.middleware";
 import { fail, respond, validBody } from "../../types/result";
 import { adminService } from "./admin.service";
-import { adminLoginSchema, organizerListQuerySchema, organizerStatusSchema } from "./admin.schema";
+import { adminLoginSchema } from "./admin.schema";
 
 // query angka opsional: kosong -> fallback, bukan bilangan bulat -> null
 const intQuery = (raw: string | undefined, fallback: number) => {
@@ -39,27 +39,6 @@ export const adminController = {
     if (limit === null || limit < 1 || limit > 50) return respond(c)(fail(400, "limit must be an integer between 1 and 50", "VALIDATION_ERROR"));
     return respond(c)(await adminService.recentOrders(limit));
   },
-
-  listOrganizers: async (c: Context<AppEnv>) => {
-    const query = organizerListQuerySchema.safeParse({ status: c.req.query("status") || undefined });
-    if (!query.success) return respond(c)(fail(400, "invalid status filter", "VALIDATION_ERROR"));
-    return respond(c)(await adminService.listOrganizers(query.data.status));
-  },
-
-  getOrganizer: async (c: Context<AppEnv>) => {
-    const id = Number(c.req.param("id"));
-    if (!Number.isInteger(id) || id <= 0) return respond(c)(fail(404, "organizer not found"));
-    return respond(c)(await adminService.getOrganizer(id));
-  },
-
-  setOrganizerStatus: async (c: Context<AppEnv>) => {
-    const id = Number(c.req.param("id"));
-    if (!Number.isInteger(id) || id <= 0) return respond(c)(fail(404, "organizer not found"));
-    const { status, reason } = validBody<z.output<typeof organizerStatusSchema>>(c);
-    return respond(c)(await adminService.setOrganizerStatus(id, status, reason));
-  },
-
-  listEvents: async (c: Context<AppEnv>) => respond(c)(await adminService.listEvents()),
 
   listCustomers: async (c: Context<AppEnv>) => respond(c)(await adminService.listCustomers()),
 };

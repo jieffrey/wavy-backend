@@ -1,9 +1,9 @@
+import jwt from "jsonwebtoken";
 import { describe, expect, test } from "bun:test";
 import {
   call,
   createCustomer,
   createEventWithCategory,
-  createOrganizer,
   insertPendingOrder,
   orderBody,
   orderStatus,
@@ -24,14 +24,14 @@ const baseEvent = (artistId: number) => ({
 });
 
 // ---------------------------------------------------------------------------
-// 1. Tenggat penjualan pada endpoint event organizer
+// 1. Tenggat penjualan pada endpoint event admin
 // ---------------------------------------------------------------------------
-describe("organizer event sales window", () => {
+describe("admin event sales window", () => {
   test("create menyimpan sales_start_at & sales_end_at", async () => {
-    const { organizer, artistId } = await createEventWithCategory();
+    const { admin, artistId } = await createEventWithCategory();
     const start = minutesFromNow(60);
     const end = minutesFromNow(120);
-    const res = await call("POST", "/organizer/events", organizer.token, {
+    const res = await call("POST", "/admin/events", admin.token, {
       ...baseEvent(artistId),
       sales_start_at: start.toISOString(),
       sales_end_at: end.toISOString(),
@@ -42,9 +42,9 @@ describe("organizer event sales window", () => {
   });
 
   test("create menolak sales_end_at <= sales_start_at", async () => {
-    const { organizer, artistId } = await createEventWithCategory();
+    const { admin, artistId } = await createEventWithCategory();
     const t = minutesFromNow(60).toISOString();
-    const res = await call("POST", "/organizer/events", organizer.token, {
+    const res = await call("POST", "/admin/events", admin.token, {
       ...baseEvent(artistId),
       sales_start_at: t,
       sales_end_at: t,
@@ -53,8 +53,8 @@ describe("organizer event sales window", () => {
   });
 
   test("create menolak format tanggal tidak valid", async () => {
-    const { organizer, artistId } = await createEventWithCategory();
-    const res = await call("POST", "/organizer/events", organizer.token, {
+    const { admin, artistId } = await createEventWithCategory();
+    const res = await call("POST", "/admin/events", admin.token, {
       ...baseEvent(artistId),
       sales_start_at: "besok",
     });
@@ -63,19 +63,19 @@ describe("organizer event sales window", () => {
 
   test("update parsial divalidasi terhadap nilai tersimpan; field yang tidak dikirim dipertahankan", async () => {
     const start = minutesFromNow(60);
-    const { organizer, artistId, eventId } = await createEventWithCategory({ salesStartAt: start });
+    const { admin, artistId, eventId } = await createEventWithCategory({ salesStartAt: start });
 
-    const bad = await call("PUT", `/organizer/events/${eventId}`, organizer.token, {
+    const bad = await call("PUT", `/admin/events/${eventId}`, admin.token, {
       ...baseEvent(artistId),
       sales_end_at: minutesFromNow(30).toISOString(), // sebelum start tersimpan
     });
     expect(bad.status).toBe(400);
 
-    const kept = await call("PUT", `/organizer/events/${eventId}`, organizer.token, baseEvent(artistId));
+    const kept = await call("PUT", `/admin/events/${eventId}`, admin.token, baseEvent(artistId));
     expect(kept.status).toBe(200);
     expect(new Date(kept.body.sales_start_at).getTime()).toBe(start.getTime());
 
-    const cleared = await call("PUT", `/organizer/events/${eventId}`, organizer.token, {
+    const cleared = await call("PUT", `/admin/events/${eventId}`, admin.token, {
       ...baseEvent(artistId),
       sales_start_at: null,
     });
@@ -89,8 +89,8 @@ describe("organizer event sales window", () => {
 // ---------------------------------------------------------------------------
 describe("POST /orders sales status", () => {
   test("event yang di-close manual -> 409 SALES_CLOSED", async () => {
-    const { organizer, eventId, categoryId } = await createEventWithCategory();
-    const closed = await call("POST", `/organizer/events/${eventId}/close-sales`, organizer.token);
+    const { admin, eventId, categoryId } = await createEventWithCategory();
+    const closed = await call("POST", `/admin/events/${eventId}/close-sales`, admin.token);
     expect(closed.status).toBe(200);
 
     const customer = await createCustomer();
@@ -293,8 +293,8 @@ describe("lazy expiry", () => {
     expect(res.body.status).toBe("expired");
   });
 
-  test("GET /orders/history dan GET /organizer/orders menandai order lewat waktu", async () => {
-    const { organizer, eventId, categoryId } = await createEventWithCategory();
+  test("GET /orders/history dan GET /admin/orders menandai order lewat waktu", async () => {
+    const { admin, eventId, categoryId } = await createEventWithCategory();
     const customer = await createCustomer();
     const other = await createCustomer();
     const id1 = await insertPendingOrder(customer.id, eventId, categoryId, 1, -1);
@@ -308,17 +308,17 @@ describe("lazy expiry", () => {
     expect(byId.get(fresh)).toBe("pending_payment");
     expect(await orderStatus(id2)).toBe("pending_payment"); // milik customer lain, belum disentuh
 
-    const list = await call("GET", "/organizer/orders", organizer.token);
+    const list = await call("GET", "/admin/orders", admin.token);
     expect(list.status).toBe(200);
     expect(list.body.find((o: any) => o.id === id2).status).toBe("expired");
   });
 
-  test("EO tidak bisa approve order yang sudah expired -> 409 ORDER_EXPIRED", async () => {
-    const { organizer, eventId, categoryId } = await createEventWithCategory({ quota: 5 });
+  test("admin tidak bisa approve order yang sudah expired -> 409 ORDER_EXPIRED", async () => {
+    const { admin, eventId, categoryId } = await createEventWithCategory({ quota: 5 });
     const customer = await createCustomer();
     const id = await insertPendingOrder(customer.id, eventId, categoryId, 2, -1);
 
-    const res = await call("POST", `/organizer/orders/${id}/verify`, organizer.token, { approve: true });
+    const res = await call("POST", `/admin/orders/${id}/verify`, admin.token, { approve: true });
     expect(res.status).toBe(409);
     expect(res.body).toEqual({ error: { code: "ORDER_EXPIRED", message: expect.any(String) } });
 
@@ -330,98 +330,30 @@ describe("lazy expiry", () => {
   });
 
   test("approve order yang masih berlaku tetap jalan (paid + tiket terbit)", async () => {
-    const { organizer, eventId, categoryId } = await createEventWithCategory({ quota: 5 });
+    const { admin, eventId, categoryId } = await createEventWithCategory({ quota: 5 });
     const customer = await createCustomer();
     const id = await insertPendingOrder(customer.id, eventId, categoryId, 2, 10);
 
-    const res = await call("POST", `/organizer/orders/${id}/verify`, organizer.token, { approve: true });
+    const res = await call("POST", `/admin/orders/${id}/verify`, admin.token, { approve: true });
     expect(res.status).toBe(200);
     expect(await orderStatus(id)).toBe("paid");
     const [{ n }] = await sql<{ n: number }[]>`SELECT COUNT(*)::int AS n FROM tickets WHERE order_id = ${id}`;
     expect(n).toBe(2);
 
-    const again = await call("POST", `/organizer/orders/${id}/verify`, organizer.token, { approve: true });
+    const again = await call("POST", `/admin/orders/${id}/verify`, admin.token, { approve: true });
     expect(again.status).toBe(400);
   });
 });
 
 // ---------------------------------------------------------------------------
-// 4. Suspend organizer langsung berlaku
+// 4. Hanya token admin yang membuka /admin/* (role EO sudah dihapus)
 // ---------------------------------------------------------------------------
-describe("organizer suspension", () => {
-  test("JWT valid tapi organizer di-suspend -> 403 ORGANIZER_SUSPENDED", async () => {
-    const organizer = await createOrganizer();
-    const before = await call("GET", "/organizer/events", organizer.token);
-    expect(before.status).toBe(200);
-
-    await sql`UPDATE organizers SET status = 'suspended' WHERE id = ${organizer.id}`;
-    const after = await call("GET", "/organizer/events", organizer.token);
-    expect(after.status).toBe(403);
-    expect(after.body).toEqual({ error: { code: "ORGANIZER_SUSPENDED", message: expect.any(String) } });
-
-    await sql`UPDATE organizers SET status = 'active' WHERE id = ${organizer.id}`;
-    const restored = await call("GET", "/organizer/events", organizer.token);
-    expect(restored.status).toBe(200);
-  });
-
-  test("suspend lewat endpoint admin langsung memblokir token EO", async () => {
-    const organizer = await createOrganizer();
-    const [admin] = await sql<{ id: number }[]>`
-      INSERT INTO admins (name, email, password) VALUES ('Admin', ${`admin-${organizer.id}@test.local`}, 'x') RETURNING id
-    `;
-    const res = await call("PATCH", `/admin/organizers/${organizer.id}`, tokenFor("admin_id", admin.id), {
-      status: "suspended",
-    });
-    expect(res.status).toBe(200);
-
-    const blocked = await call("GET", "/organizer/dashboard", organizer.token);
-    expect(blocked.status).toBe(403);
-    expect(blocked.body.error.code).toBe("ORGANIZER_SUSPENDED");
-  });
-
-  test("token untuk organizer yang tidak ada -> 401", async () => {
-    const res = await call("GET", "/organizer/events", tokenFor("organizer_id", 999_999_999));
-    expect(res.status).toBe(401);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// Migration backfill order lama
-// ---------------------------------------------------------------------------
-describe("migrate-order-rules backfill", () => {
-  test("pending tanpa expires_at -> expired; created_at NULL diisi; run kedua tidak mengubah apa pun", async () => {
-    const { migrateOrderRules } = await import("../src/db/migrations/order-rules");
-    const { eventId, categoryId } = await createEventWithCategory();
+describe("auth /admin/*", () => {
+  test("token customer, token EO lama (klaim organizer_id), token admin rusak -> 401", async () => {
     const customer = await createCustomer();
-
-    const insertLegacy = async (status: string, expiresAt: Date | null) => {
-      const [row] = await sql<{ id: number }[]>`
-        INSERT INTO orders (customer_id, event_id, ticket_category_id, quantity, total_price, status, expires_at, created_at)
-        VALUES (${customer.id}, ${eventId}, ${categoryId}, 1, 100000, ${status}, ${expiresAt}, NULL)
-        RETURNING id
-      `;
-      return row.id;
-    };
-    const expiresAt = new Date("2026-10-01T10:15:00Z");
-    const pendingNoExpiry = await insertLegacy("pending_payment", null);
-    const paidWithExpiry = await insertLegacy("paid", expiresAt);
-    const paidNoExpiry = await insertLegacy("paid", null);
-
-    const first = await migrateOrderRules(sql);
-    expect(first.pendingWithoutExpiryExpired).toBeGreaterThanOrEqual(1);
-    expect(first.createdAtBackfilled).toBeGreaterThanOrEqual(3);
-
-    const rows = await sql<{ id: number; status: string; created_at: Date | null }[]>`
-      SELECT id, status, created_at FROM orders WHERE id IN ${sql([pendingNoExpiry, paidWithExpiry, paidNoExpiry])}
-    `;
-    const byId = new Map(rows.map((r) => [r.id, r]));
-    expect(byId.get(pendingNoExpiry)!.status).toBe("expired");
-    expect(byId.get(paidWithExpiry)!.status).toBe("paid");
-    expect(byId.get(paidWithExpiry)!.created_at!.toISOString()).toBe("2026-10-01T10:00:00.000Z");
-    expect(byId.get(paidNoExpiry)!.created_at).not.toBeNull();
-    expect(rows.every((r) => r.created_at !== null)).toBe(true);
-
-    const second = await migrateOrderRules(sql);
-    expect(second).toEqual({ pendingWithoutExpiryExpired: 0, createdAtBackfilled: 0 });
+    expect((await call("GET", "/admin/events", customer.token)).status).toBe(401);
+    const oldEo = jwt.sign({ organizer_id: 1 }, process.env.JWT_SECRET!, { expiresIn: "1h" });
+    expect((await call("GET", "/admin/events", oldEo)).status).toBe(401);
+    expect((await call("GET", "/admin/events", "bukan-jwt")).status).toBe(401);
   });
 });

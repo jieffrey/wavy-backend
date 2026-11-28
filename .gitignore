@@ -3,3 +3,5 @@ dist/
 .env
 *.log
 opencode.json
+# backup lokal dari scripts/db-reset.ts (berisi hash password admin)
+backup/

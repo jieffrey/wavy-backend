@@ -23,16 +23,16 @@ async function order(eventId: number, categoryId: number, status: string, qty: n
 }
 
 describe("GET /admin/stats", () => {
-  test("KPI per status organizer + order per status; pending kedaluwarsa dihitung expired", async () => {
+  test("KPI platform + order per status; pending kedaluwarsa dihitung expired", async () => {
     const admin = await adminToken();
     const ev = await createEventWithCategory({ quota: 50 });
     const stale = await order(ev.eventId, ev.categoryId, "pending_payment", 1, 100000, { expired: true });
+    await order(ev.eventId, ev.categoryId, "cancelled", 1, 100000);
     const res = await call("GET", "/admin/stats", admin);
     expect(res.status).toBe(200);
+    expect(res.body).not.toHaveProperty("organizer_count");
     for (const key of [
-      "active_organizer_count",
-      "pending_organizer_count",
-      "suspended_organizer_count",
+      "event_count",
       "customer_count",
       "published_event_count",
       "order_count",
@@ -42,6 +42,9 @@ describe("GET /admin/stats", () => {
       expect(typeof res.body[key]).toBe("number");
     const [{ n }] = await sql<{ n: number }[]>`SELECT COUNT(*)::int AS n FROM orders WHERE status = 'expired'`;
     expect(res.body.orders_by_status.expired).toBe(n);
+    const [{ c }] = await sql<{ c: number }[]>`SELECT COUNT(*)::int AS c FROM orders WHERE status = 'cancelled'`;
+    expect(c).toBeGreaterThan(0);
+    expect(res.body.orders_by_status.cancelled).toBe(c);
     const [row] = await sql`SELECT status FROM orders WHERE id = ${stale}`;
     expect(row.status).toBe("expired");
     const [{ q }] = await sql<{ q: number }[]>`SELECT COALESCE(SUM(quantity), 0)::int AS q FROM orders WHERE status = 'paid'`;
@@ -92,15 +95,16 @@ describe("GET /admin/stats/daily", () => {
 describe("GET /admin/stats/top-events & /admin/orders/recent", () => {
   test("event terlaris diurutkan tiket terjual, hanya order paid", async () => {
     const admin = await adminToken();
-    const a = await createEventWithCategory({ quota: 100 });
-    const b = await createEventWithCategory({ quota: 100 });
-    await order(a.eventId, a.categoryId, "paid", 90, 9_000_000);
-    await order(b.eventId, b.categoryId, "paid", 95, 9_500_000);
-    await order(a.eventId, a.categoryId, "pending_payment", 50, 5_000_000);
+    const a = await createEventWithCategory({ quota: 200 });
+    const b = await createEventWithCategory({ quota: 200 });
+    // maks 4 tiket per order (CHECK di DB): banyak order supaya kedua event jadi teratas di platform
+    for (let i = 0; i < 23; i++) await order(a.eventId, a.categoryId, "paid", 4, 400_000); // 92 tiket
+    for (let i = 0; i < 25; i++) await order(b.eventId, b.categoryId, "paid", 4, 400_000); // 100 tiket
+    await order(a.eventId, a.categoryId, "pending_payment", 4, 5_000_000);
     const res = await call("GET", "/admin/stats/top-events?limit=2", admin);
     expect(res.status).toBe(200);
     expect(res.body.map((e: { id: number }) => e.id)).toEqual([b.eventId, a.eventId]);
-    expect(res.body[1]).toMatchObject({ tickets_sold: 90, revenue: 9_000_000, organizer_name: "EO Test" });
+    expect(res.body[1]).toMatchObject({ tickets_sold: 92, revenue: 9_200_000, artist_name: "Artist" });
   });
 
   test("order terbaru paling baru di atas, dengan nama event & pembeli", async () => {
