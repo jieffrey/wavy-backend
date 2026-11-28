@@ -3,6 +3,8 @@ import { ok, fail, type Result } from "../../types/result";
 import type { z } from "zod";
 import type { createOrderSchema, profileSchema } from "./customer.schema";
 import { expireByCategory, expireByCustomer, expireOrder } from "../../utils/order-expiry";
+import { midtrans, midtransConfig, MidtransError } from "../payment/midtrans.client";
+import { applyMidtransStatus, isSettled } from "../payment/payment.service";
 import { remainingQuotaSql } from "../../utils/quota";
 import { categorySalesStatus, salesError, salesStatus, type SalesWindow } from "../../utils/sales-status";
 
@@ -100,6 +102,52 @@ export const customerService = {
       `;
       return ok(order);
     });
+  },
+
+  // Customer membatalkan order pending miliknya: status -> cancelled, kuota langsung lepas
+  // (kuota terpakai hanya menghitung pending_payment, utils/quota.ts).
+  async cancelOrder(customerId: number, id: number): Promise<Result<OrderViewRow>> {
+    await expireOrder(sql, id);
+    const [current] = await sql<{ status: string; payment_ref: string | null }[]>`
+      SELECT status, payment_ref FROM orders WHERE id = ${id} AND customer_id = ${customerId}
+    `;
+    if (!current) return fail(404, "order not found");
+    if (current.status === "expired") return fail(409, "order has expired", "ORDER_EXPIRED");
+    if (current.status !== "pending_payment") return fail(409, "order is not pending payment", "ORDER_NOT_PENDING");
+
+    // Sudah pernah membuka Midtrans: pastikan belum lunas, lalu tutup transaksinya supaya tidak bisa
+    // dibayar setelah order batal. Gagal menghubungi Midtrans = batal ditolak (lebih aman daripada uang
+    // masuk ke order yang sudah batal).
+    if (current.payment_ref && midtransConfig().configured) {
+      try {
+        const st = await midtrans.getStatus(current.payment_ref);
+        if (st && isSettled(st)) {
+          await applyMidtransStatus(st);
+          return fail(409, "order has already been paid", "ORDER_NOT_PENDING");
+        }
+        if (st && st.transaction_status === "pending") await midtrans.expireTransaction(current.payment_ref);
+      } catch (err) {
+        if (err instanceof MidtransError) return fail(502, err.message, "PAYMENT_GATEWAY_ERROR");
+        throw err;
+      }
+    }
+
+    const result = await sql.begin(async (tx): Promise<Result<null>> => {
+      // urutan lock sama dengan verifikasi admin & webhook: order dulu, lalu kategori
+      const [order] = await tx<{ status: string; ticket_category_id: number }[]>`
+        SELECT status, ticket_category_id FROM orders WHERE id = ${id} AND customer_id = ${customerId} FOR UPDATE
+      `;
+      if (!order) return fail(404, "order not found");
+      await expireOrder(tx, id);
+      const [again] = await tx<{ status: string }[]>`SELECT status FROM orders WHERE id = ${id}`;
+      if (again.status === "expired") return fail(409, "order has expired", "ORDER_EXPIRED");
+      if (again.status !== "pending_payment") return fail(409, "order is not pending payment", "ORDER_NOT_PENDING");
+      await tx`SELECT id FROM ticket_categories WHERE id = ${order.ticket_category_id} FOR UPDATE`;
+      await tx`UPDATE orders SET status = 'cancelled' WHERE id = ${id}`;
+      return ok(null);
+    });
+    if (!result.ok) return result;
+    return this.getOrder(customerId, id);
   },
 
   async getOrder(customerId: number, id: number): Promise<Result<OrderViewRow>> {

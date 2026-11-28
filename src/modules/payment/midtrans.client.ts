@@ -77,4 +77,16 @@ export const midtrans = {
     if (!res.ok || !json.transaction_status) throw new MidtransError(`status ${res.status} ${json.status_code ?? ""}`);
     return json;
   },
+
+  // Tutup transaksi yang masih pending supaya tidak bisa dibayar lagi (Core API "expire", juga untuk Snap).
+  // Sukses = status_code "407" (transaction_status "expire"); selain itu dilempar sebagai MidtransError.
+  async expireTransaction(orderId: string): Promise<void> {
+    const cfg = midtransConfig();
+    const res = await fetch(`${cfg.apiUrl}/v2/${encodeURIComponent(orderId)}/expire`, {
+      method: "POST",
+      headers: { Accept: "application/json", Authorization: authHeader(cfg.serverKey) },
+    });
+    const json = (await res.json().catch(() => ({}))) as { status_code?: string; status_message?: string };
+    if (json.status_code !== "407") throw new MidtransError(`expire ${res.status} ${json.status_code ?? ""} ${json.status_message ?? ""}`.trim());
+  },
 };

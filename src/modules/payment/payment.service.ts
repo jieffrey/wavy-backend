@@ -31,7 +31,7 @@ export const orderIdFromRef = (ref: string): number | null => {
 
 const FAILED = new Set(["expire", "cancel", "deny"]);
 
-const isSettled = (st: MidtransStatus) =>
+export const isSettled = (st: MidtransStatus) =>
   st.transaction_status === "settlement" ||
   (st.transaction_status === "capture" && (st.fraud_status ?? "accept") === "accept");
 
@@ -41,11 +41,14 @@ export async function applyMidtransStatus(st: MidtransStatus): Promise<PaymentOu
   const orderId = orderIdFromRef(st.order_id);
   if (!orderId) return "ignored";
 
-  return sql.begin(async (tx): Promise<PaymentOutcome> => {
+  const outcome = await sql.begin(async (tx): Promise<PaymentOutcome | "close"> => {
     await expireOrder(tx, orderId);
     const [order] = await tx<OrderRow[]>`SELECT * FROM orders WHERE id = ${orderId} FOR UPDATE`;
     if (!order) return "ignored";
     if (order.status === "paid") return "paid";
+    // order sudah dibatalkan customer, tapi Snap yang masih terbuka sempat membuat transaksi baru:
+    // tutup transaksi itu supaya tidak bisa dibayar (dikerjakan di luar transaksi DB, lihat bawah)
+    if (order.status === "cancelled" && st.transaction_status === "pending") return "close";
     if (order.status !== "pending_payment") return order.status === "expired" ? "expired" : "ignored";
 
     if (isSettled(st)) {
@@ -60,6 +63,9 @@ export async function applyMidtransStatus(st: MidtransStatus): Promise<PaymentOu
     }
     return "pending";
   });
+  if (outcome !== "close") return outcome;
+  await midtrans.expireTransaction(st.order_id).catch(() => {});
+  return "ignored";
 }
 
 export const paymentService = {

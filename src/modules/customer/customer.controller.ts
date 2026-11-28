@@ -14,6 +14,9 @@ export const customerController = {
   getOrder: async (c: Context<AppEnv>) =>
     respond(c)(await customerService.getOrder(c.get("customerId"), Number(c.req.param("id")))),
 
+  cancelOrder: async (c: Context<AppEnv>) =>
+    respond(c)(await customerService.cancelOrder(c.get("customerId"), Number(c.req.param("id")))),
+
   history: async (c: Context<AppEnv>) => respond(c)(await customerService.history(c.get("customerId"))),
 
   profile: async (c: Context<AppEnv>) => respond(c)(await customerService.profile(c.get("customerId"))),
